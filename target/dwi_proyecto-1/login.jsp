@@ -169,7 +169,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-5">
-                                    <button class="btn btn-primary d-grid w-100" onclick="iniciarSession(event)">Iniciar sesión</button>
+                                    <button class="btn btn-primary d-grid w-100" type="submit">Iniciar sesión</button>
                                 </div>
                             </form>
                         </div>
@@ -206,29 +206,33 @@
 
         <!-- Page JS -->
         <script>
-                                        async function iniciarSession(e) {
-                                            e.preventDefault();
-                                            const body = {
-                                                usuario: "admin",
-                                                clave: "admin"
-                                            };
-                                            const response = await fetch('api/usuario/login', {
-                                                method: 'POST',
-                                                headers: {
-                                                    'Accept': 'application/json',
-                                                    'Content-Type': 'application/json'
-                                                },
-                                                body: JSON.stringify(body)
-                                            });
 
-                                            const result = await response.json();
+            const form = document.getElementById('formAuthentication');
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
 
-                                            if (result.success) {
-                                                window.location = 'index.jsp';
-                                            } else {
-                                                alert('Error: ' + result.error);
-                                            }
-                                        }
+                // Creamos un objeto FormData con los datos del formulario
+                const formData = new FormData(form);
+                // Convertir FormData a un objeto (opcional, si prefieres trabajar con un objeto plano)
+                const formObject = {};
+                formData.forEach((value, key) => {
+                    formObject[key] = value;
+                });
+                const response = await fetch('api/usuario/login', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formObject)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    window.location = 'index.jsp';
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            });
         </script> 
 
         <!-- Place this tag before closing body tag for github widget button. -->

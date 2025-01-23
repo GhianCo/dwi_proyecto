@@ -63,6 +63,7 @@ public class LoginCtrl extends HttpServlet {
 
             jsonResponse.put("data", data);
         } else {
+            jsonResponse.put("message", "Credenciales inválidas, intenta nuevamente.");
             jsonResponse.put("success", false);
         }
 
