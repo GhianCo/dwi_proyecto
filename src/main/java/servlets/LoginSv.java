@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.entities.Usuario;
 import services.impl.UsuarioServiceImpl;
 
@@ -33,9 +34,11 @@ public class LoginSv extends HttpServlet {
         UsuarioServiceImpl usuarioservice = new UsuarioServiceImpl();
         usuario_login = usuarioservice.login(usuarioObj);
         request.setAttribute("errorMessage", null);
-        
+
         if (usuario_login.getNick() != null) {
-            response.sendRedirect("index.jsp");  // Redirigir al index
+            HttpSession session = request.getSession(true);
+            session.setAttribute("usuario", usuario_login);
+            response.sendRedirect("index.jsp");
         } else {
             request.setAttribute("errorMessage", "Credenciales inválidas, intenta nuevamente.");
             request.getRequestDispatcher("/login.jsp").forward(request, response);

@@ -133,7 +133,7 @@
                         <!-- /Logo -->
 
                         <div class="card-body mt-1">
-                            <h4 class="mb-1">Welcome to DWI! 👋🏻</h4>
+                            <h4 class="mb-1">Bienvenido a DWI! 👋🏻</h4>
                             <p class="mb-5">Ingresa tus credenciales para acceder al sistema</p>
                             <% if (request.getAttribute("errorMessage") != null) {%>
                             <div class="alert alert-danger" role="alert">
