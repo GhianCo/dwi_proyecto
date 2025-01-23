@@ -3,6 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+    <filter>
+        <filter-name>JsonRequestFilter</filter-name>
+        <filter-class>http.JsonRequestFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>JsonRequestFilter</filter-name>
+        <url-pattern>/*</url-pattern> <!-- Aplica el filtro a todas las solicitudes -->
+    </filter-mapping>
+    
+    <servlet>
+        <servlet-name>LoginCtrl</servlet-name>
+        <servlet-class>api.usuario.LoginCtrl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginCtrl</servlet-name>
+        <url-pattern>/api/usuario/login</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

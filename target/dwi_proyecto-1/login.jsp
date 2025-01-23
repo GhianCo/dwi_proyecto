@@ -140,7 +140,7 @@
                                 <%= request.getAttribute("errorMessage")%>
                             </div>
                             <% }%>
-                            <form id="formAuthentication" class="mb-5" action="LoginSv" method="POST">
+                            <form id="formAuthentication" class="mb-5">
                                 <div class="form-floating form-floating-outline mb-5">
                                     <input
                                         type="text"
@@ -169,7 +169,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-5">
-                                    <button class="btn btn-primary d-grid w-100" type="submit">Iniciar sesión</button>
+                                    <button class="btn btn-primary d-grid w-100" onclick="iniciarSession(event)">Iniciar sesión</button>
                                 </div>
                             </form>
                         </div>
@@ -205,6 +205,31 @@
         <script src="assets/js/main.js"></script>
 
         <!-- Page JS -->
+        <script>
+                                        async function iniciarSession(e) {
+                                            e.preventDefault();
+                                            const body = {
+                                                usuario: "admin",
+                                                clave: "admin"
+                                            };
+                                            const response = await fetch('api/usuario/login', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(body)
+                                            });
+
+                                            const result = await response.json();
+
+                                            if (result.success) {
+                                                window.location = 'index.jsp';
+                                            } else {
+                                                alert('Error: ' + result.error);
+                                            }
+                                        }
+        </script> 
 
         <!-- Place this tag before closing body tag for github widget button. -->
         <script async defer src="https://buttons.github.io/buttons.js"></script>

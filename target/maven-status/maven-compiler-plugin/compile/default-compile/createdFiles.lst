@@ -1,8 +1,12 @@
 servlets/LoginSv.class
+http/JsonRequestWrapper.class
 utils/DBConn.class
+api/usuario/LoginCtrl.class
 models/dao/EntityDao.class
+http/JsonRequestWrapper$1.class
 com/developer/group/dwi_proyecto/JakartaRestConfiguration.class
 models/dao/impl/DaoFactory$DaoFactoryHolder.class
+http/JsonRequestFilter.class
 utils/Util.class
 models/entities/Usuario.class
 services/BaseService.class

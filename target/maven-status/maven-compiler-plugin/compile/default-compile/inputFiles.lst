@@ -1,3 +1,4 @@
+/Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/http/JsonRequestFilter.java
 /Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/models/dao/UsuarioDao.java
 /Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/utils/DBConn.java
 /Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/com/developer/group/dwi_proyecto/resources/JakartaEE10Resource.java
@@ -8,7 +9,9 @@
 /Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/services/impl/UsuarioServiceImpl.java
 /Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/utils/Util.java
 /Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/services/UsuarioService.java
+/Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/http/JsonRequestWrapper.java
 /Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/com/developer/group/dwi_proyecto/JakartaRestConfiguration.java
 /Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/models/entities/Persona.java
 /Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/models/dao/EntityDao.java
 /Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/models/dao/impl/DaoFactory.java
+/Users/ghianco/NetBeansProjects/dwi_proyecto/src/main/java/api/usuario/LoginCtrl.java
