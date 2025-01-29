@@ -26,6 +26,15 @@
     <!-- Inicio CRUD Usuarios -->
     
     <servlet>
+        <servlet-name>UsuarioCreate</servlet-name>
+        <servlet-class>modules.usuario.servlets.Create</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsuarioCreate</servlet-name>
+        <url-pattern>/api/usuario/create</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>UsuarioGetAll</servlet-name>
         <servlet-class>modules.usuario.servlets.GetAll</servlet-class>
     </servlet>

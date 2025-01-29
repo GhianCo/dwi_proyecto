@@ -22,7 +22,42 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
     @Override
     public int create(Usuario entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int id = 0;
+        try {
+
+            connection = DBConn.getConnection();
+
+            String sql = "insert into usuario (persona_id, nick, clave, rol) "
+                    + "values (?,?,?,?)";
+
+            PreparedStatement pst = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            pst.setInt(1, entity.getPersona_id());
+            pst.setString(2, entity.getNick());
+            pst.setString(3, entity.getClave());
+            pst.setString(4, entity.getRol());
+
+            pst.executeUpdate();
+
+            resultSet = pst.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+            }
+
+            pst.close();
+            resultSet.close();
+            connection.close();
+
+        } catch (SQLException ex) {
+            try {
+                System.out.println(ex.getMessage());
+                connection.close();
+            } catch (SQLException exp) {
+                System.out.println(exp.getMessage());
+            }
+        }
+        return id;
     }
 
     @Override
@@ -119,7 +154,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public PaginationResult paginate(String query, int page, int perPage) {
+    public PaginationResult<ArrayList<Usuario>, Pagination> paginate(String query, int page, int perPage) {
         ArrayList<Usuario> listadeUsuarios = new ArrayList<>();
         int totalRecords = 0;
 

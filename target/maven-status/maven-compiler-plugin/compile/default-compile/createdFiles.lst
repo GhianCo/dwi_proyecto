@@ -1,6 +1,7 @@
 http/JsonRequestWrapper.class
 shared/DaoFactory$DaoFactoryHolder.class
 modules/usuario/servlets/GetAll.class
+modules/usuario/dto/UsuarioCreateRequestDTO.class
 modules/usuario/servlets/Delete.class
 shared/conn/Util.class
 modules/usuario/servlets/LoginCtrl.class
@@ -24,4 +25,5 @@ shared/ActionError.class
 shared/EntityDao.class
 shared/DaoFactory.class
 modules/usuario/servlets/Create.class
+shared/JsonMapper.class
 modules/usuario/services/UsuarioService.class
