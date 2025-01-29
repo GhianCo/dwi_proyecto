@@ -26,6 +26,24 @@
     <!-- Inicio CRUD Usuarios -->
     
     <servlet>
+        <servlet-name>UsuarioGetAll</servlet-name>
+        <servlet-class>modules.usuario.servlets.GetAll</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsuarioGetAll</servlet-name>
+        <url-pattern>/api/usuario/getAll</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>UsuarioGetOne</servlet-name>
+        <servlet-class>modules.usuario.servlets.GetOne</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsuarioGetOne</servlet-name>
+        <url-pattern>/api/usuario/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>UsuarioCreate</servlet-name>
         <servlet-class>modules.usuario.servlets.Create</servlet-class>
     </servlet>
@@ -44,21 +62,12 @@
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>UsuarioGetAll</servlet-name>
-        <servlet-class>modules.usuario.servlets.GetAll</servlet-class>
+        <servlet-name>UsuarioDelete</servlet-name>
+        <servlet-class>modules.usuario.servlets.Delete</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UsuarioGetAll</servlet-name>
-        <url-pattern>/api/usuario/getAll</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>UsuarioGetOne</servlet-name>
-        <servlet-class>modules.usuario.servlets.GetOne</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UsuarioGetOne</servlet-name>
-        <url-pattern>/api/usuario/*</url-pattern>
+        <servlet-name>UsuarioDelete</servlet-name>
+        <url-pattern>/api/usuario/delete/*</url-pattern>
     </servlet-mapping>
     
     <!-- Fin CRUD Usuarios -->

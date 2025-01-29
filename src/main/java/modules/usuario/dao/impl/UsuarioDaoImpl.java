@@ -138,7 +138,26 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
     @Override
     public void delete(Object id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+
+            connection = DBConn.getConnection();
+
+            String sql = "update usuario set activo = 0 where id = " + id;
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            try {
+                System.out.println(ex.getMessage());
+                resultSet.close();
+                callableStatement.close();
+                connection.close();
+            } catch (SQLException exp) {
+                System.out.println(exp.getMessage());
+            }
+        }
     }
 
     public Usuario login(Usuario usuario) {

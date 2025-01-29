@@ -84,7 +84,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void borrar(Object id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        usuarioDao.delete(id);
     }
 
     @Override
