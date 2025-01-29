@@ -54,6 +54,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public Usuario updateUsuarioAndPersona(UsuarioCreateRequestDTO jsonRequest) {
+        Persona personaToCreate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Persona.class);
+        Usuario usuarioToCreate = JsonMapper.mapJsonToDto(new JSONObject(jsonRequest), Usuario.class);
+
+        personaToCreate.setId(jsonRequest.getPersonaId());
+        personaDao.update(personaToCreate);
+
+        usuarioToCreate.setId(jsonRequest.getId());
+        usuarioDao.update(usuarioToCreate);
+
+        return usuarioToCreate;
+    }
+
+    @Override
     public Usuario buscar(Object id) {
         return usuarioDao.find(id);
     }

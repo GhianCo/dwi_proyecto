@@ -35,6 +35,15 @@
     </servlet-mapping>
     
     <servlet>
+        <servlet-name>UsuarioUpdate</servlet-name>
+        <servlet-class>modules.usuario.servlets.Update</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsuarioUpdate</servlet-name>
+        <url-pattern>/api/usuario/update</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>UsuarioGetAll</servlet-name>
         <servlet-class>modules.usuario.servlets.GetAll</servlet-class>
     </servlet>

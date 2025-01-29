@@ -108,7 +108,32 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
     @Override
     public void update(Usuario entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+
+            connection = DBConn.getConnection();
+
+            String sql = "update usuario set nick = ?, clave = ?, rol = ? where id = ?";
+
+            PreparedStatement pst = connection.prepareStatement(sql);
+
+            pst.setString(1, entity.getNick());
+            pst.setString(2, entity.getClave());
+            pst.setString(3, entity.getRol());
+
+            pst.setDouble(4, entity.getId());
+
+            pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+        } catch (SQLException ex) {
+            try {
+                System.out.println(ex.getMessage());
+                connection.close();
+            } catch (SQLException exp) {
+                System.out.println(exp.getMessage());
+            }
+        }
     }
 
     @Override

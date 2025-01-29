@@ -2,7 +2,7 @@ package modules.usuario.models;
 
 import shared.Persona;
 
-public class Usuario extends Persona{
+public class Usuario extends Persona {
 
     private int id;
     private int persona_id;
@@ -22,7 +22,7 @@ public class Usuario extends Persona{
         this.clave = clave;
         this.activo = activo;
     }
-    
+
     public Usuario(int id, int persona_id, String nombres, String apellidos, String dni) {
         super(nombres, apellidos, dni);
         this.id = id;

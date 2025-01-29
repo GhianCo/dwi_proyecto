@@ -7,4 +7,5 @@ import shared.BaseService;
 public interface UsuarioService extends BaseService<Usuario> {
     public Usuario login(Usuario usuario);
     public Usuario createUsuarioAndPersona(UsuarioCreateRequestDTO entity);
+    public Usuario updateUsuarioAndPersona(UsuarioCreateRequestDTO entity);
 }

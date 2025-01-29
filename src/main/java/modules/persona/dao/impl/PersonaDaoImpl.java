@@ -64,31 +64,55 @@ public class PersonaDaoImpl implements PersonaDao {
     @Override
     public Persona find(Object personaId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public ArrayList<Persona> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void update(Persona entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+
+            connection = DBConn.getConnection();
+
+            String sql = "update persona set nombres = ?, apellidos = ?, dni = ?, direccion = ?, telefono = ?, email = ?, direccion = ? where id = ?";
+
+            PreparedStatement pst = connection.prepareStatement(sql);
+
+            pst.setString(1, entity.getNombres());
+            pst.setString(2, entity.getApellidos());
+            pst.setString(3, entity.getDni());
+            pst.setString(4, entity.getDireccion());
+            pst.setString(5, entity.getTelefono());
+            pst.setString(6, entity.getEmail());
+            pst.setString(7, entity.getDireccion());
+
+            pst.setDouble(8, entity.getId());
+
+            pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+        } catch (SQLException ex) {
+            try {
+                System.out.println(ex.getMessage());
+                connection.close();
+            } catch (SQLException exp) {
+                System.out.println(exp.getMessage());
+            }
+        }
     }
 
     @Override
     public void delete(Object id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public PaginationResult<Object, Object> paginate(String query, int page, int perPage) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
