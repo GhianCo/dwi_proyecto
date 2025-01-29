@@ -3,34 +3,23 @@ package modules.usuario.servlets;
 import http.JsonRequestWrapper;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import modules.usuario.models.Usuario;
 import modules.usuario.services.impl.UsuarioServiceImpl;
 import org.json.JSONObject;
+import shared.ActionPayload;
+import shared.BaseServlet;
 
-public class LoginCtrl extends HttpServlet {
-
-    protected void allowCORS(HttpServletResponse response) {
-        response.setContentType("text/html;charset=UTF-8");
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-    }
-
+public class LoginCtrl extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        allowCORS(response);
 
-        // Obtener el cuerpo JSON de la solicitud utilizando el JsonRequestWrapper
         JsonRequestWrapper wrappedRequest = (JsonRequestWrapper) request;
         String jsonBody = wrappedRequest.getJsonBody();
 
-        // Convertir el cuerpo JSON en un JSONObject
         JSONObject jsonRequest = new JSONObject(jsonBody);
 
         String usuario = jsonRequest.optString("usuario");
@@ -45,33 +34,12 @@ public class LoginCtrl extends HttpServlet {
         UsuarioServiceImpl usuarioservice = new UsuarioServiceImpl();
         usuario_login = usuarioservice.login(usuarioObj);
 
-        JSONObject jsonResponse = new JSONObject();
-        jsonResponse.put("success", true);
-        jsonResponse.put("data", "");
         if (usuario_login.getNick() != null) {
-            JSONObject data = new JSONObject();
-            data.put("nombres", usuario_login.getNombres());
-            data.put("apellidos", usuario_login.getApellidos());
-
-            jsonResponse.put("data", data);
+            sendJsonResponse(response, new ActionPayload(200, usuario_login, "Inicio de sesión"));
         } else {
-            jsonResponse.put("message", "Credenciales inválidas, intenta nuevamente.");
-            jsonResponse.put("success", false);
+            sendJsonResponse(response, new ActionPayload(401, null, "Credenciales inválidas, intenta nuevamente."));
         }
 
-        response.setContentType("application/json");
-        response.getWriter().write(jsonResponse.toString());
-    }
-
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        allowCORS(resp);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
     }
 
 }
