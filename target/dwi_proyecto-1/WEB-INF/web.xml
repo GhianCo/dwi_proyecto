@@ -13,14 +13,38 @@
         <url-pattern>/*</url-pattern> <!-- Aplica el filtro a todas las solicitudes -->
     </filter-mapping>
     
+    
     <servlet>
         <servlet-name>LoginCtrl</servlet-name>
-        <servlet-class>api.usuario.LoginCtrl</servlet-class>
+        <servlet-class>modules.usuario.servlets.LoginCtrl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginCtrl</servlet-name>
         <url-pattern>/api/usuario/login</url-pattern>
     </servlet-mapping>
+    
+    <!-- Inicio CRUD Usuarios -->
+    
+    <servlet>
+        <servlet-name>UsuarioGetAll</servlet-name>
+        <servlet-class>modules.usuario.servlets.GetAll</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsuarioGetAll</servlet-name>
+        <url-pattern>/api/usuario/getAll</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>UsuarioGetOne</servlet-name>
+        <servlet-class>modules.usuario.servlets.GetOne</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsuarioGetOne</servlet-name>
+        <url-pattern>/api/usuario/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Fin CRUD Usuarios -->
+    
     <session-config>
         <session-timeout>
             30
