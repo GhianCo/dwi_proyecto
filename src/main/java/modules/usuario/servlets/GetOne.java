@@ -5,9 +5,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
+import modules.usuario.services.impl.UsuarioServiceImpl;
 import shared.ActionPayload;
 import shared.BaseServlet;
 import shared.PathInfoExtractor;
+import modules.usuario.models.Usuario;
 
 public class GetOne extends BaseServlet {
 
@@ -16,8 +18,10 @@ public class GetOne extends BaseServlet {
             throws ServletException, IOException {
         Map<String, String> params = PathInfoExtractor.extractParams(request);
         String usuarioId = params.get("id");
-        System.out.println("usu: "+ usuarioId);
-        sendJsonResponse(response, new ActionPayload(200, usuarioId, "Lista de usuarios", null));
+        
+        UsuarioServiceImpl usuarioservice = new UsuarioServiceImpl();
+        Usuario usuario = usuarioservice.buscar(usuarioId);
+        sendJsonResponse(response, new ActionPayload(200, usuario, "Usuario encontrado"));
     }
 
 }

@@ -26,8 +26,44 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public Usuario find(Object id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Usuario find(Object usuarioId) {
+        Usuario usuario = null;
+
+        try {
+
+            connection = DBConn.getConnection();
+
+            String sql = "select u.id, u.persona_id, u.rol, u.nick, u.clave, p.nombres, p.apellidos, p.dni from usuario u, persona p where u.persona_id = p.id and u.activo = 1 and u.id = " + usuarioId + " limit 1";
+
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery(sql);
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int personaId = resultSet.getInt("persona_id");
+                String nombres = resultSet.getString("nombres");
+                String apellidos = resultSet.getString("apellidos");
+                String dni = resultSet.getString("dni");
+
+                usuario = new Usuario(id, personaId, nombres, apellidos, dni);
+
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            try {
+                System.out.println(ex.getMessage());
+                resultSet.close();
+                callableStatement.close();
+                connection.close();
+            } catch (SQLException exp) {
+                System.out.println(exp.getMessage());
+            }
+        }
+        return usuario;
     }
 
     @Override
@@ -132,7 +168,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
         int totalPages = (int) Math.ceil((double) totalRecords / perPage);
         Pagination pagination = new Pagination(totalRecords, totalPages, page, perPage);
-        
+
         return new PaginationResult<>(listadeUsuarios, pagination);
 
     }

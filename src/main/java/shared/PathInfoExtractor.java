@@ -3,6 +3,9 @@ package shared;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PathInfoExtractor {
 
@@ -13,13 +16,18 @@ public class PathInfoExtractor {
 
         if (pathInfo != null && !pathInfo.isEmpty()) {
             String[] pathParts = pathInfo.split("/");
+            List<String> cleanedPathParts = Arrays.stream(pathParts)
+                    .filter(part -> !part.isEmpty())
+                    .collect(Collectors.toList());
+            
+            if (cleanedPathParts.size() % 2 != 0) {
+                throw new IllegalArgumentException("La ruta contiene un número impar de parámetros.");
+            }
 
-            for (int i = 0; i < pathParts.length; i += 2) {
-                if (i + 1 < pathParts.length) {
-                    String key = pathParts[i];
-                    String value = pathParts[i + 1];
-                    params.put(key, value);
-                }
+            for (int i = 0; i < cleanedPathParts.size(); i += 2) {
+                String key = cleanedPathParts.get(i);
+                String value = cleanedPathParts.get(i + 1);
+                params.put(key, value);
             }
         }
 

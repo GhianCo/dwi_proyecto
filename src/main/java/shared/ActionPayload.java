@@ -12,13 +12,19 @@ public class ActionPayload {
     private Object pagination;
     private ActionError error;
 
+    public ActionPayload(int code, Object data, String message) {
+        this.code = code;
+        this.data = data;
+        this.message = message;
+    }
+
     public ActionPayload(int code, Object data, String message, Object pagination) {
         this.code = code;
         this.data = data;
         this.message = message;
         this.pagination = pagination;
     }
-    
+
     public ActionPayload(int code, Object data, String message, Object pagination, ActionError error) {
         this.code = code;
         this.data = data;
