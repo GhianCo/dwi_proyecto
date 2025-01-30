@@ -20,7 +20,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginCtrl</servlet-name>
-        <url-pattern>/api/usuario/login</url-pattern>
+        <url-pattern>/auth/login</url-pattern>
     </servlet-mapping>
     
     <!-- Inicio CRUD Usuarios -->
