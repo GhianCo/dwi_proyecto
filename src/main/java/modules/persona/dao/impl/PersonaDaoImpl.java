@@ -26,14 +26,14 @@ public class PersonaDaoImpl implements PersonaDao {
 
             connection = DBConn.getConnection();
 
-            String sql = "insert into persona (nombres, apellidos, dni, telefono, email, direccion) "
+            String sql = "insert into persona (nombres, apellidos, numero_documento, telefono, email, direccion) "
                     + "values (?,?,?,?,?,?)";
 
             PreparedStatement pst = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
             pst.setString(1, entity.getNombres());
             pst.setString(2, entity.getApellidos());
-            pst.setString(3, entity.getDni());
+            pst.setString(3, entity.getNumero_documento());
             pst.setString(4, entity.getTelefono());
             pst.setString(5, entity.getEmail());
             pst.setString(6, entity.getDireccion());
@@ -77,13 +77,13 @@ public class PersonaDaoImpl implements PersonaDao {
 
             connection = DBConn.getConnection();
 
-            String sql = "update persona set nombres = ?, apellidos = ?, dni = ?, direccion = ?, telefono = ?, email = ?, direccion = ? where id = ?";
+            String sql = "update persona set nombres = ?, apellidos = ?, numero_documento = ?, direccion = ?, telefono = ?, email = ?, direccion = ? where id = ?";
 
             PreparedStatement pst = connection.prepareStatement(sql);
 
             pst.setString(1, entity.getNombres());
             pst.setString(2, entity.getApellidos());
-            pst.setString(3, entity.getDni());
+            pst.setString(3, entity.getNumero_documento());
             pst.setString(4, entity.getDireccion());
             pst.setString(5, entity.getTelefono());
             pst.setString(6, entity.getEmail());

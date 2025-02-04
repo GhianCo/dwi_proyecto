@@ -46,7 +46,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioToCreate.setPersona_id(personaIdCreate);
         usuarioToCreate.setNombres(personaToCreate.getNombres());
         usuarioToCreate.setApellidos(personaToCreate.getApellidos());
-        usuarioToCreate.setDni(personaToCreate.getDni());
+        usuarioToCreate.setNumero_documento(personaToCreate.getNumero_documento());
         usuarioToCreate.setEmail(personaToCreate.getEmail());
         usuarioToCreate.setTelefono(personaToCreate.getTelefono());
 

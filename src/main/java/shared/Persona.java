@@ -5,45 +5,47 @@ public class Persona {
     private int id;
     private String nombres;
     private String apellidos;
-    private String dni;
-    private String direccion;
+    private String numero_documento;
+    private String tipo_documento;
+    private String es_juridica;
     private String telefono;
     private String email;
+    private String direccion;
     private String activa;
 
     public Persona() {
     }
-    
-    public Persona(int id, String nombres, String apellidos, String dni, String direccion, String telefono, String email) {
+
+    public Persona(int id, String nombres, String apellidos, String tipo_documento, String numero_documento, String direccion, String telefono, String email) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.dni = dni;
         this.direccion = direccion;
+        this.tipo_documento = tipo_documento;
+        this.numero_documento = numero_documento;
         this.telefono = telefono;
         this.email = email;
     }
-    
+
     public Persona(int id, String nombres, String apellidos, String dni) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.dni = dni;
     }
-    
-    public Persona(String nombres, String apellidos, String dni, String direccion, String telefono, String correo) {
+
+    public Persona(String nombres, String apellidos, String tipo_documento, String numero_documento, String direccion, String telefono, String email) {
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.dni = dni;
         this.direccion = direccion;
+        this.tipo_documento = tipo_documento;
+        this.numero_documento = numero_documento;
         this.telefono = telefono;
         this.email = email;
     }
-    
+
     public Persona(String nombres, String apellidos, String dni) {
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.dni = dni;
     }
 
     public int getId() {
@@ -70,12 +72,28 @@ public class Persona {
         this.apellidos = apellidos;
     }
 
-    public String getDni() {
-        return dni;
+    public String getNumero_documento() {
+        return numero_documento;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setNumero_documento(String numero_documento) {
+        this.numero_documento = numero_documento;
+    }
+
+    public String getTipo_documento() {
+        return tipo_documento;
+    }
+
+    public void setTipo_documento(String tipo_documento) {
+        this.tipo_documento = tipo_documento;
+    }
+
+    public String getEs_juridica() {
+        return es_juridica;
+    }
+
+    public void setEs_juridica(String es_juridica) {
+        this.es_juridica = es_juridica;
     }
 
     public String getDireccion() {

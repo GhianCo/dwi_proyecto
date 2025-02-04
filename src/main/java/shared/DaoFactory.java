@@ -1,5 +1,7 @@
 package shared;
 
+import modules.conductor.dao.ConductorDao;
+import modules.conductor.dao.impl.ConductorDaoImpl;
 import modules.usuario.dao.UsuarioDao;
 import modules.persona.dao.PersonaDao;
 
@@ -25,6 +27,10 @@ public class DaoFactory {
     
     public PersonaDao getPersonaDao() {
         return new PersonaDaoImpl();
+    }
+    
+    public ConductorDao getConductorDao() {
+        return new ConductorDaoImpl();
     }
     
 }

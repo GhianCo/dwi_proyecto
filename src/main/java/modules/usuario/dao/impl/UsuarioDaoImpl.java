@@ -176,7 +176,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
                 usuario_login.setClave(resultSet.getString(4));
                 usuario_login.setNombres(resultSet.getString(5));
                 usuario_login.setApellidos(resultSet.getString(6));
-                usuario_login.setDni(resultSet.getString(7));
+                usuario_login.setNumero_documento(resultSet.getString(7));
             }
 
             resultSet.close();

@@ -72,6 +72,55 @@
     
     <!-- Fin CRUD Usuarios -->
     
+    <!-- Inicio CRUD Conductor -->
+    
+    <servlet>
+        <servlet-name>ConductorGetAll</servlet-name>
+        <servlet-class>modules.conductor.servlets.GetAll</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConductorGetAll</servlet-name>
+        <url-pattern>/api/conductor/getAll</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ConductorGetOne</servlet-name>
+        <servlet-class>modules.conductor.servlets.GetOne</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConductorGetOne</servlet-name>
+        <url-pattern>/api/conductor/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ConductorCreate</servlet-name>
+        <servlet-class>modules.conductor.servlets.Create</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConductorCreate</servlet-name>
+        <url-pattern>/api/conductor/create</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ConductorUpdate</servlet-name>
+        <servlet-class>modules.conductor.servlets.Update</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConductorUpdate</servlet-name>
+        <url-pattern>/api/conductor/update</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ConductorDelete</servlet-name>
+        <servlet-class>modules.conductor.servlets.Delete</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConductorDelete</servlet-name>
+        <url-pattern>/api/conductor/delete/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Fin CRUD Conductor -->
+    
     <session-config>
         <session-timeout>
             30
