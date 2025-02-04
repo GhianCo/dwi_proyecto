@@ -23,10 +23,11 @@ public class Usuario extends Persona {
         this.activo = activo;
     }
 
-    public Usuario(int id, int persona_id, String nombres, String apellidos, String dni) {
-        super(nombres, apellidos, dni);
+    public Usuario(int id, int persona_id, String nombres, String apellidos, String numero_documento, String rol) {
+        super(nombres, apellidos, numero_documento);
         this.id = id;
         this.persona_id = persona_id;
+        this.rol = rol;
     }
 
     public int getId() {

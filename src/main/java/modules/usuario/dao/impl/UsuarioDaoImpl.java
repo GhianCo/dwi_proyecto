@@ -68,7 +68,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
             connection = DBConn.getConnection();
 
-            String sql = "select u.id, u.persona_id, u.rol, u.nick, u.clave, p.nombres, p.apellidos, p.dni from usuario u, persona p where u.persona_id = p.id and u.activo = 1 and u.id = " + usuarioId + " limit 1";
+            String sql = "select u.id, u.persona_id, u.rol, u.nick, u.clave, u.rol, p.nombres, p.apellidos, p.numero_documento from usuario u, persona p where u.persona_id = p.id and u.activo = 1 and u.id = " + usuarioId + " limit 1";
 
             statement = connection.createStatement();
 
@@ -79,9 +79,10 @@ public class UsuarioDaoImpl implements UsuarioDao {
                 int personaId = resultSet.getInt("persona_id");
                 String nombres = resultSet.getString("nombres");
                 String apellidos = resultSet.getString("apellidos");
-                String dni = resultSet.getString("dni");
+                String numero_documento = resultSet.getString("numero_documento");
+                String rol = resultSet.getString("rol");
 
-                usuario = new Usuario(id, personaId, nombres, apellidos, dni);
+                usuario = new Usuario(id, personaId, nombres, apellidos, numero_documento, rol);
 
             }
 
@@ -165,7 +166,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
         try {
 
             connection = DBConn.getConnection();
-            String sql = "select u.id, u.rol, u.nick, u.clave, p.nombres, p.apellidos, p.dni from usuario u, persona p where u.persona_id = p.id and nick='" + usuario.getNick() + "' and clave='" + usuario.getClave() + "' and u.activo = 1";
+            String sql = "select u.id, u.rol, u.nick, u.clave, p.nombres, p.apellidos, p.numero_documento from usuario u, persona p where u.persona_id = p.id and nick='" + usuario.getNick() + "' and clave='" + usuario.getClave() + "' and u.activo = 1";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
@@ -202,11 +203,11 @@ public class UsuarioDaoImpl implements UsuarioDao {
         ArrayList<Usuario> listadeUsuarios = new ArrayList<>();
         int totalRecords = 0;
 
-        String sql = "SELECT SQL_CALC_FOUND_ROWS u.id, u.persona_id, p.nombres, p.apellidos, p.dni "
+        String sql = "SELECT SQL_CALC_FOUND_ROWS u.id, u.persona_id, p.nombres, p.apellidos, p.numero_documento, u.rol "
                 + "FROM usuario u "
                 + "JOIN persona p ON u.persona_id = p.id "
                 + "WHERE u.activo = 1 "
-                + (query != null && !query.isEmpty() ? " AND (p.nombres LIKE ? OR p.apellidos LIKE ? OR p.dni LIKE ?)" : "")
+                + (query != null && !query.isEmpty() ? " AND (p.nombres LIKE ? OR p.apellidos LIKE ? OR p.numero_documento LIKE ?)" : "")
                 + " ORDER BY u.id LIMIT ? OFFSET ?";
 
         try (Connection connection = DBConn.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -227,9 +228,10 @@ public class UsuarioDaoImpl implements UsuarioDao {
                     int personaId = resultSet.getInt("persona_id");
                     String nombres = resultSet.getString("nombres");
                     String apellidos = resultSet.getString("apellidos");
-                    String dni = resultSet.getString("dni");
+                    String numero_documento = resultSet.getString("numero_documento");
+                    String rol = resultSet.getString("rol");
 
-                    listadeUsuarios.add(new Usuario(id, personaId, nombres, apellidos, dni));
+                    listadeUsuarios.add(new Usuario(id, personaId, nombres, apellidos, numero_documento, rol));
                 }
             }
 

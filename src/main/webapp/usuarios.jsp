@@ -1,4 +1,13 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="shared.PaginationResult"%>
+<%@page import="modules.usuario.services.impl.UsuarioServiceImpl"%>
+<%@page import="modules.usuario.models.Usuario"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html
     lang="es"
@@ -10,6 +19,11 @@
     data-style="light">
 
     <%@include file="head.jsp" %>
+    <%
+        UsuarioServiceImpl usuarioservice = new UsuarioServiceImpl();
+        PaginationResult data = usuarioservice.paginate("", 1, 20);
+        ArrayList<Usuario> usuarios = (ArrayList<Usuario>) data.getData();
+    %>
 
     <body>
         <!-- Layout wrapper -->
@@ -105,27 +119,27 @@
                                             </tr>
                                         </thead>
                                         <tbody class="table-border-bottom-0">
-                                            <tr>
-                                                <td><span>Anderson</span></td>
-                                                <td>Castillo</td>
-                                                <td>45334345</td>
-                                                <td><span class="badge rounded-pill bg-label-primary me-1">Admin</span></td>
+                                            <% for (Usuario usuario : usuarios) {%>
+                                            <tr id="usuario-<%= usuario.getId() %>">
+                                                <td><span><%= usuario.getNombres()%></span></td>
+                                                <td><%= usuario.getApellidos()%></td>
+                                                <td><%= usuario.getNumero_documento()%></td>
+                                                <td>
+                                                    <span class="badge rounded-pill bg-label-primary me-1"><%= usuario.getRol()%></span>
+                                                </td>
                                                 <td>
                                                     <div class="dropdown">
                                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                             <i class="ri-more-2-line"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                               ><i class="ri-pencil-line me-1"></i> Editar</a
-                                                            >
-                                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                               ><i class="ri-delete-bin-6-line me-1"></i> Eliminar</a
-                                                            >
+                                                            <a id="btnEditarUsuario" class="dropdown-item"><i class="ri-pencil-line me-1"></i> Editar</a>
+                                                            <button id="btnDeleteUsuario" class="dropdown-item" onclick="eliminarUsuario(<%= usuario.getId()%>)"><i class="ri-delete-bin-6-line me-1"></i> Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <% }%>
                                         </tbody>
                                     </table>
                                 </div>
@@ -146,5 +160,29 @@
         </div>
         <!-- / Layout wrapper -->
         <%@include file="scripts.jsp" %>
+        <script>
+            var token = "<%= session.getAttribute("token") %>";  // Token desde la sesión
+            
+            async function eliminarUsuario(id) {
+                if (confirm("¿Seguro que deseas eliminar este usuario?")) {
+
+                    const response = await fetch('api/usuario/delete/id/' + id, {
+                        method: 'DELETE',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            "Authorization": "Bearer " + token
+                        }
+                    });
+                    const result = await response.json();
+                    if (result.code === 200) {
+                        var row = document.getElementById("usuario-" + id);
+                        row.parentNode.removeChild(row);
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            }
+        </script> 
     </body>
 </html>

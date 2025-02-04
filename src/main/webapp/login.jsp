@@ -218,7 +218,7 @@
                 formData.forEach((value, key) => {
                     formObject[key] = value;
                 });
-                const response = await fetch('api/usuario/login', {
+                const response = await fetch('auth/login', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -227,7 +227,7 @@
                     body: JSON.stringify(formObject)
                 });
                 const result = await response.json();
-                if (result.success) {
+                if (result.code === 200) {
                     window.location = 'index.jsp';
                 } else {
                     alert('Error: ' + result.message);

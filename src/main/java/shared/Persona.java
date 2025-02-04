@@ -43,9 +43,10 @@ public class Persona {
         this.email = email;
     }
 
-    public Persona(String nombres, String apellidos, String dni) {
+    public Persona(String nombres, String apellidos, String numero_documento) {
         this.nombres = nombres;
         this.apellidos = apellidos;
+        this.numero_documento = numero_documento;
     }
 
     public int getId() {

@@ -12,6 +12,7 @@ import modules.usuario.services.impl.UsuarioServiceImpl;
 import org.json.JSONObject;
 import shared.ActionPayload;
 import shared.BaseServlet;
+import jakarta.servlet.http.HttpSession;
 
 public class LoginCtrl extends BaseServlet {
 
@@ -45,6 +46,9 @@ public class LoginCtrl extends BaseServlet {
                     .withClaim("apellidos", usuario_login.getApellidos())
                     .withClaim("rol", usuario_login.getRol())
                     .sign(algorithm);
+            HttpSession session = request.getSession();
+            session.setAttribute("token", token);
+            
             sendJsonResponse(response, new ActionPayload(200, token, "Inicio de sesión"));
         } else {
             sendJsonResponse(response, new ActionPayload(401, null, "Credenciales inválidas, intenta nuevamente."));
