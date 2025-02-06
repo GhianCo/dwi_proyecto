@@ -1,7 +1,7 @@
 package modules.especie.services.impl;
 
 import modules.especie.models.Especie;
-import java.util.ArrayList;
+import java.util.List;
 import modules.especie.dao.EspecieDao;
 import modules.especie.dto.EspecieCreateRequestDTO;
 import modules.especie.services.EspecieService;
@@ -59,7 +59,7 @@ public class EspecieServiceImpl implements EspecieService {
     }
 
     @Override
-    public ArrayList<Especie> listar() {
+    public List<Especie> listar() {
         return especieDao.findAll();
     }
 

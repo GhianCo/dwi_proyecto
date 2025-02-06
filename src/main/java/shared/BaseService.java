@@ -1,6 +1,6 @@
 package shared;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface BaseService<T> {
 
@@ -8,7 +8,7 @@ public interface BaseService<T> {
 
     public T buscar(Object id);
 
-    public ArrayList<T> listar();
+    public List<T> listar();
     
     public PaginationResult paginate(String query, int page, int perPage);
 
