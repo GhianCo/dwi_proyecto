@@ -143,7 +143,7 @@
                                                             <div class="col mb-2">
                                                                 <div class="form-floating form-floating-outline">
                                                                     <input
-                                                                        type="text"
+                                                                        type="password"
                                                                         id="clave"
                                                                         name="clave"
                                                                         class="form-control"
@@ -153,12 +153,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row g-4">
+                                                        <div class="row g-4 mt-0">
                                                             <div class="col mb-2">
                                                                 <div class="form-floating form-floating-outline">
-                                                                    <select class="form-select" id="rol" aria-label="Default select example">
-                                                                        <option selected>Selecciona el rol</option>
-                                                                        <option value="Administrador">Administrador</option>
+                                                                    <select class="form-select" id="rol" aria-label="Rol de usuario" id="rol" name="rol" required>
+                                                                        <option value="Administrador" selected="">Administrador</option>
                                                                         <option value="Operador">Operador</option>
                                                                         <option value="Auditor">Auditor</option>
                                                                     </select>
@@ -189,7 +188,7 @@
                                                 <th>Apellidos</th>
                                                 <th>DNI</th>
                                                 <th>Rol</th>
-                                                <th></th>
+                                                <th>Opciones</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-border-bottom-0">
@@ -245,7 +244,6 @@
 
                 const usuarioData = Object.fromEntries(formData);
 
-
                 if (usuarioData.nombres && usuarioData.apellidos) {
 
                     const response = await fetch('api/usuario/create', {
@@ -258,7 +256,8 @@
                         body: JSON.stringify(usuarioData)
                     });
                     const result = await response.json();
-                    if (result.code === 200) {
+                    if (result.code === 200 || result.code === 201) {
+                        location.reload();
                     } else {
                         alert(result.message);
                     }
