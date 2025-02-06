@@ -43,25 +43,7 @@
                     <li>
                         <a class="dropdown-item" href="#">
                             <i class="ri-user-3-line ri-22px me-2"></i>
-                            <span class="align-middle">My Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="ri-settings-4-line ri-22px me-2"></i>
-                            <span class="align-middle">Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <span class="d-flex align-items-center align-middle">
-                                <i class="flex-shrink-0 ri-file-text-line ri-22px me-3"></i>
-                                <span class="flex-grow-1 align-middle">Billing</span>
-                                <span
-                                    class="flex-shrink-0 badge badge-center rounded-pill bg-danger h-px-20 d-flex align-items-center justify-content-center"
-                                    >4</span
-                                >
-                            </span>
+                            <span class="align-middle">Mi perfil</span>
                         </a>
                     </li>
                     <li>
@@ -69,8 +51,8 @@
                     </li>
                     <li>
                         <div class="d-grid px-4 pt-2 pb-1">
-                            <a class="btn btn-danger d-flex" href="javascript:void(0);">
-                                <small class="align-middle">Logout</small>
+                            <a class="btn btn-danger d-flex" href="logout">
+                                <small class="align-middle">Cerrar sesión</small>
                                 <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
                             </a>
                         </div>
