@@ -6,7 +6,7 @@ public class UsuarioCreateRequestDTO {
     private int persona_id;
     private String nombres;
     private String apellidos;
-    private String dni;
+    private String numero_documento;
     private String telefono;
     private String email;
     private String direccion;
@@ -46,12 +46,12 @@ public class UsuarioCreateRequestDTO {
         this.apellidos = apellidos;
     }
 
-    public String getDni() {
-        return dni;
+    public String getNumero_documento() {
+        return numero_documento;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setNumero_documento(String numero_documento) {
+        this.numero_documento = numero_documento;
     }
 
     public String getTelefono() {
