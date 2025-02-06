@@ -121,6 +121,55 @@
     
     <!-- Fin CRUD Conductor -->
     
+    <!-- Inicio CRUD embarcacion -->
+    
+    <servlet>
+        <servlet-name>EmbarcacionGetAll</servlet-name>
+        <servlet-class>modules.embarcacion.servlets.GetAll</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmbarcacionGetAll</servlet-name>
+        <url-pattern>/api/embarcacion/getAll</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>EmbarcacionGetOne</servlet-name>
+        <servlet-class>modules.embarcacion.servlets.GetOne</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmbarcacionGetOne</servlet-name>
+        <url-pattern>/api/embarcacion/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>EmbarcacionCreate</servlet-name>
+        <servlet-class>modules.embarcacion.servlets.Create</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmbarcacionCreate</servlet-name>
+        <url-pattern>/api/embarcacion/create</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>EmbarcacionUpdate</servlet-name>
+        <servlet-class>modules.embarcacion.servlets.Update</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmbarcacionUpdate</servlet-name>
+        <url-pattern>/api/embarcacion/update</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>EmbarcacionDelete</servlet-name>
+        <servlet-class>modules.embarcacion.servlets.Delete</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmbarcacionDelete</servlet-name>
+        <url-pattern>/api/embarcacion/delete/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Fin CRUD embarcacion -->
+
     <session-config>
         <session-timeout>
             30

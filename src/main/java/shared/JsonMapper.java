@@ -21,11 +21,11 @@ public class JsonMapper {
 
                     if (field.getType() == String.class) {
                         field.set(dtoInstance, value.toString());
-                    } else if (field.getType() == int.class) {
+                    } else if (field.getType() == int.class || field.getType() == Integer.class) {
                         field.set(dtoInstance, Integer.valueOf(value.toString()));
-                    } else if (field.getType() == double.class) {
+                    } else if (field.getType() == double.class || field.getType() == Double.class) {
                         field.set(dtoInstance, Double.valueOf(value.toString()));
-                    } else if (field.getType() == boolean.class) {
+                    } else if (field.getType() == boolean.class || field.getType() == Boolean.class) {
                         field.set(dtoInstance, Boolean.valueOf(value.toString()));
                     }
                     // Agregar más conversiones si es necesario
