@@ -2,6 +2,8 @@ package shared;
 
 import modules.conductor.dao.ConductorDao;
 import modules.conductor.dao.impl.ConductorDaoImpl;
+import modules.especie.dao.EspecieDao;
+import modules.especie.dao.impl.EspecieDaoImpl;
 import modules.usuario.dao.UsuarioDao;
 import modules.persona.dao.PersonaDao;
 
@@ -33,4 +35,8 @@ public class DaoFactory {
         return new ConductorDaoImpl();
     }
     
+    public EspecieDao getEspecieDao() {
+        return new EspecieDaoImpl();
+    }
+
 }

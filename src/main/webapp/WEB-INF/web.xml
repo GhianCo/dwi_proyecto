@@ -119,7 +119,56 @@
         <url-pattern>/api/conductor/delete/*</url-pattern>
     </servlet-mapping>
     
-    <!-- Fin CRUD Conductor -->
+     <!-- Fin CRUD Conductor -->
+
+     <!-- Inicio CRUD Especie -->
+
+    <servlet>
+        <servlet-name>EspecieGetAll</servlet-name>
+        <servlet-class>modules.especie.servlets.GetAll</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecieGetAll</servlet-name>
+        <url-pattern>/api/especie/getAll</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EspecieGetOne</servlet-name>
+        <servlet-class>modules.especie.servlets.GetOne</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecieGetOne</servlet-name>
+        <url-pattern>/api/especie/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EspecieCreate</servlet-name>
+        <servlet-class>modules.especie.servlets.Create</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecieCreate</servlet-name>
+        <url-pattern>/api/especie/create</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EspecieUpdate</servlet-name>
+        <servlet-class>modules.especie.servlets.Update</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecieUpdate</servlet-name>
+        <url-pattern>/api/especie/update</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EspecieDelete</servlet-name>
+        <servlet-class>modules.especie.servlets.Delete</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecieDelete</servlet-name>
+        <url-pattern>/api/especie/delete/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Fin CRUD Especie -->
     
     <session-config>
         <session-timeout>
