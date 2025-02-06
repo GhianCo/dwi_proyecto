@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="shared.PaginationResult"%>
@@ -206,7 +207,7 @@
                                                             <i class="ri-more-2-line"></i>
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                            <a id="btnEditarUsuario" class="dropdown-item"><i class="ri-pencil-line me-1"></i> Editar</a>
+                                                            <button id="btnEditarUsuario" class="dropdown-item" onclick="editarUsuario(<%= usuario.getId()%>)"><i class="ri-pencil-line me-1"></i> Editar</button>
                                                             <button id="btnDeleteUsuario" class="dropdown-item" onclick="eliminarUsuario(<%= usuario.getId()%>)"><i class="ri-delete-bin-6-line me-1"></i> Eliminar</button>
                                                         </div>
                                                     </div>
@@ -262,6 +263,33 @@
                         alert(result.message);
                     }
                 }
+            }
+            async function editarUsuario(id) {
+                const response = await fetch('api/usuario/id/' + id, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + token
+                    }
+                });
+                const result = await response.json();
+                if (result.code === 200) {
+                    const usuario = result.data;
+                    const form = document.getElementById('nuevoUsuarioForm');
+
+                    for (let element of form.elements) {
+                        if (element.name && usuario.hasOwnProperty(element.name)) {
+                            element.value = usuario[element.name] || ''; // Asignamos el valor correspondiente o un valor vacío
+                        }
+                    }
+                    const modal = new bootstrap.Modal(document.getElementById('modalCenter'));
+                    modal.show();
+                } else {
+                    alert(result.message);
+                }
+
+
             }
 
             async function eliminarUsuario(id) {

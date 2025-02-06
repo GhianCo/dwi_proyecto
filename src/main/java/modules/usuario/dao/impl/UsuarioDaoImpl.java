@@ -68,7 +68,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
             connection = DBConn.getConnection();
 
-            String sql = "select u.id, u.persona_id, u.rol, u.nick, u.clave, u.rol, p.nombres, p.apellidos, p.numero_documento from usuario u, persona p where u.persona_id = p.id and u.activo = 1 and u.id = " + usuarioId + " limit 1";
+            String sql = "select u.id, u.persona_id, u.rol, u.nick, u.clave, u.rol, p.nombres, p.apellidos, p.numero_documento, p.telefono, p.email, p.direccion from usuario u, persona p where u.persona_id = p.id and u.activo = 1 and u.id = " + usuarioId + " limit 1";
 
             statement = connection.createStatement();
 
@@ -77,13 +77,23 @@ public class UsuarioDaoImpl implements UsuarioDao {
             if (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 int personaId = resultSet.getInt("persona_id");
+                String nick = resultSet.getString("nick");
+                String clave = resultSet.getString("clave");
                 String nombres = resultSet.getString("nombres");
                 String apellidos = resultSet.getString("apellidos");
                 String numero_documento = resultSet.getString("numero_documento");
                 String rol = resultSet.getString("rol");
+                String telefono = resultSet.getString("telefono");
+                String email = resultSet.getString("email");
+                String direccion = resultSet.getString("direccion");
 
                 usuario = new Usuario(id, personaId, nombres, apellidos, numero_documento, rol);
+                usuario.setNick(nick);
+                usuario.setClave(clave);
+                usuario.setTelefono(telefono);
+                usuario.setEmail(email);
 
+                usuario.setDireccion(direccion);
             }
 
             resultSet.close();
