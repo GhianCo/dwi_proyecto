@@ -1,12 +1,12 @@
 package shared;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface EntityDao<T> {
     public int create(T entity);
     
     public T find(Object id);
-    public ArrayList<T> findAll();
+    public List<T> findAll();
     
     public PaginationResult paginate(String query, int page, int perPage);
 

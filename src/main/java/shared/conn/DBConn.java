@@ -13,7 +13,7 @@ public class DBConn {
     static {
         try {
             url = "jdbc:mysql://localhost:3306/dwi_proyecto?autoReconnect=true&useSSL=false";
-            driver = "com.mysql.jdbc.Driver";
+            driver = "com.mysql.cj.jdbc.Driver";
             usuario = "root";
             password = "";
 
