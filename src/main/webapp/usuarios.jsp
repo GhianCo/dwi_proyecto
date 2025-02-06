@@ -236,6 +236,7 @@
         <%@include file="scripts.jsp" %>
         <script>
             var token = "<%= session.getAttribute("token")%>";
+            var usuarioEditarId = null;
 
             async function guardarUsuario(event) {
                 event.preventDefault();
@@ -244,27 +245,32 @@
                 const formData = new FormData(form);
 
                 const usuarioData = Object.fromEntries(formData);
+                let accion = 'create';
+                let method = 'POST';
+                if (usuarioEditarId > 0) {
+                    accion = 'update';
+                    method = 'PUT';
+                    usuarioData.id = usuarioEditarId;
+                }
 
-                if (usuarioData.nombres && usuarioData.apellidos) {
-
-                    const response = await fetch('api/usuario/create', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            "Authorization": "Bearer " + token
-                        },
-                        body: JSON.stringify(usuarioData)
-                    });
-                    const result = await response.json();
-                    if (result.code === 200 || result.code === 201) {
-                        location.reload();
-                    } else {
-                        alert(result.message);
-                    }
+                const response = await fetch('api/usuario/' + accion, {
+                    method,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer " + token
+                    },
+                    body: JSON.stringify(usuarioData)
+                });
+                const result = await response.json();
+                if (result.code === 200 || result.code === 201) {
+                    location.reload();
+                } else {
+                    alert(result.message);
                 }
             }
             async function editarUsuario(id) {
+                usuarioEditarId = id;
                 const response = await fetch('api/usuario/id/' + id, {
                     method: 'GET',
                     headers: {
