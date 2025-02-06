@@ -209,11 +209,9 @@
 
             const form = document.getElementById('formAuthentication');
             form.addEventListener('submit', async function (event) {
-                event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+                event.preventDefault();
 
-                // Creamos un objeto FormData con los datos del formulario
                 const formData = new FormData(form);
-                // Convertir FormData a un objeto (opcional, si prefieres trabajar con un objeto plano)
                 const formObject = {};
                 formData.forEach((value, key) => {
                     formObject[key] = value;
