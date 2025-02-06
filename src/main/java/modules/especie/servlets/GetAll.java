@@ -1,15 +1,15 @@
-package modules.conductor.servlets;
+package modules.especie.servlets;
 
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import modules.conductor.services.impl.ConductorServiceImpl;
+import modules.especie.services.impl.EspecieServiceImpl;
 import shared.ActionPayload;
 import shared.BaseServlet;
 import shared.PaginationResult;
-import modules.conductor.models.Conductor;
+import modules.especie.models.Especie;
 
 public class GetAll extends BaseServlet {
 
@@ -24,8 +24,8 @@ public class GetAll extends BaseServlet {
         page = (page != null && !page.isEmpty()) ? page : "1";
         perPage = (perPage != null && !perPage.isEmpty()) ? perPage : "10";
 
-        ConductorServiceImpl conductorservice = new ConductorServiceImpl();
-        PaginationResult<List<Conductor>, Object> data = conductorservice.paginate(query, Integer.parseInt(page), Integer.parseInt(perPage));
-        sendJsonResponse(response, new ActionPayload(200, data.getData(), "Lista de conductores", data.getPagination()));
+        EspecieServiceImpl especieService = new EspecieServiceImpl();
+        PaginationResult<List<Especie>, Object> data = especieService.paginate(query, Integer.parseInt(page), Integer.parseInt(perPage));
+        sendJsonResponse(response, new ActionPayload(200, data.getData(), "Lista de especies", data.getPagination()));
     }
 }

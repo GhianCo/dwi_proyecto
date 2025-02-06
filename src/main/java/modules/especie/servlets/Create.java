@@ -1,4 +1,4 @@
-package modules.conductor.servlets;
+package modules.especie.servlets;
 
 import java.io.IOException;
 
@@ -8,9 +8,9 @@ import http.JsonRequestWrapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import modules.conductor.dto.ConductorCreateRequestDTO;
-import modules.conductor.models.Conductor;
-import modules.conductor.services.impl.ConductorServiceImpl;
+import modules.especie.dto.EspecieCreateRequestDTO;
+import modules.especie.models.Especie;
+import modules.especie.services.impl.EspecieServiceImpl;
 import shared.ActionPayload;
 import shared.BaseServlet;
 import shared.JsonMapper;
@@ -25,12 +25,10 @@ public class Create extends BaseServlet {
 
         JSONObject jsonRequest = new JSONObject(jsonBody);
 
-        ConductorCreateRequestDTO conductorCreateRequestDTO = JsonMapper.mapJsonToDto(jsonRequest, ConductorCreateRequestDTO.class);
+        EspecieCreateRequestDTO especieCreateRequestDTO = JsonMapper.mapJsonToDto(jsonRequest, EspecieCreateRequestDTO.class);
         
-        ConductorServiceImpl conductorservice = new ConductorServiceImpl();
-        Conductor data = conductorservice.createConductorAndPersona(conductorCreateRequestDTO);
-        sendJsonResponse(response, new ActionPayload(201, data, "Conductor creado exitosamente"));
-
+        EspecieServiceImpl especieService = new EspecieServiceImpl();
+        Especie data = especieService.createEspecie(especieCreateRequestDTO);
+        sendJsonResponse(response, new ActionPayload(201, data, "Especie creada exitosamente"));
     }
-
 }

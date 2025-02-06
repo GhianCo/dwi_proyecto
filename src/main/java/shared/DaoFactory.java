@@ -4,6 +4,8 @@ import modules.conductor.dao.ConductorDao;
 import modules.conductor.dao.impl.ConductorDaoImpl;
 import modules.embarcacion.dao.EmbarcacionDao;
 import modules.embarcacion.dao.impl.EmbarcacionDaoImpl;
+import modules.especie.dao.EspecieDao;
+import modules.especie.dao.impl.EspecieDaoImpl;
 import modules.usuario.dao.UsuarioDao;
 import modules.persona.dao.PersonaDao;
 
@@ -39,4 +41,8 @@ public class DaoFactory {
         return new EmbarcacionDaoImpl(); 
     }
    
+    public EspecieDao getEspecieDao() {
+        return new EspecieDaoImpl();
+    }
+
 }
