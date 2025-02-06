@@ -50,56 +50,130 @@
                                     <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalCenterTitle">Nuevo usuario</h5>
-                                                    <button
-                                                        type="button"
-                                                        class="btn-close"
-                                                        data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col mb-6 mt-2">
-                                                            <div class="form-floating form-floating-outline">
-                                                                <input
-                                                                    type="text"
-                                                                    id="nameWithTitle"
-                                                                    class="form-control"
-                                                                    placeholder="Ingresa los nombres" />
-                                                                <label for="nameWithTitle">Nombres</label>
+                                                <form id="nuevoUsuarioForm" onsubmit="guardarUsuario(event)">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalCenterTitle">Nuevo usuario</h5>
+                                                        <button
+                                                            type="button"
+                                                            class="btn-close"
+                                                            data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row g-4">
+                                                            <div class="col mb-2">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input
+                                                                        type="text"
+                                                                        id="nombres"
+                                                                        name="nombres"
+                                                                        class="form-control"
+                                                                        placeholder="Ingresa los nombres" 
+                                                                        required/>
+                                                                    <label for="nombresWithTitle">Nombres</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col mb-2">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input
+                                                                        type="text"
+                                                                        id="apellidos"
+                                                                        name="apellidos"
+                                                                        class="form-control"
+                                                                        placeholder="Ingresa los apellidos" 
+                                                                        required/>
+                                                                    <label for="apellidosWithTitle">Apellidos</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row g-4">
+                                                            <div class="col mb-2">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input
+                                                                        type="text"
+                                                                        id="numero_documento"
+                                                                        name="numero_documento"
+                                                                        class="form-control"
+                                                                        placeholder="Ingresa los DNI" 
+                                                                        required/>
+                                                                    <label for="dniWithTitle">DNI</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col mb-2">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input
+                                                                        type="text"
+                                                                        id="telefono"
+                                                                        name="telefono"
+                                                                        class="form-control"
+                                                                        placeholder="Ingresa el telefono" 
+                                                                        required/>
+                                                                    <label for="telefonoWithTitle">Telefono</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row g-4">
+                                                            <div class="col mb-2">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input
+                                                                        type="text"
+                                                                        id="email"
+                                                                        name="email"
+                                                                        class="form-control"
+                                                                        placeholder="Ingresa el correo" 
+                                                                        required/>
+                                                                    <label for="correoWithTitle">Correo</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h6 class="mb-2 mt-2">Credenciales</h6>
+                                                        <div class="row g-4">
+                                                            <div class="col mb-2">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input
+                                                                        type="text"
+                                                                        id="nick"
+                                                                        name="nick"
+                                                                        class="form-control"
+                                                                        placeholder="Ingresa el nick" 
+                                                                        required/>
+                                                                    <label for="nickWithTitle">Nick</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col mb-2">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input
+                                                                        type="text"
+                                                                        id="clave"
+                                                                        name="clave"
+                                                                        class="form-control"
+                                                                        placeholder="Ingresa la clave" 
+                                                                        required/>
+                                                                    <label for="claveWithTitle">Clave</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row g-4">
+                                                            <div class="col mb-2">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <select class="form-select" id="rol" aria-label="Default select example">
+                                                                        <option selected>Selecciona el rol</option>
+                                                                        <option value="Administrador">Administrador</option>
+                                                                        <option value="Operador">Operador</option>
+                                                                        <option value="Auditor">Auditor</option>
+                                                                    </select>
+                                                                    <label for="exampleFormControlSelect1">Rol</label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row g-4">
-                                                        <div class="col mb-2">
-                                                            <div class="form-floating form-floating-outline">
-                                                                <input
-                                                                    type="text"
-                                                                    id="emailWithTitle"
-                                                                    class="form-control"
-                                                                    placeholder="Ingresa los apellidos" />
-                                                                <label for="emailWithTitle">Apellidos</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col mb-2">
-                                                            <div class="form-floating form-floating-outline">
-                                                                <input
-                                                                    type="text"
-                                                                    id="emailWithTitle"
-                                                                    class="form-control"
-                                                                    placeholder="Ingresa el DNI" />
-                                                                <label for="emailWithTitle">DNI</label>
-                                                            </div>
-                                                        </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                                            Cerrar
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                                        Cerrar
-                                                    </button>
-                                                    <button type="button" class="btn btn-primary">Guardar cambios</button>
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +194,7 @@
                                         </thead>
                                         <tbody class="table-border-bottom-0">
                                             <% for (Usuario usuario : usuarios) {%>
-                                            <tr id="usuario-<%= usuario.getId() %>">
+                                            <tr id="usuario-<%= usuario.getId()%>">
                                                 <td><span><%= usuario.getNombres()%></span></td>
                                                 <td><%= usuario.getApellidos()%></td>
                                                 <td><%= usuario.getNumero_documento()%></td>
@@ -161,8 +235,36 @@
         <!-- / Layout wrapper -->
         <%@include file="scripts.jsp" %>
         <script>
-            var token = "<%= session.getAttribute("token") %>";  // Token desde la sesión
-            
+            var token = "<%= session.getAttribute("token")%>";
+
+            async function guardarUsuario(event) {
+                event.preventDefault();
+
+                const form = document.getElementById('nuevoUsuarioForm');
+                const formData = new FormData(form);
+
+                const usuarioData = Object.fromEntries(formData);
+
+
+                if (usuarioData.nombres && usuarioData.apellidos) {
+
+                    const response = await fetch('api/usuario/create', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            "Authorization": "Bearer " + token
+                        },
+                        body: JSON.stringify(usuarioData)
+                    });
+                    const result = await response.json();
+                    if (result.code === 200) {
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            }
+
             async function eliminarUsuario(id) {
                 if (confirm("¿Seguro que deseas eliminar este usuario?")) {
 
