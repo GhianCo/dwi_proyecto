@@ -60,6 +60,11 @@
                                                             data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
+                                                    <input
+                                                        type="text"
+                                                        id="persona_id"
+                                                        hidden
+                                                        name="persona_id"/>
                                                     <div class="modal-body">
                                                         <div class="row g-4">
                                                             <div class="col mb-2">
