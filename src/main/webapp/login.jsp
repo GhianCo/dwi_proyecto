@@ -226,6 +226,7 @@
                 });
                 const result = await response.json();
                 if (result.code === 200) {
+                    localStorage.setItem("dwi_token", result.data)
                     window.location = 'index.jsp';
                 } else {
                     alert('Error: ' + result.message);

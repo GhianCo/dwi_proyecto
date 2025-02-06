@@ -50,7 +50,7 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <div class="d-grid px-4 pt-2 pb-1">
+                        <div class="d-grid px-4 pt-2 pb-1" onclick="window.localStorage.clear();">
                             <a class="btn btn-danger d-flex" href="logout">
                                 <small class="align-middle">Cerrar sesión</small>
                                 <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
