@@ -47,13 +47,13 @@
                                 <h5>Gestion de usuarios</h5>
                                 <div class="float-end">
                                     <button class="btn btn-primary d-grid w-100" data-bs-toggle="modal"
-                                            data-bs-target="#modalCenter">Nuevo</button>
-                                    <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                                            onclick="registrarNuevoUsuarios()">Nuevo</button>
+                                    <div class="modal fade" id="modalFormUsuario" tabindex="-1" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <form id="nuevoUsuarioForm" onsubmit="guardarUsuario(event)">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="modalCenterTitle">Nuevo usuario</h5>
+                                                        <h5 class="modal-title" id="modalFormUsuarioTitle">Nuevo usuario</h5>
                                                         <button
                                                             type="button"
                                                             class="btn-close"
@@ -243,6 +243,17 @@
             var token = "<%= session.getAttribute("token")%>";
             var usuarioEditarId = null;
 
+            async function registrarNuevoUsuarios() {
+                const form = document.getElementById('nuevoUsuarioForm');
+                usuarioEditarId = null;
+
+                for (let element of form.elements) {
+                    element.value = '';
+                }
+                const modal = new bootstrap.Modal(document.getElementById('modalFormUsuario'));
+                modal.show();
+            }
+
             async function guardarUsuario(event) {
                 event.preventDefault();
 
@@ -256,6 +267,8 @@
                     accion = 'update';
                     method = 'PUT';
                     usuarioData.id = usuarioEditarId;
+                } else {
+                    delete usuarioData.persona_id;
                 }
 
                 const response = await fetch('api/usuario/' + accion, {
@@ -294,7 +307,7 @@
                             element.value = usuario[element.name] || ''; // Asignamos el valor correspondiente o un valor vacío
                         }
                     }
-                    const modal = new bootstrap.Modal(document.getElementById('modalCenter'));
+                    const modal = new bootstrap.Modal(document.getElementById('modalFormUsuario'));
                     modal.show();
                 } else {
                     alert(result.message);
