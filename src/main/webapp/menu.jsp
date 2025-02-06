@@ -76,13 +76,17 @@
 
     <ul class="menu-inner py-1">
 
-        <!-- Components -->
         <li class="menu-header mt-7"><span class="menu-header-text">Ajustes</span></li>
-        <!-- Cards -->
         <li class="menu-item">
-            <a href="usuarios.jsp" class="menu-link">
+            <a href="usuario.jsp" class="menu-link">
                 <i class="menu-icon tf-icons ri-bank-card-2-line"></i>
                 <div data-i18n="Basic">Usuarios</div>
+            </a>
+        </li>
+         <li class="menu-item">
+            <a href="conductor.jsp" class="menu-link">
+                <i class="menu-icon tf-icons ri-bank-card-2-line"></i>
+                <div data-i18n="Basic">Conductores</div>
             </a>
         </li>
     </ul>

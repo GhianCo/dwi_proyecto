@@ -92,7 +92,6 @@ public class UsuarioDaoImpl implements UsuarioDao {
                 usuario.setClave(clave);
                 usuario.setTelefono(telefono);
                 usuario.setEmail(email);
-
                 usuario.setDireccion(direccion);
             }
 

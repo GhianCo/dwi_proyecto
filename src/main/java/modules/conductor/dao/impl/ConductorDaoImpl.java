@@ -66,7 +66,7 @@ public class ConductorDaoImpl implements ConductorDao {
 
             connection = DBConn.getConnection();
 
-            String sql = "select c.id, c.persona_id, c.fecha_nacimiento, p.nombres, p.apellidos, p.numero_documento from conductor c, persona p where c.persona_id = p.id and c.activo = 1 and c.id = " + conductorId + " limit 1";
+            String sql = "select c.id, c.persona_id, c.fecha_nacimiento, p.nombres, p.apellidos, p.numero_documento, p.telefono, p.email, p.direccion from conductor c, persona p where c.persona_id = p.id and c.activo = 1 and c.id = " + conductorId + " limit 1";
 
             statement = connection.createStatement();
 
@@ -78,9 +78,14 @@ public class ConductorDaoImpl implements ConductorDao {
                 String nombres = resultSet.getString("nombres");
                 String apellidos = resultSet.getString("apellidos");
                 String numero_documento = resultSet.getString("numero_documento");
+                String telefono = resultSet.getString("telefono");
+                String email = resultSet.getString("email");
+                String direccion = resultSet.getString("direccion");
 
                 conductor = new Conductor(id, personaId, nombres, apellidos, numero_documento);
-
+                conductor.setTelefono(telefono);
+                conductor.setEmail(email);
+                conductor.setDireccion(direccion);
             }
 
             resultSet.close();
