@@ -44,13 +44,12 @@ public class EmbarcacionDaoImpl implements EmbarcacionDao {
         int idGenerado = 0;
         try (Connection connection = DBConn.getConnection(); PreparedStatement pst = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             
-            pst.setInt(1, entity.getPersonaId());
+            pst.setInt(1, entity.getPersona_id());
             pst.setString(2, entity.getNombre());
             pst.setString(3, entity.getMatricula());
-            pst.setDouble(4, entity.getCapacidadBodega());
-            pst.setString(5, entity.getPermisoPesca());
+            pst.setDouble(4, entity.getCapacidad_bodega());
+            pst.setString(5, entity.getPermiso_pesca());
             pst.setString(6, entity.getRegimen());
-            pst.setString(7, entity.getActiva());
 
             pst.executeUpdate();
 
@@ -100,11 +99,11 @@ public class EmbarcacionDaoImpl implements EmbarcacionDao {
     public void update(Embarcacion entity) {
         try (Connection connection = DBConn.getConnection(); PreparedStatement pst = connection.prepareStatement(UPDATE_SQL)) {
 
-            pst.setInt(1, entity.getPersonaId());
+            pst.setInt(1, entity.getPersona_id());
             pst.setString(2, entity.getNombre());
             pst.setString(3, entity.getMatricula());
-            pst.setDouble(4, entity.getCapacidadBodega());
-            pst.setString(5, entity.getPermisoPesca());
+            pst.setDouble(4, entity.getCapacidad_bodega());
+            pst.setString(5, entity.getPermiso_pesca());
             pst.setString(6, entity.getRegimen());
             pst.setInt(7, entity.getId());
 

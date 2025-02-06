@@ -20,11 +20,11 @@ import lombok.NoArgsConstructor;
 public class Embarcacion {
     
     private Integer id;
-    private Integer personaId;
+    private Integer persona_id;
     private String nombre;
     private String matricula;
-    private Double capacidadBodega;
-    private String permisoPesca;
+    private Double capacidad_bodega;
+    private String permiso_pesca;
     private String regimen;
     private String activa;
     
