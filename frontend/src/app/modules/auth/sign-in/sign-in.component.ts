@@ -2,7 +2,6 @@ import {Component, inject, ViewEncapsulation} from '@angular/core';
 import {
     FormsModule,
     ReactiveFormsModule,
-    UntypedFormGroup,
 } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';

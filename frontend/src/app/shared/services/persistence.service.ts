@@ -7,8 +7,8 @@ export interface PersistenceOptions {
 
 @Injectable({providedIn: 'root'})
 export class PersistenceService {
-    localStorePrefix = 'dipafar_st_';
-    cookiePrefix = 'dipafar_ck_';
+    localStorePrefix = 'dwi_proyecto_st_';
+    cookiePrefix = 'dwi_proyecto_ck_';
 
     private setPersistenceValue(key: string, value: unknown, options?: PersistenceOptions) {
         if (undefined !== value) {

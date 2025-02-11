@@ -48,8 +48,8 @@ export class AppStore extends SignalStore<IAppCoreState> {
     constructor() {
         super();
         initialAppCoreState.signInForm = this._formBuilder.group({
-            user: ['admin'],
-            password: ['1234', Validators.required]
+            usuario: ['admin'],
+            clave: ['admin', Validators.required]
         });
         this.initialize(initialAppCoreState);
     };
@@ -64,18 +64,11 @@ export class AppStore extends SignalStore<IAppCoreState> {
             takeUntilDestroyed(this.destroyRef),
             tap(async ({data}: any) => {
                 this.patch({
-                    dataSession: data.token,
+                    dataSession: data,
                 });
 
-                // Guardamos en local store los permisos del usuario;
-                this._persistencia.set(PKEY.PERMISOS_USER, data.permisosUsuario);
-                this._persistencia.set(PKEY.LOCAL_LOGEADO, data.local);
-
-                /** Guardamos la moneda para el local */
-                this._persistencia.set(PKEY.MONEDA, data.moneda);
-
                 // Store the access token in the local storage
-                this._authService.accessToken = data.token;
+                this._authService.accessToken = data;
 
                 const redirectURL =
                     this._activatedRoute.snapshot.queryParamMap.get(

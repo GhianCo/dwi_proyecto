@@ -23,18 +23,18 @@
             <form class="mt-8" [formGroup]="vm.signInForm">
                 <mat-form-field class="w-full">
                     <mat-label>Usuario</mat-label>
-                    <input id="user" matInput [formControlName]="'user'"/>
-                    @if (vm.signInForm.get('user').hasError('required')) {
+                    <input id="usuario" matInput [formControlName]="'usuario'"/>
+                    @if (vm.signInForm.get('usuario').hasError('required')) {
                         <mat-error> El usuario es requerido</mat-error>
                     }
                 </mat-form-field>
                 <mat-form-field class="w-full">
                     <mat-label>Clave</mat-label>
                     <input
-                            id="password"
+                            id="clave"
                             matInput
-                            type="password"
-                            [formControlName]="'password'"
+                            type="clave"
+                            [formControlName]="'clave'"
                             #passwordField
                     />
                     <button
