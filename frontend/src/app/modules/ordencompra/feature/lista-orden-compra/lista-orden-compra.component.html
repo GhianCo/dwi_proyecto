@@ -1,0 +1,172 @@
+<div class="p2 w-full">
+  <section class="absolute inset-0 flex flex-col min-w-0 overflow-hidden p-4" *ngIf="ordencompraStore.vm() as vm" [appLoading]="vm.ordencompraLoading">
+    <form class="bg-white p-4" [formGroup]="form">
+      <div class="flex justify-end mb-4">
+        <div class="flex gap-2">
+          <button
+            class="ml-4"
+            mat-flat-button
+            [color]="'accent'"
+            (click)="buscar()"
+          >
+            <mat-icon [svgIcon]="'heroicons_outline:arrow-path'"></mat-icon>
+            <span class="ml-2 mr-1">Buscar</span>
+          </button>
+          <a
+            class="ml-4 flex gap-2 items-center"
+            mat-flat-button
+            routerLink="/compras/ordenes-de-compra/nueva"
+          >
+            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+            <span class="ml-2 mr-1">Nueva órden de compra</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="w-full grid items-center grid-cols-5 gap-4">
+        <div class="col-span-1">
+          <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+            <mat-label>Estado</mat-label>
+              <mat-select
+              formControlName="ordencompra_estado"
+              [spellcheck]="false"
+            >
+              <mat-option
+                *ngFor="let estado of estadoOrdenCompra"
+                [value]="estado.id"
+              >
+                {{ estado.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-span-1">
+          <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+            <mat-label>Cod.</mat-label>
+            <input matInput placeholder="746" formControlName="codigo" />
+          </mat-form-field>
+        </div>
+
+
+      </div>
+
+    </form>
+
+    <div class="w-full flex flex-col flex-auto overflow-hidden bg-white">
+      <!-- <ng-container *ngIf="vm.ventasParaAmortizar.length"> -->
+      <ng-container *ngIf="vm.ordencompraData.length">
+        <div class="flex flex-col flex-auto overflow-hidden">
+          <div class="flex-grow overflow-x-auto mb-[73px]">
+            <div class="py-2 px-4 inline-block min-w-full">
+              <div class="overflow-hidden relative">
+                <table class="w-full text-left text-gray-500 table-hover">
+                  <thead class="text-gray-800 uppercase bg-gray-50 text-sm">
+                    <tr>
+                      <th class="px-6 py-3">Estado</th>
+                      <th class="px-6 py-3">Cod.</th>
+                      <th class="px-6 py-3">Fec. Registro</th>
+                      <th class="px-6 py-3">Fec. Vecimiento</th>
+                      <th class="px-6 py-3">Usuario</th>
+                      <th class="px-6 py-3">Proveedor</th>
+                      <th class="px-6 py-3">Total</th>
+                      <th class="px-6 py-3"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-sm">
+                    <ng-container *ngFor="let ordencompra of vm.ordencompraData">
+                      <tr class="border-b hover:bg-gray-50">
+                        <td class="px-6 py-4 font-medium text-gray-900">
+                            <span *ngIf="ordencompra.ordencompra_estado == ORDENCOMPRA_ESTADO.PENDIENTE">PENDIENTE</span>
+                            <span *ngIf="ordencompra.ordencompra_estado == ORDENCOMPRA_ESTADO.PROCESADO">PROCESADO</span>
+                        </td>
+                        <td class="px-6 py-4">
+                          {{ ordencompra.ordencompra_id }}
+                        </td>
+                        <td class="px-6 py-4">
+                          {{ ordencompra.ordencompra_fecharegistroFormateada }}
+                        </td>
+                        <td class="px-6 py-4">
+                          {{ ordencompra.ordencompra_fechavecimientoFormateada }}
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900">
+                          <ng-container *ngIf="ordencompra.usuario">
+                            {{ ordencompra.usuario.usuario_nombres }} {{ ordencompra.usuario.usuario_apellidos }}
+                          </ng-container>
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900">
+                          <ng-container *ngIf="ordencompra.proveedor">
+                            {{ ordencompra.proveedor.proveedor_nombrecomercial }}
+                          </ng-container>
+                        </td>
+                        <td class="px-6 py-4">
+                          {{ simboloMoneda }} {{ ordencompra.ordencompra_total | currencyFormat }}
+                        </td>
+
+                        <td class="px-6 py-4 font-medium">
+                          <div class="flex gap-2 items-center">
+                            <button class="bg-blue-600 text-white m-0 p-1  rounded-full flex items-center" (click)="abrirModalDetalleOrdencompra(ordencompra)">
+                              <mat-icon fontIcon="visibility" class="text-white text-[18px] m-0 p-0"></mat-icon>
+                            </button>
+
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                              <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                              <a mat-menu-item *ngIf="ordencompra.ordencompra_pedientecanjear"
+                                [routerLink]="['/compras/ordenes-de-compra/editar', ordencompra.ordencompra_id]"
+                                [queryParams]="{ canjearOrden: 1 }"
+                              >
+                                <!-- <mat-icon>dialpad</mat-icon> -->
+                                <span>Canjear</span>
+                              </a>
+                              <a mat-menu-item *ngIf="ordencompra.ordencompra_pedientecanjear"
+                                [routerLink]="['/compras/ordenes-de-compra/editar', ordencompra.ordencompra_id]"
+                              >
+                                <!-- <mat-icon>dialpad</mat-icon> -->
+                                <span>Editar</span>
+                              </a>
+                              <!-- <button mat-menu-item *ngIf="ordencompra.ordencompra_activo">
+                                <span>Anular</span>
+                              </button> -->
+                              <!-- <button mat-menu-item>
+                                <mat-icon>notifications_off</mat-icon>
+                                <span>Disable alerts</span>
+                              </button> -->
+                            </mat-menu>
+                        </div>
+
+                        </td>
+                        
+                     </tr>
+                    </ng-container>
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <mat-paginator
+                  class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                  (page)="changePagination($event)"
+                  [ngClass]="{ 'pointer-events-none': vm.ordencompraLoading }"
+                  [length]="vm.ordencompraPagination?.totalRows"
+                  [pageIndex]="vm.ordencompraPagination?.currentPage - 1"
+                  [pageSize]="vm.ordencompraPagination?.perPage"
+                  [pageSizeOptions]="[10, 25, 100]"
+                  [showFirstLastButtons]="true"
+                ></mat-paginator>
+                
+              
+      </ng-container>
+      <div
+        *ngIf="!vm.ordencompraData.length && !vm.ordencompraLoading"
+        class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+        >
+          No se encontraron registros!
+        </div>
+      
+    </div>
+
+  </section>
+</div>

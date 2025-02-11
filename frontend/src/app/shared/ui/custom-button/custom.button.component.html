@@ -1,0 +1,12 @@
+<button class="fuse-mat-button-large mt-6 w-full"
+        mat-flat-button
+        [color]="color"
+        [disabled]="disabled"
+        (click)="click()">
+    @if (!disabled) {
+        <span> {{ text }} </span>
+    }
+    @if (disabled) {
+        <mat-progress-spinner [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+    }
+</button>

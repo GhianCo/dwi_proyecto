@@ -1,0 +1,395 @@
+<div class="flex flex-col w-full" *ngIf="productoStore.vm() as vm" [appLoading]="vm.loadingProductoSelected || vm.createUpdateStateProductoLoading">
+    <ng-container *ngIf="!editMode">
+        <div class="relative w-full h-22 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
+            <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
+                <div class="text-4xl font-bold truncate">{{vm.presentacionProductoSelected?.presentacionproducto_nombre }}</div>
+                <div class="flex items-center ml-auto mb-1">
+                    <button mat-stroked-button (click)="toggleEditMode(true)">
+                        <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                        <span class="ml-2">Editar</span>
+                    </button>
+                </div>
+                <button mat-icon-button [matTooltip]="'Cerrar'" [routerLink]="['/producto/producto']">
+                    <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                </button>
+            </div>
+        </div>
+        <!-- Company -->
+        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0">
+            <div class="w-full max-w-3xl">
+                <div class="flex flex-col mt-4 pt-6 border-t space-y-8">
+                    <div class="flex sm:items-center" *ngIf="vm.presentacionProductoSelected?.presentacionproducto_nombre">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6"><span class="font-bold">Nombre:</span>
+                            {{ vm.presentacionProductoSelected?.presentacionproducto_nombre }}</div>
+                    </div>
+                    <div class="flex sm:items-center" *ngIf="vm.presentacionProductoSelected?.unidadmedida?.unidadmedida_descripcion">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6"><span class="font-bold">Unidad Medida:</span>
+                            {{ vm.presentacionProductoSelected?.unidadmedida?.unidadmedida_descripcion }}</div>
+                    </div>
+                    <div class="flex sm:items-center" *ngIf="vm.productoSelected?.producto_codigo">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6"><span class="font-bold">Codgo interno:</span>
+                            {{vm.productoSelected?.producto_codigo}}</div>
+                    </div>
+                    <div class="flex sm:items-center" *ngIf="vm.presentacionProductoSelected?.presentacionproducto_precio">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6"><span class="font-bold">Precio:</span>
+                            {{ vm.productoSelected?.moneda?.moneda_simbolo }}
+                        </div>
+                            {{ " "}} {{ vm.presentacionProductoSelected?.presentacionproducto_precio }}
+                    </div>
+
+                    <div class="flex sm:items-center">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6 flex gap-2 items-center">
+                            <span class="font-bold">IGV:</span>
+                            @if(vm.productoSelected?.producto_incluyeivg) {
+                                <mat-icon
+                                    class="text-green-400"
+                                    [svgIcon]="'heroicons_outline:check'"
+                                ></mat-icon>
+                            } @else {
+                                <mat-icon 
+                                    class="text-red-400"
+                                    [svgIcon]="'heroicons_outline:x-mark'"
+                                ></mat-icon>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="editMode">
+        <div class="relative w-full h-22 px-8 sm:px-12 bftig-accent-100 dark:bg-accent-700">
+            <div class="flex items-center justify-between w-full max-w-3xl mx-auto pt-6">
+                <div class="text-4xl font-bold truncate">{{ vm.productoSelected?.producto_nombre }}</div>
+                <button mat-icon-button [matTooltip]="'Cerrar'" [routerLink]="['/producto/producto']">
+                    <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
+            <div class="w-full max-w-3xl">
+                <form [formGroup]="form">
+                    <mat-tab-group>
+                        <mat-tab label="Datos generales">
+                            <div>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1" >
+                                        <mat-checkbox formControlName="producto_incluyeivg">
+                                            Incluye IGV
+                                        </mat-checkbox>
+                                    </div>
+
+                                    <div class="col-span-1">
+                                        <mat-checkbox formControlName="producto_sujetodetraccion">
+                                            Sujecto a detracción
+                                        </mat-checkbox>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="col-span-1">
+                                        <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                            <mat-label>Nombre</mat-label>
+                                            <input matInput formControlName="producto_nombre" placeholder="Nombre" [spellcheck]="false">
+                                        </mat-form-field>
+                                    </div>
+    
+                                    <div class="col-span-1">
+                                        <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                            <mat-label>Principio Activo</mat-label>
+                                            <input matInput placeholder="Principio activo" [spellcheck]="false" formControlName="producto_principioactivo">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                        <mat-label>Descripcion</mat-label>
+                                        <textarea matInput placeholder="Decripcion" formControlName="producto_descripcion" [spellcheck]="false"></textarea>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="grid grid-cols-4 gap-4">
+                                    <div class="col-span-4">
+                                        <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                            <mat-label>Concentración</mat-label>
+                                            <input matInput placeholder="Concentración" formControlName="producto_concentracion" [spellcheck]="false">
+                                        </mat-form-field>
+                                    </div>
+                                    <!-- <div class="col-span-2">
+                                        <mat-form-field class="mat-no-subscript w-full">
+                                            <mat-label>Registro Sanitario</mat-label>
+                                            <input matInput placeholder="Registro sanitario" formControlName="producto_registrosanitario" [spellcheck]="false">
+                                        </mat-form-field>
+                                    </div> -->
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="col-span-1">
+                                        <mat-form-field class="mat-no-subscript w-full" floatLabel="always"> 
+                                            <mat-label>Moneda</mat-label>
+                                            <mat-select
+                                              placeholder="Moneda"
+                                              formControlName="moneda_id"
+                                              [spellcheck]="false"
+                                            >
+                                              <mat-option [value]="moneda.moneda_id" *ngFor="let moneda of monedas">
+                                                {{ moneda.moneda_descripcion }}
+                                              </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+        
+                                      </div>
+                                      <div class="col-span-1">
+                                        <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                                <mat-label>Stock inicial</mat-label>
+                                                <input matInput placeholder="Stock inicial" formControlName="producto_stockinicial" [spellcheck]="false">
+                                            </mat-form-field>
+                                      </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-1">
+                                        <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                            <mat-label>Stock Mínimo</mat-label>
+                                            <input matInput placeholder="Stock minimo" formControlName="producto_stockminimo" [spellcheck]="false">
+                                        </mat-form-field>
+        
+                                    </div>
+
+                                    <div class="col-span-1">
+                                        <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                            <mat-label>Código Interno</mat-label>
+                                            <input matInput placeholder="Codigo interno" formControlName="producto_codigo" [spellcheck]="false">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-span-1"> 
+                                        <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                            <mat-label>Código Medicamento DIGEMID</mat-label>
+                                            <input matInput placeholder="Principio activo" [spellcheck]="false" formControlName="producto_codigomedicameneto">
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="mt-8" *ngIf="vm.productoSelected?.producto_id > 0">
+                                <div class="flex flex-col">
+                                    <span class="font-semibold mb-2">Estado</span>
+                                    <mat-slide-toggle formControlName="producto_activo"
+                                        [color]="'primary'">
+                                        {{ 
+                                            form.get('producto_activo').value 
+                                            ? 'Activa' 
+                                            : 'Inactiva'
+                                        }}
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Almacenes">
+                            <div class="flex flex-col gap-2">
+                                <!-- <mat-checkbox *ngFor="let almacen of almacenes">
+                                    {{ almacen.almacen_descripcion }}
+                                </mat-checkbox> -->
+                                <div formArrayName="almacenes" class="flex flex-col">
+                                    <mat-checkbox *ngFor="let almacen of almacenesFormArray.controls; let i = index" [formControlName]="i">
+                                        {{ almacenesList()[i]?.almacen_descripcion }}
+                                    </mat-checkbox>
+                                </div> 
+
+
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Presentaciones">
+                            <div>
+                                <div class="mb-4 flex justify-end">
+                                    <button mat-flat-button [color]="'primary'"
+                                        [matTooltip]="'Nueva presentacion'" (click)="addPresentacion()">
+                                        Nueva presentacion
+                                    </button>
+                                </div>
+
+                                <div formArrayName="presentaciones">
+                                    <div *ngFor="let presentacion of presentaciones.controls; let i = index" [formGroupName]="i" class="grid grid-cols-1 gap-4 mb-8">
+                                        <div class="col-span-1">
+                                            <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                                <mat-label>Descripción</mat-label>
+                                                <input matInput placeholder="Descripción" [spellcheck]="false" formControlName="presentacionproducto_descripcion">
+                                            </mat-form-field>
+                                        </div>
+                                
+                                        <div class="grid grid-cols-3 gap-4">
+                                            <div class="col-span-1">
+                                                <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                                    <mat-label>Precio</mat-label>
+                                                    <input matInput placeholder="Precio"  [spellcheck]="false" formControlName="presentacionproducto_precio">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-span-1">
+                                                <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                                    <mat-label>Cód. Barra</mat-label>
+                                                    <input matInput placeholder="Cód. barra"  [spellcheck]="false" formControlName="presentacionproducto_codigobarra">
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="col-span-1">
+                                                <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                                    <mat-label>Unidad medida</mat-label>
+                                                    
+                                                    <mat-select
+                                                      placeholder="Unidad de medida"
+                                                      formControlName="unidadmedida_id"
+                                                      [spellcheck]="false"
+                                                    >
+                                                      <mat-option [value]="unidadmedida.unidadmedida_id" *ngFor="let unidadmedida of unidadesMedida">
+                                                        {{ unidadmedida.unidadmedida_descripcion }}
+                                                      </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid grid-cols-3 gap-4">
+                                            <div class="col-span-1">
+                                                <mat-checkbox formControlName="aplicarganacia" (ngModelChange)="onChangeAplicarGanancia(i)">
+                                                    Aplicar ganancia
+                                                </mat-checkbox>
+                                            </div>
+                                            <div>
+                                                <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                                    <mat-label>Costo unitario</mat-label>
+                                                    <input matInput placeholder="Descripción" [spellcheck]="false" formControlName="presentacionproducto_costounitario"
+                                                        (ngModelChange)="calcularGanancia(i)"
+                                                    >
+                                                </mat-form-field>
+                                            </div>
+                                            <div>
+                                                <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                                    <mat-label>Porcentaje de ganacia (%)</mat-label>
+                                                    <input matInput placeholder="Descripción" 
+                                                        [spellcheck]="false" 
+                                                        formControlName="presentacionproducto_porcentajeganacia"
+                                                        (ngModelChange)="calcularGanancia(i)"
+                                                    >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid grid-cols-3 gap-4">
+                                            <div class="col-span-1">
+                                                <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                                    <mat-label>Registro sanitario</mat-label>
+                                                    <input matInput placeholder="Descripción" [spellcheck]="false" 
+                                                        formControlName="presentacionproducto_registrosanitario">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-span-1">
+                                                <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                                    <mat-label>Digemid</mat-label>
+                                                    <input matInput placeholder="Descripción" [spellcheck]="false" 
+                                                        formControlName="presentacionproducto_digemid">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-span-1" *ngIf="presentacion.get('presentacionproducto_id') && presentacion.get('presentacionproducto_id').value">
+                                                <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                                    <mat-label>Codigo del producto</mat-label>
+                                                    <input matInput placeholder="A5" [spellcheck]="false" 
+                                                        formControlName="presentacionproducto_codigo"                                                    >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Atributos">
+                            <div>
+                                <div class="grid grid-cols-2 gap-4 mb-2">
+                                    <div class="col-span-1">
+                                        <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                            <mat-label>Marca/laboratio</mat-label>
+                                            
+                                            <mat-select
+                                              placeholder="Laboratorio"
+                                              formControlName="laboratorio_id"
+                                              [spellcheck]="false"
+                                            >
+                                              <mat-option [value]="laboratio.laboratorio_id" *ngFor="let laboratio of laboratorios">
+                                                {{ laboratio.laboratorio_descripcion }}
+                                              </mat-option>
+                                            </mat-select>
+                    
+                                        </mat-form-field>
+                                    </div> 
+                                    <div class="col-span-1">
+                                        <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                                            <mat-label>Ubicación</mat-label>
+                                            <mat-select
+                                              placeholder="Ubicación"
+                                              formControlName="ubicacion_id"
+                                              [spellcheck]="false"
+                                            >
+                                              
+                                              <mat-option [value]="ubicacion.ubicacion_id" *ngFor="let ubicacion of ubicaciones">
+                                                {{ ubicacion.ubicacion_descripcion }}
+                                              </mat-option>
+                                            </mat-select>
+                                            
+                                        </mat-form-field>
+                                    </div> 
+                                </div>
+
+
+                                <div>
+                                    <h4 class="font-semibold mb-2">Imagen</h4>
+                                    <div class="flex justify-center">
+                                        <div class="aspect-square h-80 border border-dashed flex justify-center items-center hover:bg-slate-50 cursor-pointer" (click)="subirImagen()" *ngIf="!voucherImg">
+                                            <mat-icon [svgIcon]="'heroicons_outline:camera'" class="text-gray-400"></mat-icon>
+                                        </div>
+                                        
+                                        <div class="aspect-square h-80 border border-dashed flex justify-center items-center cursor-pointer hover:opacity-90" (click)="subirImagen()" *ngIf="voucherImg">
+                                            <img [src]="voucherImg" alt="" class="w-full h-full object-cover">
+                                        </div>
+
+                                    </div>
+
+                                    <input type="file" name="file" id="file" #file hidden (change)="onFileSelected($event)">
+
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                    
+
+
+                    <div class="flex items-center mt-10 -mx-6 sm:-mx-12 py-4 pr-4 pl-1 sm:pr-12 sm:pl-7 border-t bg-gray-50 dark:bg-transparent">
+                        <div class="ml-auto" *ngIf="form.get('producto_id').value <= 0"></div>
+                        <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="toggleEditMode(false)"
+                            *ngIf="form.get('producto_id').value > 0">
+                            Cancelar
+                        </button>
+                        <!--<app-flash-message *ngIf="vm.createUpdateTipoDocumentoFlashMessage"
+                                        [hasError]="vm.createUpdateTipoDocumentoError"
+                                        [message]="vm.createUpdateTipoDocumentoFlashMessage"></app-flash-message>-->
+                        <button class="ml-2" mat-flat-button [color]="'primary'" 
+                            [disabled]="form.invalid || vm.createUpdateStateProductoLoading"
+                            [loadingButton]="vm.createUpdateStateProductoLoading"
+                            [matTooltip]="'Guardar'" (click)="createUpdateSelected()">
+                            Guardar
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </ng-container>
+</div>

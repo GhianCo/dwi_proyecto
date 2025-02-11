@@ -1,0 +1,289 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+  <mat-drawer-container
+    class="flex-auto h-full bg-card dark:bg-transparent"
+    (backdropClick)="onBackdropClicked()"
+  >
+    <!-- Drawer -->
+    <mat-drawer
+      class="w-full md:w-240 dark:bg-gray-900"
+      [mode]="drawerMode"
+      [opened]="false"
+      [position]="'end'"
+      [disableClose]="true"
+      #matDrawer
+    >
+      <router-outlet></router-outlet>
+    </mat-drawer>
+
+    <mat-drawer-content>
+      <form [formGroup]="form">
+        <div
+          class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"
+          *ngIf="productoStore.vm() as vm"
+          [appLoading]="vm.productoLoading"
+        >
+          <div
+            class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"
+          >
+            <div class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8">
+              <div>
+                <div class="text-2xl font-extrabold tracking-tight leading-none">
+                  Productos
+                </div>
+              </div>
+              <div class="flex items-center mt-4 sm:mt-0 w-full">
+                <div class="flex-auto md:mx-32">
+                  
+                </div>
+                <button
+                  class="ml-4"
+                  mat-flat-button
+                  [color]="'accent'"
+                  (click)="loadAllStatesFixedAsset()"
+                  [disabled]="vm.productoLoading"
+                >
+                  <mat-icon [svgIcon]="'heroicons_outline:arrow-path'"></mat-icon>
+                  <span class="ml-2 mr-1">Actualizar</span>
+                </button>
+                <button
+                  class="ml-4"
+                  mat-flat-button
+                  [color]="'primary'"
+                  [routerLink]="['./new']"
+                >
+                  <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                  <span class="ml-2 mr-1">Agregar</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="px-6 md:px-8 flex items-center gap-2 border-b mb-2">
+              <div class="w-72">
+                <div class="flex gap-2 w-full">
+                  <h3 class="font-semibold inline-block" >Filtrar por: </h3>
+                  <mat-form-field class="mat-no-subscript" style="flex-grow: 1;">
+                    <mat-select formControlName="tipoFiltro" (selectionChange)="changeFiltroSelected($event)">
+                      <mat-option [value]="filtro.tipo" *ngFor="let filtro of filtrosList">
+                        {{ filtro.value }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+    
+                </div>
+              </div>
+
+              <div class="w-120">
+                <mat-form-field
+                    class="mat-dense mat-no-subscript mat-rounded w-full min-w-50"
+                  >
+                    <mat-icon
+                      class="icon-size-4 mr-2"
+                      [svgIcon]="'heroicons_outline:magnifying-glass'"
+                    ></mat-icon>
+                    <input
+                      matInput
+                      #searchStateFixedassetText
+                      [autocomplete]="'off'"
+                      (keyup)="
+                        searchTipoDocumentoByQuery(
+                          searchStateFixedassetText.value
+                        )
+                      "
+                      [placeholder]="'Busqueda...'"
+                    />
+                  </mat-form-field>
+              </div>
+            </div>
+
+            <div class="w-full flex justify-end px-4 mb-2">
+              <button 
+                [matMenuTriggerFor]="menu"
+                class="flex gap-2 items-center bg-[#4f46e5] py-2 px-4 rounded-full text-white"
+              >
+                <span>Mostrar/ocultar columnas</span>
+                <mat-icon class="text-white" aria-hidden="false" aria-label="Example home icon" fontIcon="keyboard_arrow_down"></mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <ul class="flex flex-col">
+                  <li class="block" *ngFor="let column of columnasParaConfigurar">
+                    <mat-checkbox class="example-margin"
+                    [checked]="column.visible"
+                    (change)="toggleColumn(column.key)"
+                      >Mostrar {{ column.label }}</mat-checkbox>
+                  </li>
+                </ul>
+              </mat-menu>
+            </div>
+
+            <div class="flex flex-auto overflow-hidden">
+              <div
+                class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto"
+              >
+                <ng-container *ngIf="vm.productoData.length">
+                  <div class="flex flex-col">
+                    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                        <div class="overflow-hidden">
+                          <table class="min-w-full py-4 px-6">
+                            <thead
+                              class="py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                            >
+                              <tr>
+                                <th class="font-bold px-6 py-4 text-left" 
+                                  *ngFor="let column of columns" [hidden]="!column.visible"
+                                  [ngClass]="{'text-right': column.key === 'presentacionproducto_activo' || column.key === 'ver_detalles'}"
+                                >
+                                  {{ column.label }}
+                                </th>
+                                <!-- <th class="font-bold px-6 py-4 text-left">
+                                  Cód. Interno
+                                </th>
+                                <th class="font-bold px-6 py-4 text-left">
+                                  Laboratorio
+                                </th>
+                                <th class="font-bold px-6 py-4 text-left">
+                                  U. Medida
+                                </th>
+                                <th class="font-bold px-6 py-4 text-left">
+                                  P. Unitario
+                                </th>
+                                <th class="font-bold px-6 py-4 text-left">IGV</th>
+                                <th class="font-bold px-6 py-4 text-right">
+                                  Activo
+                                </th>
+                                <th class="font-bold px-6 py-4 text-right">
+                                  Detalles
+                                </th> -->
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <!-- <ng-container *ngFor="let producto of vm.productoData"> -->
+                                <ng-container *ngFor="let presentacion of vm.productoData">
+                                  <tr
+                                    class="border-b"
+                                    [ngClass]="{
+                                      'bg-gray-100':
+                                        vm.presentacionproductoSelected
+                                          ?.presentacion_id ==
+                                        presentacion.presentacion_id,
+                                    }"
+                                  >
+                                    @for (column of columns; track $index) {
+                                        @if (column.visible) {
+
+                                          @if(column.key === 'producto_codigo') {
+                                            <td class="px-6 py-4 font-medium">
+                                              {{ presentacion.producto_codigo }}
+                                            </td>
+                                          } @else if(column.key === 'unidad_medida') {
+                                            <td class="px-6 py-4 font-medium">
+                                              {{ presentacion?.unidadmedida?.unidadmedida_descripcion }}
+                                            </td>
+                                          } @else if(column.key === 'laboratorio') {
+                                            <td class="px-6 py-4 font-medium">
+                                              {{ presentacion.producto?.laboratorio.laboratorio_descripcion }}
+                                            </td>
+                                          } @else if(column.key === 'precio_unitario') {
+                                            <td class="px-6 py-4 font-medium">
+                                              <ng-container *ngIf="presentacion.producto?.moneda">
+                                                {{ presentacion.producto?.moneda?.moneda_simbolo }}
+                                              </ng-container>
+                                              {{ presentacion?.presentacionproducto_precio }}
+                                            </td>
+                                          } @else if(column.key === 'producto_incluyeivg') {
+                                            <td class="px-6 py-4 text-center">
+                                              @if (presentacion?.producto?.producto_incluyeivg) {
+                                                <mat-icon
+                                                  class="text-green-400"
+                                                  [svgIcon]="'heroicons_outline:check'"
+                                                ></mat-icon>
+                                              } @else {
+                                                <mat-icon
+                                                  class="text-red-400"
+                                                  [svgIcon]="'heroicons_outline:x-mark'"
+                                                ></mat-icon>
+                                              }
+                                          </td>
+                                          } @else if (column.key === 'presentacionproducto_activo') {
+                                            <td class="px-6 py-4 text-right">
+                                              @if (presentacion.presentacionproducto_activo) {
+                                                <mat-icon
+                                                  class="text-green-400"
+                                                  [svgIcon]="'heroicons_outline:check'"
+                                                ></mat-icon>
+                                              } @else {
+                                                <mat-icon
+                                                  class="text-red-400"
+                                                  [svgIcon]="'heroicons_outline:x-mark'"
+                                                ></mat-icon>
+                                              }
+                                          </td>
+                                          } @else if(column.visible && column.key == 'ver_detalles') {
+                                            <td class="px-6 py-4 font-medium text-right">
+                                              <a
+                                              class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                                              mat-stroked-button
+                                              [routerLink]="['./',presentacion?.producto?.producto_id, presentacion?.presentacionproducto_id]"
+                                            >
+                                              <mat-icon
+                                                [svgIcon]="'heroicons_outline:eye'"
+                                              ></mat-icon>
+                                            </a>
+                                          </td>
+                                          } @else if(column.visible && column.key == 'ver_historial') {
+                                            <td class="px-6 py-4 font-medium text-right">
+                                              <button
+                                              class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                                              mat-stroked-button
+                                              (click)="verHistorialProducto(presentacion)"
+                                            >
+                                              <mat-icon
+                                                fontIcon="history"
+                                              ></mat-icon>
+                                            </button>
+                                          </td>
+                                          } @else {
+                                            <td class="px-6 py-4 font-medium">
+                                              {{ presentacion[column.key] }}
+                                            </td>
+                                          } 
+
+                                          
+                                        }
+                                    }
+
+                                  </tr>
+                                </ng-container>
+                              <!-- </ng-container> -->
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <mat-paginator
+                    class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+                    (page)="changePagination($event)"
+                    [ngClass]="{ 'pointer-events-none': vm.productoLoading }"
+                    [length]="vm.productoPagination?.totalRows"
+                    [pageIndex]="vm.productoPagination?.currentPage - 1"
+                    [pageSize]="vm.filterProductoToApply?.perPage"
+                    [pageSizeOptions]="[10, 25, 100]"
+                    [showFirstLastButtons]="true"
+                  ></mat-paginator>
+                </ng-container>
+
+                <div
+                  *ngIf="!vm.productoData.length && !vm.productoLoading"
+                  class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                >
+                  No se encontraron registros!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

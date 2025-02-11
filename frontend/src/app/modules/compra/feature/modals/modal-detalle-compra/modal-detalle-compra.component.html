@@ -1,0 +1,71 @@
+<ng-container *ngIf="compraStore.vm() as vm">
+  <section class="w-full relative h-[600px]" [appLoading]="vm.compraLoadingSelected">
+    <ng-container *ngIf="vm.compraSelected">
+      <div class="flex flex-col h-full">
+        <div class="mb-4 flex justify-between">
+          <h4 class="font-bold text-2xl mb-2">
+            <span class="block" *ngIf="vm.compraSelected.comprobante.comprobante_id === COMPROBANTES.BOLETA">BOLETA</span>
+            <span class="block" *ngIf="vm.compraSelected.comprobante.comprobante_id === COMPROBANTES.FACTURA">FACTURA</span>
+            {{ vm.compraSelected.compra_serie }} - {{ vm.compraSelected.compra_correlativo }}
+          </h4>
+          <p>
+            <span class="font-semibold">Fecha de registro: </span>
+            <span class="font-normal">{{ vm.compraSelected.compra_fecharegistFormateada }}</span>
+          </p>
+        </div>
+
+        <h5 class="mb-2 font-semibold">Registrador por: <span class="font-normal">{{ vm.compraSelected.usuario.usuario_nombres }} {{ vm.compraSelected.usuario.usuario_apellidos }}</span> </h5>
+        <div>
+          <h5 class="font-semibold">Proveedor:  </h5>
+          <p>{{ vm.compraSelected.proveedor.proveedor_nombrecomercial }}</p>
+        </div>
+
+        <div class="flex flex-col flex-auto overflow-hidden">
+          <div class="flex-grow overflow-x-auto mb-[73px]">
+            <div class="py-2 px-4 inline-block min-w-full">
+              <div class="overflow-hidden relative">
+                <table class="w-full text-left text-gray-500 table-hover table-fixed">
+                  <thead class="text-gray-800 uppercase bg-gray-50 text-sm">
+                    <tr>
+                      <th class="px-6 py-3">Cantidad</th>
+                      <th class="px-6 py-3" width="250px">Item.</th>
+                      <th class="px-6 py-3">Precio</th>
+                      <th class="px-6 py-3">Sub total</th>
+                      <th class="px-6 py-3">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-sm">
+                      <ng-container *ngIf="vm.compraSelected.detallecompra">
+                        <tr *ngFor="let detallecompra of vm.compraSelected.detallecompra">
+                          <td class="px-6 py-4"> {{ detallecompra.detallecompra_cantidad }}</td>
+                          <td class="px-6 py-4"> 
+                            <ng-container *ngIf="detallecompra.presentacionproducto">
+                              {{ detallecompra.presentacionproducto.presentacionproducto_descripcioncompleta }}
+                            </ng-container>
+                          </td>
+                          <td class="px-6 py-4"> 
+                            <span>
+                              {{ simboloMoneda }} {{ detallecompra.detallecompra_precio | currencyFormat }}
+                            </span>
+                          </td>
+                          <td class="px-6 py-4">{{ detallecompra.detallecompra_cantidad }}</td>
+                          <!-- <td class="px-6 py-4"> {{ detallecompra?.almacen?.almacen_descripcion }}</td> -->
+                          <td class="px-6 py-4"> {{ simboloMoneda }} {{ detallecompra.detallecompra_total | currencyFormat }}</td>
+                        </tr>
+                      </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <div class="flex gap-4 items-center">
+            <span class="font-semibold text-xl">Importe total</span>
+            <span class="text-xl">{{ simboloMoneda }} {{ vm.compraSelected.compra_total }}</span>
+          </div>
+        </div>
+      </div>
+  </ng-container>
+  </section>
+</ng-container>

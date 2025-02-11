@@ -1,0 +1,38 @@
+<div class="flex items-center justify-center px-4 m-1.5 rounded-full cursor-pointer text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700 {{classSelectSearching}}"
+     [ngClass]="{'border-2 border-red-500': hasError}"
+     (click)="openPanel()" #panelSource>
+    <ng-container *ngIf="id > 0">
+        <!--<app-lead-icon icon="pencil-alt" class="icon-size-4"></app-lead-icon>-->
+        <span class="ml-1.5 my-2 text-md font-medium">{{valueText}}</span>
+    </ng-container>
+
+    <ng-container *ngIf="!id">
+        <!--<app-lead-icon icon="plus-circle" class="icon-size-4"></app-lead-icon>-->
+        <span class="ml-1.5 my-2 text-md font-medium">{{emptyValueText}}</span>
+    </ng-container>
+
+    <ng-template #panelListResults>
+        <div class="rounded border shadow-md bg-card {{classPanelListResults}}">
+            <div class="flex items-center m-3 mr-2" *ngIf="withInputSearch">
+                <div class="flex items-center">
+                    <!--<app-lead-icon icon="search" class="icon-size-4"></app-lead-icon>-->
+                    <div class="ml-2">
+                        <input class="w-full min-w-0 py-1 border-0" type="text"
+                               placeholder="{{placeholderInputSearch}}" #inputSearch
+                               [autocomplete]="'off'"
+                               (keyup)="searchByQuery(inputSearch.value)">
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col max-h-64 py-2 border-t overflow-y-auto" *ngIf="resultsFound.length">
+                <ng-container *ngFor="let result of resultsFound">
+                    <div class="flex items-center h-10 min-h-10 px-4 cursor-pointer hover:bg-hover"
+                         [ngClass]="{'bg-gray-100': id > 0 && result[keyId] == id}"
+                         (click)="selectResult(result)" matRipple>
+                        <div class="ml-1 truncate">{{result[keyValue]}}</div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </ng-template>
+</div>

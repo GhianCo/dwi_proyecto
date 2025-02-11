@@ -1,0 +1,394 @@
+<div class="p-4 w-full"  (document:click)="onDocumentClick($event)">
+  <div class="p-8 w-full bg-white" [appLoading]="buscandoPedidoParaVenta || generandoVenta || cargandoDiasCreditoList">
+    <header class="mb-10">
+      <h1 class="text-2xl font-extrabold tracking-tight leading-none">
+        Nueva Venta
+      </h1>
+    </header>
+  
+    <form [formGroup]="formVenta" (ngSubmit)="pagar()" #formVentaDirective="ngForm">
+      <div class="flex gap-4">
+        <div class="w-[500px]">
+          <div class="mb-2">
+            <mat-form-field class="mat-no-subscript w-full" floatLabel="always" *ngIf="controlBuscarPedido.value">
+              <mat-label>Código pedido</mat-label>
+              <input 
+                matInput 
+                placeholder="000001" 
+                class="w-full" 
+                [matAutocomplete]="pedidosParaVenta"
+                (input)="onInputPedidoCodigo($event)"
+                [formControl]="controlPedidoParaVenta"
+              />  
+              <mat-autocomplete  #pedidosParaVenta="matAutocomplete"
+                (optionSelected)="selectPedidoParaVenta($event.option.value)"  [displayWith]="displayFnPedidoParaVenta">
+                <mat-option [value]="pedido" *ngFor="let pedido of pedidosParaVentaList | async">
+                  {{ pedido.pedido_descripcion }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            
+            <mat-checkbox [formControl]="controlBuscarPedido">Buscar pedido</mat-checkbox>
+
+          </div>
+
+          <div class="mb-2">
+            <div>
+              <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                <mat-label>Busca un cliente</mat-label>
+                <input 
+                    matInput 
+                    placeholder="Busca un cliente" 
+                    class="w-full" 
+                    [matAutocomplete]="clienteAuto"
+                    (input)="onInputCliente($event)"
+                    [formControl]="controlCliente"
+                  />
+                  <mat-autocomplete #clienteAuto="matAutocomplete"
+                    (optionSelected)="selectCliente($event.option.value)"  [displayWith]="displayFnCliente">
+                    <mat-option [value]="cliente" *ngFor="let cliente of clientesList | async">
+                      {{ cliente.cliente_nombres }} {{ cliente.cliente_apellidos }}
+                    </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+  
+          <ng-container>
+            <div *ngIf="clienteSeleccionado && !otraDireccion.value">
+              <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                <mat-label>Direccion</mat-label>
+                <!-- <input matInput placeholder="Cliente" class="w-full" /> -->
+                  <mat-select
+                  placeholder="Piura"
+                  formControlName="venta_clientedireccion"
+                  [spellcheck]="false"
+                >
+                  <mat-option
+                    *ngFor="let direccionciente of clienteSeleccionado.direcciones"
+                    [value]="direccionciente.direccioncliente_direccion"
+                  >
+                    {{ direccionciente.direccioncliente_direccion }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+  
+            <div *ngIf="otraDireccion.value"> 
+              <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                <mat-label>Direccion</mat-label>
+                <input
+                  matInput
+                  formControlName="venta_clientedireccion"
+                  placeholder="Ingresa otra direccion"
+                  [spellcheck]="false"
+                />
+              </mat-form-field> 
+            </div>
+  
+            <mat-checkbox *ngIf="clienteSeleccionado" [formControl]="otraDireccion">
+              Otra dirección
+            </mat-checkbox>
+        </ng-container>
+  
+          <!-- <div formGroupName="pagoventa" class="mb-2">
+            <div>
+              <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                <mat-label>Paga con</mat-label>
+                
+                <mat-select placeholder="Modalidad" [spellcheck]="false" floatLabel="always" formControlName="pagoventa_tipo">
+                  <mat-option *ngFor="let pago of tiposPago" [value]="pago.id"> {{ pago.descripcion }} </mat-option>
+                </mat-select>
+              </mat-form-field>
+  
+              <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                <input type="text" OnlyNumbers matInput class="w-full" placeholder="0.00" formControlName="pagoventa_recibido" [spellcheck]="false"  />
+              </mat-form-field>
+  
+            </div>
+          </div>
+  
+          <div class="mb-4">
+            <div class="mb-1">
+              <h4 class="font-semibold text-2xl text-green-700 flex justify-between items-center">Recibido
+  
+                <span> {{ simboloMoneda }} {{ pagoventaRecibido | currencyFormat }} </span>
+              </h4>
+              
+            </div>
+    
+            <div class="mb-1">
+              <h4 class="font-semibold text-2xl text-red-500 justify-between items-center">FALTA: 
+  
+                <span>{{ simboloMoneda }} {{ pagoventaFalta | currencyFormat }}</span>
+              </h4>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="mb-1">
+              <h4 class="font-semibold text-2xl text-yellow-500 flex justify-between items-center">Vuelto: 
+  
+                <span>{{ simboloMoneda }} {{ pagoventaVuelto | currencyFormat }}</span>
+              </h4>
+            </div>
+    
+          </div> -->
+  
+          <div class="mb-4">
+            <div class="">
+              <mat-form-field class="mat-no-subscript w-full">
+                <mat-label>Condición de pago</mat-label>
+                <mat-select
+                placeholder="Condición de pago"
+                formControlName="venta_tipo"
+                [spellcheck]="false"
+                (selectionChange)="changeCondicionPago($event)"
+              >
+                <mat-option
+                  *ngFor="let condicionpago of condicionesPagoList"
+                  [value]="condicionpago.id"
+                >
+                  {{ condicionpago.descripcion }}
+                </mat-option>
+              </mat-select>
+              </mat-form-field>
+            </div>
+  
+            <div *ngIf="formVenta.get('venta_tipo').value === condicionPagoCredito">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-1">
+                  <mat-form-field class="w-full">
+                    <mat-label>Días de crédito</mat-label>
+                    <mat-select formControlName="diascredito_id"
+                      (selectionChange)="changeDiasCredito($event)"
+                    >
+                      <mat-option
+                        [value]="diascredito.diascredito_id"
+                        *ngFor="let diascredito of diasCreditoList"
+                        [value]="diascredito.diascredito_id"
+                      >
+                        {{ diascredito.diascredito_label }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+    
+                <div class="col-span-1">
+                  <mat-form-field class="mat-no-subscript w-full">
+                    <mat-label>Fecha de Vencimiento</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="venta_creditofechavecimiento" disabled>
+                    <mat-hint>DD/MM/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                
+              </div>
+              
+  
+            </div>
+
+            <div formArrayName="amortizaciones" *ngIf="formVenta.get('venta_tipo').value === condicionPagoContado">
+              <div *ngFor="let amortizacion of amortizaciones.controls; let i = index"
+                [formGroupName]="i"
+              >
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="col-span-1">
+                    <mat-form-field class="mat-no-subscript w-full">
+                      <mat-label>Método de pago</mat-label>
+                      <mat-select
+                      placeholder="Condición de pago"
+                      formControlName="amortizacion_pagomodalidad"
+                      [spellcheck]="false"
+                    >
+                      <mat-option
+                        *ngFor="let pago of tiposPago"
+                        [value]="pago.id"
+                      >
+                        {{ pago.descripcion }}
+                      </mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-span-1">
+                    <mat-form-field class="mat-no-subscript w-full">
+                      <mat-label>Monto</mat-label>
+                      <input matInput formControlName="amortizacion_monto" placeholder="0.00" />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+          </div>
+
+          <div>
+            <button class="w-full flex justify-center items-center gap-2" mat-flat-button [color]="'primary'"
+              type="submit"
+            >
+              <mat-icon fontIcon="payments"></mat-icon>
+              Realizar venta
+    
+            </button>
+          </div>
+        </div>
+  
+  
+        <mat-divider [vertical]="true"></mat-divider>
+        
+        <div class="flex-grow">
+          <div>
+            <div class="mb-4">
+              <h3 class="mb-3 font-semibold text-sm">TIPO DOCUMENTO</h3>
+              <div>
+                <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [hideSingleSelectionIndicator]="false" class="w-full" formControlName="comprobante_id" [spellcheck]="false">
+                  <mat-button-toggle  [value]="comprobante.comprobante_id" class="w-full" *ngFor="let comprobante of comprobantesList | async">
+                    {{ comprobante.comprobante_descripcion }}
+                  </mat-button-toggle>
+                  <!-- <mat-button-toggle value="italic" class="w-full">FACTURA</mat-button-toggle> -->
+                </mat-button-toggle-group>
+              </div>
+            </div>
+      
+              <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-2">
+                  <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                    <mat-label>Fec. emisión</mat-label>
+                    <input matInput [matDatepicker]="pickerFechaEmision" formControlName="venta_fechaemision" placeholder="Fecha emisión">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFechaEmision"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFechaEmision></mat-datepicker>
+                  </mat-form-field>
+                </div>
+          
+                <!-- <div class="col-span-1">
+                  <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                    <mat-label>Fec. Vencimiento</mat-label>
+                    <input matInput [matDatepicker]="pickerFechaVencimiento" formControlName="venta_fechavencimiento" placeholder="Fecha vencimiento">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFechaVencimiento"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFechaVencimiento></mat-datepicker>
+                  </mat-form-field>
+                </div> -->
+              </div>
+              
+              <mat-divider class="py-4"></mat-divider>
+            <div>
+              <div class="w-full flex items-center gap-4">
+                <div class="w-[60%] relative">
+                  <mat-form-field class="mat-no-subscript w-full relative" floatLabel="always">
+                    <mat-label>Agrega un item</mat-label>
+                    <input 
+                      matInput 
+                      placeholder="Busca un item" 
+                      class="w-full" 
+                      (input)="onInputProducto($event)"
+                      formControlName="controlProducto"
+                      (focus)="onFocusProducto()"
+                      (click)="this.mostrarResultadoProductos = true; $event.stopPropagation();"
+                    />  
+                    <!-- <mat-autocomplete  #auto="matAutocomplete"
+                      (optionSelected)="selectProducto($event.option.value)"  [displayWith]="displayFnProducto">
+                      <mat-option [value]="producto" *ngFor="let producto of productosList | async">
+                        {{ producto.presentacionproducto_descripcioncompleta }}
+                      </mat-option>
+                    </mat-autocomplete> -->
+                  </mat-form-field>
+
+                  <ng-container *ngIf="productosList | async as productosList">
+                    <div class="absolute z-10 w-full h-250px! bg-white shadow-lg rounded-lg -mt-2 border overflow-y-auto" style="height: 250px !important;"
+                      *ngIf="mostrarResultadoProductos && (productosList).length > 0"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <div *ngFor="let item of productosList" class="flex flex-col mb-2 hover:bg-gray-100 cursor-pointer"
+                        (click)="selectProducto(item);  $event.stopPropagation()"
+                      >
+                        <div class="px-4 py-2">
+                          <p>{{ item.presentacionproducto_nombre }} </p>
+                        <div class="flex justify-between">
+                          <p>
+                            <b class="block">Lote: {{ item.lote.lote_codigo }}</b>
+                            <b class="block">Fec. Vencimiento: {{ item.lote.lote_fechavencimientoformateada }}</b>
+                          </p>
+                          <p>
+                            <b>Cant: {{ item.lotedetallecompra.lotedetallecompra_cantidaddisponible }}</b>
+                          </p>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                </ng-container>
+
+                </div>
+                <div class="w-[25%]">
+                  <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+                    <mat-label>Cantidad</mat-label>
+                    <input matInput placeholder="0.00" class="w-full" formControlName="controlCantidad" OnlyPositiveInteger />
+                  </mat-form-field>
+                </div>
+                <div class="w-[15%]">
+                  <button type="button" class="w-full" mat-flat-button [color]="'primary'" (click)="agregarProducto()"
+                    [disabled]="!formVenta.get('controlCantidad').value || formVenta.get('controlCantidad').value == ''"
+                  >
+                    Agregar
+                  </button>
+                </div>
+            </div>
+      
+      
+              <div class="w-full">
+                <table class="py-4 px-6 w-full mb-1">
+                  <thead
+                    class="py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
+                  >
+                    <tr>
+                      <th class="font-bold px-6 py-4 text-left" width="40%">Descripcion</th>
+                      <th class="font-bold px-6 py-4 text-left">Precio</th>
+                      <!-- <th class="font-bold px-6 py-4 text-left">Cantidad disponible</th> -->
+                      <th class="font-bold px-6 py-4 text-left">Cantidad</th>
+                      <th class="font-bold px-6 py-4 ext-left">Importe</th>
+                      <th class="font-bold px-6 py-4 text-left"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container formArrayName="pedidos" *ngIf="pedidos.controls.length > 0">
+                      <tr *ngFor="let pedido of pedidos.controls; let i = index" [formGroupName]="i">
+                        <td class="px-6 py-4 font-medium">{{ pedido.get("detalleventa_descripcion").value }}</td>
+                        <td class="px-6 py-4 font-medium">{{ simboloMoneda }} {{ pedido.get("detalleventa_precio").value | currencyFormat }}</td>
+                        <!-- <td class="px-6 py-4 font-medium">{{ pedido.get("producto")?.value?.lotedetallecompra?.lotedetallecompra_cantidaddisponible }}</td> -->
+                        
+                        <td class="px-6 py-4 font-medium" >
+                          <mat-form-field class="mat-no-subscript w-full">
+                            <input type="text" matInput class="w-full" formControlName="detalleventa_cantidad" OnlyPositiveInteger (change)="onChangeCantidad()"/>
+                          </mat-form-field>
+                        </td>
+                        <td class="px-6 py-4 font-medium">{{ simboloMoneda }} {{ pedido.get("detalleventa_importe").value | currencyFormat }}</td>
+                        <td class="px-6 py-4 font-medium">
+                          <button mat-button color="warn" (click)="eliminarPedido(i)">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
+                          </button>
+                        </td>
+                      </tr>
+                  </ng-container>
+                  <ng-container *ngIf="!pedidos.controls.length">
+                    <tr>
+                      <td colspan="4" class="text-center py-4"> Aún no has agregado items</td>
+                    </tr>
+                  </ng-container>
+                  
+                  </tbody>
+                </table>
+                <mat-divider class="mb-4"></mat-divider>
+                <div class="mb-2 flex justify-end">
+                  <h3 class="font-bold text-xl">TOTAL PAGAR: {{ simboloMoneda }} {{ totalImporte | currencyFormat }}</h3>
+                </div>
+      
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </form>
+  
+  </div>
+  
+</div>

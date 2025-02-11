@@ -1,0 +1,144 @@
+<div class="p-2 w-full">
+  <section class="absolute inset-0 flex flex-col min-w-0 overflow-hidden p-4" *ngIf="ventaStore.vm() as vm" [appLoading]="vm.ventaLoading">
+    <form [formGroup]="formVenta" (ngSubmit)="buscar()" class="bg-white p-4">
+      <div class="flex justify-end mb-4">
+        <div class="flex gap-2">
+          <button
+            class="ml-4"
+            mat-flat-button
+            [color]="'accent'"
+            type="submit"
+          > 
+            <div class="flex gap-2 items-center">
+              <mat-icon [svgIcon]="'heroicons_outline:arrow-path'"></mat-icon>
+              <span class="ml-2 mr-1">Buscar</span>
+            </div>
+          </button>
+        
+          <a
+            class="ml-4 flex gap-2 items-center"
+            mat-flat-button
+            [color]="'accent'"
+            routerLink="/caja/venta/nueva-venta"
+          >
+            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+            <span class="ml-2 mr-1">Nueva venta</span>
+          </a>
+        </div>
+      </div>
+  
+      <div class="w-full grid grid-cols-4 gap-4">
+        <div class="col-span-2 w-full">
+          <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+            <mat-label>Cliente</mat-label>
+            <input matInput placeholder="Cliente" formControlName="cliente" />
+          </mat-form-field>
+        </div>
+        <div class="col-span-1 w-full">
+          <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+            <mat-label>Serie</mat-label>
+            <input matInput placeholder="0000" formControlName="ventaSerie" />
+          </mat-form-field>
+        </div>
+        <div class="col-span-1 w-full">
+          <mat-form-field class="mat-no-subscript w-full" floatLabel="always">
+            <mat-label>Correlativo</mat-label>
+            <input matInput placeholder="00000000" formControlName="ventaCorrelativo" />
+          </mat-form-field>
+        </div>
+      </div>
+    </form> 
+  
+    <div class="w-full flex flex-col flex-auto overflow-hidden bg-white">
+      <ng-container *ngIf="vm.ventaData.length">
+        <div class="flex flex-col flex-auto overflow-hidden">
+          <div class="flex-grow overflow-x-auto mb-[73px]">
+            <div class="py-2 px-4 inline-block min-w-full">
+              <div class="overflow-hidden relative">
+                <table class="min-w-full">
+                  <thead class="bg-gray-100 dark:bg-black dark:bg-opacity-5 sticky top-0">
+                    <tr>
+                      <th class="font-bold px-6 py-4 text-left">Fecha</th>
+                      <!-- <th class="font-bold px-6 py-4 text-left">Caja</th> -->
+                      <th class="font-bold px-6 py-4 text-left">Cliente</th>
+                      <th class="font-bold px-6 py-4 text-left">Documento</th>
+                      <th class="font-bold px-6 py-4 text-left">Pagos</th>
+                      <th class="font-bold px-6 py-4 text-left">Total venta</th>
+                      <th class="font-bold px-6 py-4 text-left"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let venta of vm.ventaData">
+                      <tr class="border-b"
+                      [ngClass]="{'bg-red-50': !venta.venta_activo}"
+                      >
+                        <td class="px-6 py-4 font-medium">
+                          <ng-container *ngIf="venta.venta_fecha">
+                            {{ venta.venta_fecha }}   
+                          </ng-container>                          
+                        </td>
+                        <!-- <td class="px-6 py-4 font-medium">
+                          <ng-container *ngIf="venta.caja">
+                            {{ venta.caja?.caja_descripcion }}
+                          </ng-container>
+                        </td> -->
+                        <td class="px-6 py-4 font-medium">
+                          {{ venta.cliente_nombres }} {{ venta.cliente_apellidos }}
+                        </td>
+                        <td class="px-6 py-4 font-medium">
+                          <p>
+                            <span class="block" *ngIf="venta.comprobante_id === COMPROBANTES.BOLETA">BOLETA</span>
+                            <span class="block" *ngIf="venta.comprobante_id === COMPROBANTES.FACTURA">FACTURA</span>
+                            {{ venta.venta_serie }} - {{ venta.venta_correlativo }}
+                          </p>
+                        </td>
+                        <td class="px-6 py-4">
+                          <ng-container *ngIf="venta.pagos">
+                            <div *ngFor="let pago of venta.pagos">
+                              <p>
+                              <b *ngIf="pago.pagoventa_tipo == TIPO_PAGOE_FECTIVO">Efectivo ({{ simboloMoneda }}): </b>
+                              <b *ngIf="pago.pagoventa_tipo == TIPO_PAGO_TARJETA">Tarjeta ({{ simboloMoneda }}): </b>
+                              {{ pago.pagoventa_monto }}
+                            </p>
+                            </div> 
+                          </ng-container>
+                          
+                        </td>
+                        <td class="px-6 py-4">
+                          {{ simboloMoneda }} {{ venta.venta_total }}
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                          <button class="bg-blue-600 text-white m-0 p-1  rounded-full flex items-center" (click)="verVenta(venta)">
+                            <mat-icon fontIcon="visibility" class="text-white text-[18px] m-0 p-0"></mat-icon>
+                          </button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+  
+          <mat-paginator
+            class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
+            (page)="changePagination($event)"
+            [ngClass]="{ 'pointer-events-none': vm.ventaLoading }"
+            [length]="vm.ventaPagination?.totalRows"
+            [pageIndex]="vm.ventaPagination?.currentPage - 1"
+            [pageSize]="vm.ventaPagination?.perPage"
+            [pageSizeOptions]="[10, 25, 100]"
+            [showFirstLastButtons]="true"
+          ></mat-paginator>
+        </div>
+      </ng-container>
+  
+      <div
+        *ngIf="!vm.ventaData.length && !vm.ventaLoading"
+        class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+      >
+        No se encontraron registros!
+      </div>
+    </div>
+  </section>
+</div>

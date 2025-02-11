@@ -1,0 +1,10 @@
+table {
+  border-collapse: collapse; /* Para evitar espacio entre celdas */
+}
+
+thead {
+  position: sticky; /* Fija la posición */
+  top: 0; /* Se quedará fijo en la parte superior */
+  z-index: 1; /* Asegúrate de que esté sobre otros elementos */
+  background-color: #f8fafc; /* Color de fondo para el encabezado */
+} 
