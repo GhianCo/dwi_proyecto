@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { map } from "rxjs/operators";
-import { environment } from "@environments/environment";
-import { Observable } from "rxjs";
-import { IResponse } from '@shared/interfaces/IResponse';
-import { HttpService } from "@shared/services/http.service";
-import { UsuarioMapper as UsuarioMapper } from './mappers/usuario.mapper';
+import {Injectable} from '@angular/core';
+import {map} from "rxjs/operators";
+import {environment} from "@environments/environment";
+import {Observable} from "rxjs";
+import {IResponse} from '@shared/interfaces/IResponse';
+import {HttpService} from "@shared/services/http.service";
+import {UsuarioMapper as UsuarioMapper} from './mappers/usuario.mapper';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +21,8 @@ export class UsuarioRemoteReq {
     }
 
     requestSearchUsuarioByCriteria(criteria): Observable<IResponse> {
-        return this.http.post(this.REMOTE_API_URI + 'usuario/searchByParams', criteria)
+        const {query, page, perPage} = criteria;
+        return this.http.get(this.REMOTE_API_URI + 'usuario/getAll?query=' + query + '&page=' + page + '&perPage=' + perPage)
             .pipe(
                 map((response: any) => {
                     if (response.data) {
@@ -45,7 +46,7 @@ export class UsuarioRemoteReq {
     }
 
     requestUpdateUsuario(usuario: any): Observable<IResponse> {
-        const { usuario_id } = usuario;
+        const {usuario_id} = usuario;
         return this.http.put(this.REMOTE_API_URI + 'usuario', usuario_id, usuario)
             .pipe(
                 map((response: any) => {

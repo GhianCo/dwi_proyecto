@@ -13,65 +13,14 @@
         <url-pattern>/*</url-pattern> <!-- Aplica el filtro a todas las solicitudes -->
     </filter-mapping>
     
-    
-    <servlet>
-        <servlet-name>LoginCtrl</servlet-name>
-        <servlet-class>modules.usuario.servlets.LoginCtrl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginCtrl</servlet-name>
-        <url-pattern>/auth/login</url-pattern>
-    </servlet-mapping>
-    
-    <!-- Inicio CRUD Usuarios -->
-    
-    <servlet>
-        <servlet-name>UsuarioGetAll</servlet-name>
-        <servlet-class>modules.usuario.servlets.GetAll</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UsuarioGetAll</servlet-name>
-        <url-pattern>/api/usuario/getAll</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>UsuarioGetOne</servlet-name>
-        <servlet-class>modules.usuario.servlets.GetOne</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UsuarioGetOne</servlet-name>
-        <url-pattern>/api/usuario/*</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>UsuarioCreate</servlet-name>
-        <servlet-class>modules.usuario.servlets.Create</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UsuarioCreate</servlet-name>
-        <url-pattern>/api/usuario/create</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>UsuarioUpdate</servlet-name>
-        <servlet-class>modules.usuario.servlets.Update</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UsuarioUpdate</servlet-name>
-        <url-pattern>/api/usuario/update</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>UsuarioDelete</servlet-name>
-        <servlet-class>modules.usuario.servlets.Delete</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UsuarioDelete</servlet-name>
-        <url-pattern>/api/usuario/delete/*</url-pattern>
-    </servlet-mapping>
-    
-    <!-- Fin CRUD Usuarios -->
-    
+    <filter>
+        <filter-name>CORS</filter-name>
+        <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CORS</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <!-- Inicio CRUD Conductor -->
     
     <servlet>
@@ -119,9 +68,9 @@
         <url-pattern>/api/conductor/delete/*</url-pattern>
     </servlet-mapping>
     
-     <!-- Fin CRUD Conductor -->
+    <!-- Fin CRUD Conductor -->
 
-     <!-- Inicio CRUD Especie -->
+    <!-- Inicio CRUD Especie -->
 
     <servlet>
         <servlet-name>EspecieGetAll</servlet-name>

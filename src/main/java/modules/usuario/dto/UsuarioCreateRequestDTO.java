@@ -3,10 +3,10 @@ package modules.usuario.dto;
 public class UsuarioCreateRequestDTO {
 
     private int id;
-    private int persona_id;
+    private int personaId;
     private String nombres;
     private String apellidos;
-    private String numero_documento;
+    private String numeroDocumento;
     private String telefono;
     private String email;
     private String direccion;
@@ -23,11 +23,11 @@ public class UsuarioCreateRequestDTO {
     }
 
     public int getPersonaId() {
-        return persona_id;
+        return personaId;
     }
 
-    public void setPersonaId(int persona_id) {
-        this.persona_id = persona_id;
+    public void setPersonaId(int personaId) {
+        this.personaId = personaId;
     }
 
     public String getNombres() {
@@ -47,11 +47,11 @@ public class UsuarioCreateRequestDTO {
     }
 
     public String getNumero_documento() {
-        return numero_documento;
+        return numeroDocumento;
     }
 
-    public void setNumero_documento(String numero_documento) {
-        this.numero_documento = numero_documento;
+    public void setNumero_documento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
     }
 
     public String getTelefono() {

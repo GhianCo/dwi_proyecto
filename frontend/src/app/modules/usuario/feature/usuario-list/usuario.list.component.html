@@ -103,9 +103,6 @@
                                 Número
                               </th>
                               <th class="font-bold px-6 py-4 text-left">
-                                ¿Tiene comisiones?
-                              </th>
-                              <th class="font-bold px-6 py-4 text-left">
                                 Activo
                               </th>
                               <th class="font-bold px-6 py-4 text-right">
@@ -119,40 +116,26 @@
                                 class="border-b"
                                 [ngClass]="{
                                   'bg-gray-100':
-                                    vm.usuarioSelected?.usuario_id == usuario.usuario_id,
+                                    vm.usuarioSelected?.id == usuario.id,
                                 }"
                               >
                                 <td class="px-6 py-4 font-medium">
-                                  {{ usuario.usuario_nombres }}
-                                  {{ usuario.usuario_apellidos }}
+                                  {{ usuario.nombres }}
+                                  {{ usuario.apellidos }}
                                 </td>
                                 <td class="px-6 py-4 font-medium">
-                                  {{ usuario.usuario_correo }}
+                                  {{ usuario.email }}
                                 </td>
                                 <td class="px-6 py-4 font-medium">
-                                  <ng-container *ngIf="usuario.tipodocumento">
-                                    {{ usuario.tipodocumento?.tipodocumento_descripcion }}
+                                  <ng-container *ngIf="usuario.tipo_documento">
+                                    {{ usuario.tipo_documento }}
                                   </ng-container>
-                                  
                                 </td>
                                 <td class="px-6 py-4 font-medium">
-                                  {{ usuario.usuario_documento }}
-                                </td>
-                                <td class="px-6 py-4 font-medium">
-                                  <ng-container *ngIf="usuario.comisiones && usuario.comisiones.length > 0">
-                                    <h4>
-                                      SI
-                                    </h4>
-                                  </ng-container>
-                                  <ng-container *ngIf="!usuario.comisiones || usuario.comisiones.length === 0">
-                                    <h4>
-                                      NO
-                                    </h4>
-                                  </ng-container>
-                                  
+                                  {{ usuario.numero_documento }}
                                 </td>
                                 <td class="px-6 py-4">
-                                  @if (usuario.usuario_activo) {
+                                  @if (usuario.activo) {
                                     <mat-icon
                                       class="text-green-400"
                                       [svgIcon]="'heroicons_outline:check'"
@@ -168,7 +151,7 @@
                                   <a
                                     class="min-w-10 min-h-7 h-7 px-2 leading-6"
                                     mat-stroked-button
-                                    [routerLink]="['./', usuario.usuario_id]"
+                                    [routerLink]="['./', usuario.id]"
                                   >
                                     <mat-icon
                                       [svgIcon]="'heroicons_outline:eye'"
@@ -187,7 +170,7 @@
                   class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                   (page)="changePagination($event)"
                   [ngClass]="{ 'pointer-events-none': vm.usuarioLoading }"
-                  [length]="vm.usuarioPagination?.totalRows"
+                  [length]="vm.usuarioPagination?.totalRecords"
                   [pageIndex]="vm.zonaPagination?.currentPage - 1"
                   [pageSize]="vm.filterUsuarioToApply?.perPage"
                   [pageSizeOptions]="[10, 25, 100]"

@@ -60,8 +60,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         personaToCreate.setId(jsonRequest.getPersonaId());
         personaDao.update(personaToCreate);
-
-        usuarioToCreate.setId(jsonRequest.getId());
         usuarioDao.update(usuarioToCreate);
 
         return usuarioToCreate;

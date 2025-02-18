@@ -35,7 +35,7 @@ const initialUsuarioState: IUsuarioState = {
     tiposdocumentosData: [],
 
     filterUsuarioToApply: {
-        query: PARAM.UNDEFINED,
+        query: PARAM.VACIO,
         page: 1,
         perPage: 10
     },
@@ -91,7 +91,7 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
 
     public updateRefreshData(refreshData: boolean) {
         this.patch({ refreshData: refreshData });
-    }        
+    }
 
     public async loadSearchUsuario(criteria) {
         this.patch({ usuarioLoading: true, usuarioError: null });
@@ -111,7 +111,7 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
                 }));
             }),
         ).subscribe();
-    };  
+    };
 
     public loadAllUsuario(): Observable<any> {
         this.loadSearchUsuario(this.filterClienteToApply);
@@ -162,7 +162,7 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
         const filterUsuarioToApply = this.vm().filterUsuarioToApply;
         filterUsuarioToApply.query = searchValue;
         if (!searchValue.length) {
-            filterUsuarioToApply.query = PARAM.UNDEFINED;
+            filterUsuarioToApply.query = PARAM.VACIO;
         }
         filterUsuarioToApply.page = 1;
         this.loadSearchUsuario(filterUsuarioToApply);
@@ -171,8 +171,8 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
 
     public async loadCreateUsuario(formData) {
         this.patch({
-            createUpdateStateUsuarioLoading: true, 
-            createUpdateStateUsuarioError: null 
+            createUpdateStateUsuarioLoading: true,
+            createUpdateStateUsuarioError: null
         });
 
 
@@ -201,9 +201,9 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
                 }, 3000);
             }),
             finalize(async () => {
-                this.patch({ 
-                    // createUpdateStateTipoDocumentoLoading: false 
-                    createUpdateStateUsuarioLoading: false 
+                this.patch({
+                    // createUpdateStateTipoDocumentoLoading: false
+                    createUpdateStateUsuarioLoading: false
                 });
             }),
             catchError((error) => {
@@ -238,7 +238,7 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
 
     public async loadUpdateUsuario(formData: any) {
         this.patch({ createUpdateStateUsuarioLoading: true, createUpdateStateUsuarioError: null });
-        
+
         if(formData.usuario_fechanacimiento) {
             formData.usuario_fechanacimiento =  DateUtilityService.parseFechaFromServer(formData.usuario_fechanacimiento);
         }
@@ -298,5 +298,5 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
         ).subscribe();
     }
 
-    
+
 }

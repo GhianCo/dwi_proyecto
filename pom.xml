@@ -34,7 +34,7 @@
             <artifactId>java-jwt</artifactId>
             <version>4.4.0</version>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>4.4.0</version>
@@ -54,8 +54,12 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>9.2.0</version>
         </dependency>
-
-        
+<!-- https://mvnrepository.com/artifact/com.thetransactioncompany/cors-filter -->
+<dependency>
+    <groupId>com.thetransactioncompany</groupId>
+    <artifactId>cors-filter</artifactId>
+    <version>3.0</version>
+</dependency>
 
     </dependencies>
     
