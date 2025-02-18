@@ -99,16 +99,7 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
     public usuarioStore = inject(UsuarioStore);
 
     public permisosAgrupados: any[] = [];
-    public permisosList: any[] = this._persistenceService.get(PKEY.PERMISOS_LIST);
     public permisosUsuario: any[] = [];
-
-    public comisionEmpty = this._formBuilder.group({
-        comision_tipo: [null, [Validators.required]],
-        comision_porcentaje: [null, [Validators.required]],
-        diascredito_id: [null, []],
-        comision_activo: [true, [Validators.required]],
-        eliminar: [false, []],
-    });
 
     public cargosList = CARGOS;
 

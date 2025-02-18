@@ -1,8 +1,7 @@
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { inject } from "@angular/core";
-import { ZonaStore } from 'app/modules/zona/data-access/zona.store';
 import { UsuarioStore } from 'app/modules/usuario/data-access/usuario.store';
 
 export const usuarioDetailResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {

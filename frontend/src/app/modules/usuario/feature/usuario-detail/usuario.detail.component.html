@@ -131,12 +131,10 @@
                                         <mat-select
                                                 placeholder="Rol"
                                                 formControlName="rol"
-                                                [spellcheck]="false"
-                                        >
+                                                [spellcheck]="false">
                                             <mat-option
                                                     *ngFor="let cargo of cargosList"
-                                                    [value]="cargo.id"
-                                            >
+                                                    [value]="cargo.id">
                                                 {{ cargo.descripcion }}
                                             </mat-option>
                                         </mat-select>

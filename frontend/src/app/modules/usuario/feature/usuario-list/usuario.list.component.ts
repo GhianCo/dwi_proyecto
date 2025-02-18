@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { DOCUMENT, NgClass, NgForOf, NgIf } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
-import { FormControl } from '@angular/forms';
 import { MatDrawer, MatDrawerContainer, MatSidenavModule } from '@angular/material/sidenav';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil, tap } from 'rxjs/operators';
@@ -77,7 +76,7 @@ export class UsuarioListComponent implements OnInit, OnDestroy {
 
         }, { allowSignalWrites : true });
 
-    
+
     }
 
     ngOnInit(): void {
