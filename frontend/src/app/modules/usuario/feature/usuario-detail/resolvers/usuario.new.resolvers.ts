@@ -4,6 +4,5 @@ import { ZonaStore } from "app/modules/zona/data-access/zona.store";
 
 export const usuarioNewResolver = () => {
     const usuarioStore = inject(UsuarioStore);
-    usuarioStore.cargarTiposDocumentoActivos();
     return usuarioStore.addUsuario();
 }

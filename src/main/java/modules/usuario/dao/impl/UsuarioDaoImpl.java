@@ -212,7 +212,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
         ArrayList<Usuario> listadeUsuarios = new ArrayList<>();
         int totalRecords = 0;
 
-        String sql = "SELECT SQL_CALC_FOUND_ROWS u.id, u.persona_id, p.nombres, p.apellidos, p.numero_documento, p.email, p.tipo_documento, u.activo, u.rol "
+        String sql = "SELECT SQL_CALC_FOUND_ROWS u.id, u.persona_id, p.nombres, p.apellidos, p.numero_documento, p.email, p.tipo_documento, u.activo, u.rol, u.nick, u.clave, p.telefono, p.direccion "
                 + "FROM usuario u "
                 + "JOIN persona p ON u.persona_id = p.id "
                 + "WHERE u.activo = 1 "
@@ -244,6 +244,10 @@ public class UsuarioDaoImpl implements UsuarioDao {
                     usu.setEmail(resultSet.getString("email"));
                     usu.setTipo_documento(resultSet.getString("tipo_documento"));
                     usu.setActivo(resultSet.getString("activo"));
+                    usu.setNick(resultSet.getString("nick"));
+                    usu.setClave(resultSet.getString("clave"));
+                    usu.setTelefono(resultSet.getString("telefono"));
+                    usu.setDireccion(resultSet.getString("direccion"));
 
                     listadeUsuarios.add(usu);
                 }

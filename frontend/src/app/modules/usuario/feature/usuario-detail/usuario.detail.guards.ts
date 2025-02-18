@@ -11,7 +11,6 @@ export const canDeactivateUsuarioDetail = (
 ) => {
 
   const usuarioStore = inject(UsuarioStore);
-  usuarioStore.cargarTiposDocumentoActivos();
 
   let nextRoute: ActivatedRouteSnapshot = nextState.root;
   while (nextRoute.firstChild) {

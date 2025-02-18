@@ -1,444 +1,250 @@
-<div class="flex flex-col w-full" *ngIf="usuarioStore.vm() as vm" >
-  <ng-container *ngIf="!editMode">
-    <div
-      class="relative w-full h-22 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700"
-    >
-      <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
-        <div class="text-4xl font-bold truncate">
-          {{ vm.usuarioSelected?.usuario_nombres }}
-          {{ vm.usuarioSelected?.usuario_apellidos }}
-        </div>
-        <div class="flex items-center ml-auto mb-1">
-          <button mat-stroked-button (click)="toggleEditMode(true)">
-            <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
-            <span class="ml-2">Editar</span>
-          </button>
-        </div>
-        <button mat-icon-button [matTooltip]="'Cerrar'" [routerLink]="['../']">
-          <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
-        </button>
-      </div>
-    </div>
-    <!-- Company -->
-    <div
-      class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0"
-    >
-      <div class="w-full max-w-3xl">
-        <div class="flex flex-col mt-4 pt-6 border-t space-y-8 bg-pi">
-          <div
-            class="flex sm:items-center"
-            *ngIf="vm.usuarioSelected?.usuario_nombres"
-          >
-            <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
-            <div class="ml-6 leading-6">
-              <span class="font-bold">Nombre:</span>
-              {{ vm.usuarioSelected?.usuario_nombres }}
-            </div>
-          </div>
-          <div
-            class="flex sm:items-center"
-            *ngIf="vm.usuarioSelected?.usuario_apellidos"
-          >
-            <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
-            <div class="ml-6 leading-6">
-              <span class="font-bold">Nombre:</span>
-              {{ vm.usuarioSelected?.usuario_apellidos }}
-            </div>
-          </div>
-          <div
-            class="flex sm:items-center"
-            *ngIf="
-              vm.usuarioSelected?.tipodocumento &&
-              vm.usuarioSelected?.tipodocumento.tipodocumento_descripcion
-            "
-          >
-            <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
-            <div class="ml-6 leading-6">
-              <span class="font-bold">Tipo documento:</span>
-              {{ vm.usuarioSelected?.tipodocumento.tipodocumento_descripcion }}
-            </div>
-          </div>
-          <div
-            class="flex sm:items-center"
-            *ngIf="
-              vm.usuarioSelected?.usuario_documento &&
-              vm.usuarioSelected?.usuario_documento
-            "
-          >
-            <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
-            <div class="ml-6 leading-6">
-              <span class="font-bold">Numero:</span>
-              {{ vm.usuarioSelected?.usuario_documento }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-container>
-
-  <ng-container *ngIf="editMode">
-    <div
-      class="relative w-full h-22 px-8 sm:px-12 bftig-accent-100 dark:bg-accent-700"
-    >
-      <div
-        class="flex items-center justify-between w-full max-w-3xl mx-auto pt-6"
-      >
-        <div class="text-4xl font-bold truncate">
-          {{ vm.usuarioSelected?.usuario_nombres }}
-        </div>
-        <button mat-icon-button [matTooltip]="'Cerrar'" [routerLink]="['../']">
-          <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
-      <div class="w-full max-w-3xl">
-        <form [formGroup]="form">
-          <mat-tab-group>
-            <mat-tab label="Datos del usuario">
-              <div class="grid grid-cols-2 gap-4">
-                <div class="col-span-2">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Correo</mat-label>
-                    <input
-                      matInput
-                      formControlName="usuario_correo"
-                      placeholder="Nombres"
-                      [spellcheck]="false"
-                    />
-                  </mat-form-field>
+<div class="flex flex-col w-full" *ngIf="usuarioStore.vm() as vm">
+    <ng-container *ngIf="!editMode">
+        <div
+                class="relative w-full h-22 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700"
+        >
+            <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
+                <div class="text-4xl font-bold truncate">
+                    {{ vm.usuarioSelected?.nombres }}
+                    {{ vm.usuarioSelected?.apellidos }}
                 </div>
-                <div class="col-span-1">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Nombre de usuario</mat-label>
-                    <input
-                      matInput
-                      formControlName="usuario_usuario"
-                      placeholder="******"
-                      [spellcheck]="false"
-                    />
-                  </mat-form-field>
-                </div>
-                
-                <div class="col-span-1">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Contraseña</mat-label>
-                    <input
-                      [type]="hidePassword ? 'password' : 'text'"
-                      matInput
-                      formControlName="usuario_clave"
-                      placeholder="******"
-                      [spellcheck]="false"
-                      #usuario_claveInput
-                    />
-                    <!-- <button
-                      mat-icon-button
-                      matSuffix
-                      (click)="hidePassword = !hidePassword"
-                      [attr.aria-label]="'Hide password'"
-                      [attr.aria-pressed]="hidePassword"
-                      type="button"
-                      fontIcon="home"
-                      >
-
-                    </button> -->
-                    <button (click)="togglePassword()">
-                      <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="hidePassword ? 'visibility_off' : 'visibility'"></mat-icon>
+                <div class="flex items-center ml-auto mb-1">
+                    <button mat-stroked-button (click)="toggleEditMode(true)">
+                        <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                        <span class="ml-2">Editar</span>
                     </button>
-                  </mat-form-field>
                 </div>
-
-                <div class="col-span-2">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Cargo</mat-label>
-                    <mat-select
-                      placeholder="Cargo"
-                      formControlName="usuario_cargo"
-                      [spellcheck]="false"
-                    >
-                      <mat-option
-                        *ngFor="let cargo of cargosList"
-                        [value]="cargo.id"
-                      >
-                        {{ cargo.descripcion }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                
-                <div class="col-span-1">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>N° Celular personal</mat-label>
-                    <input
-                      matInput
-                      formControlName="usuario_celularpersonal"
-                      placeholder="******"
-                      [spellcheck]="false"
-                    />
-                  </mat-form-field>
-                </div>
-
-                <div class="col-span-1">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>N° Celular corporativo</mat-label>
-                    <input
-                      matInput
-                      formControlName="usuario_celularcorporativo"
-                      placeholder="******"
-                      [spellcheck]="false"
-                    />
-                  </mat-form-field> 
-                </div>
-
-                <div class="col-span-1">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Dirección</mat-label>
-                    <input
-                      matInput
-                      formControlName="usuario_direccion"
-                      placeholder="Dirección"
-                      [spellcheck]="false"
-                    />
-                  </mat-form-field> 
-                </div>
-
-                <div class="col-span-1">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Fecha de nacimiento</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="usuario_fechanacimiento">
-                    <mat-hint>DD/MM/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                </div>
-
-                <div class="mt-8" *ngIf="vm.usuarioSelected?.usuario_id > 0">
-                  <div class="flex flex-col">
-                    <span class="font-semibold mb-2">Estado</span>
-                    <mat-slide-toggle
-                      formControlName="usuario_activo"
-                      [color]="'primary'"
-                    >
-                      {{ form.get("usuario_activo").value ? "Activa" : "Inactiva" }}
-                    </mat-slide-toggle>
-                  </div>
-                </div>
-
-              </div>
-            </mat-tab>
-            <mat-tab label="Datos personales">
-              <div class="grid grid-cols-2 gap-4">
-                <div class="col-span-1">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Nombres</mat-label>
-                    <input
-                      matInput
-                      formControlName="usuario_nombres"
-                      placeholder="Nombres"
-                      [spellcheck]="false"
-                    />
-                  </mat-form-field>
-                </div>
-                <div class="col-span-1">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Apellidos</mat-label>
-                    <input
-                      matInput
-                      formControlName="usuario_apellidos"
-                      placeholder="Apellidos"
-                      [spellcheck]="false"
-                    />
-                  </mat-form-field>
-                </div>
-
-                <div class="col-span-1">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Tipo documento</mat-label>
-                    <mat-select
-                      placeholder="Tipo documento"
-                      formControlName="tipodocumento_id"
-                      [spellcheck]="false"
-                    >
-                      <mat-option
-                        *ngFor="let tipodocumento of vm.tiposdocumentosData"
-                        [value]="tipodocumento.tipodocumento_id"
-                      >
-                        {{ tipodocumento.tipodocumento_descripcion }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div class="col-span-1">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Número</mat-label>
-                    <input
-                      matInput
-                      formControlName="usuario_documento"
-                      placeholder="Documento"
-                      [spellcheck]="false"
-                    />
-                  </mat-form-field>
-                </div>
-                <div class="col-span-2">
-                  <mat-form-field class="mat-no-subscript w-full">
-                    <mat-label>Teléfono</mat-label>
-                    <input
-                      matInput
-                      formControlName="usuario_telefono"
-                      placeholder="Apellidos"
-                      [spellcheck]="false"
-                    />
-                  </mat-form-field>
-                </div>
-              </div>
-            </mat-tab>
-
-            <mat-tab label="Permisos">
-              <div *ngFor="let grupo of form.get('permisos').controls; let g = index" class="mb-2">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    {{ grupo.get('grupo').value }}
-                  </mat-expansion-panel-header>
-                  <mat-list>
-                    <div *ngFor="let permiso of grupo.get('permisos').controls; let p = index">
-                      <mat-list-item>
-                        <mat-checkbox [formControl]="permiso">
-                          {{ permisosAgrupados[grupo.get('grupo').value][p].permiso_descripcion }}
-                        </mat-checkbox>
-                      </mat-list-item>
+                <button mat-icon-button [matTooltip]="'Cerrar'" [routerLink]="['../']">
+                    <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                </button>
+            </div>
+        </div>
+        <!-- Company -->
+        <div
+                class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0"
+        >
+            <div class="w-full max-w-3xl">
+                <div class="flex flex-col mt-4 pt-6 border-t space-y-8 bg-pi">
+                    <div class="flex sm:items-center"
+                         *ngIf="vm.usuarioSelected?.nombres">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6">
+                            <span class="font-bold">Nombre:</span>
+                            {{ vm.usuarioSelected?.nombres }}
+                        </div>
                     </div>
-                  </mat-list>
-                </mat-expansion-panel>
-              </div>
-            </mat-tab>
-            
-            <mat-tab label="Comisiones">
-
-              <div formArrayName="comisiones">
-                <div *ngFor="let comision of comisiones.controls | customFilter: filterComisiones; let i = index;"
-                  [formGroupName]="i"  
-                  class="mb-4"
-                >
-
-                <div class="flex justify-end">
-                  <button mat-flat-button color="warn" (click)="eliminarComision(i)">Eliminar</button>
-                </div>
-                  <div class="grid grid-cols-3 gap-4">
-                    <div class="col-span-1">
-                      <mat-form-field class="mat-no-subscript w-full">
-                        <mat-label>Tipo de comisión</mat-label>
-                        <mat-select
-                          placeholder="Tipo de comisión"
-                          formControlName="comision_tipo"
-                          [spellcheck]="false"
-                          (selectionChange)="changeTipocomision($event, i)"
-                        >
-                          <mat-option
-                            *ngFor="let tipocomision of tiposComisiones"
-                            [value]="tipocomision.id"
-                          >
-                            {{ tipocomision.descripcion }}
-                          </mat-option>
-                        </mat-select>
-      
-                      </mat-form-field>
+                    <div class="flex sm:items-center"
+                         *ngIf="vm.usuarioSelected?.apellidos">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6">
+                            <span class="font-bold">Apellidos:</span>
+                            {{ vm.usuarioSelected?.apellidos }}
+                        </div>
                     </div>
-
-                    <div class="col-span-1" *ngIf="comision.get('comision_tipo')?.value == comisionPorCobranza">
-                      <mat-form-field class="w-full">
-                      <mat-label>Comisión rango</mat-label>
-                      <mat-select formControlName="diascredito_id">
-                        <mat-option
-                          [value]="diascredito.diascredito_id"
-                          *ngFor="let diascredito of diasCreditoList"
-                          [value]="diascredito.diascredito_id"
-                        >
-                          {{ diascredito.diascredito_label }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-
-                    <div class="col-span-1">
-                      <mat-form-field class="w-full">
-                        <mat-label>Porcentaje</mat-label>
-                        <input
-                          matInput
-                          formControlName="comision_porcentaje"
-                          placeholder="Valor"
-                          [spellcheck]="false"
-                        />
-                      </mat-form-field>
+                    <div class="flex sm:items-center"
+                         *ngIf="vm.usuarioSelected?.tipo_documento">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6">
+                            <span class="font-bold">Tipo documento:</span>
+                            {{ vm.usuarioSelected?.tipo_documento }}
+                        </div>
                     </div>
-
-                  </div>
-                  
-                  <!-- <mat-form-field class="w-full" *ngIf="comision == comisionPorCobranza"> -->
-                  
-
-
+                    <div class="flex sm:items-center"
+                         *ngIf="vm.usuarioSelected?.numero_documento">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6">
+                            <span class="font-bold">Numero:</span>
+                            {{ vm.usuarioSelected?.numero_documento }}
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </ng-container>
 
-                <button
-                    (click)="nuevaComision()"
-                    class="ml-2 w-full"
-                    mat-flat-button
-                    [color]="'primary'"
-                  >
-                    Agregar otra comisión
-                  </button>
-
-              </div>
-            </mat-tab>
-            
-
-          </mat-tab-group>
-
-          
-
-          <div
-            class="flex items-center mt-10 -mx-6 sm:-mx-12 py-4 pr-4 pl-1 sm:pr-12 sm:pl-7 border-t bg-gray-50 dark:bg-transparent"
-          >
+    <ng-container *ngIf="editMode">
+        <div
+                class="relative w-full h-22 px-8 sm:px-12 bftig-accent-100 dark:bg-accent-700"
+        >
             <div
-              class="ml-auto"
-              *ngIf="form.get('usuario_id').value <= 0"
-            ></div>
+                    class="flex items-center justify-between w-full max-w-3xl mx-auto pt-6"
+            >
+                <div class="text-4xl font-bold truncate">
+                    {{ vm.usuarioSelected?.nombres }}
+                </div>
+                <button mat-icon-button [matTooltip]="'Cerrar'" [routerLink]="['../']">
+                    <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                </button>
+            </div>
+        </div>
 
-            <button
-              class="ml-auto"
-              mat-button
-              [matTooltip]="'Cancel'"
-              (click)="toggleEditMode(false)"
-              *ngIf="form.get('usuario_id').value > 0"
-            >
-              Cancelar
-            </button>
-            <!--<app-flash-message *ngIf="vm.createUpdateTipoDocumentoFlashMessage"
-                                        [hasError]="vm.createUpdateTipoDocumentoError"
-                                        [message]="vm.createUpdateTipoDocumentoFlashMessage"></app-flash-message>-->
-            <button
-              class="ml-2 fuse-mat-button-large"
-              mat-flat-button
-              [color]="'primary'"
-              [disabled]="form.invalid || vm.createUpdateStateUsuarioLoading"
-              (click)="createUpdateSelected()"
-              [loadingButton]="vm.createUpdateStateUsuarioLoading"
-              >
-              Guardar
-            </button>
-            
-            <!-- <button
-              [appLadda]="vm.createUpdateStateUsuarioLoading"
-              [laddaStyle]="'expand-right'"
-              [disabled]="form.invalid"
-              (click)="createUpdateSelected()"
-            >
-              Guardar
-            </button> -->
-          </div>
-        </form>
-      </div>
-    </div>
-  </ng-container>
+        <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
+            <div class="w-full max-w-3xl">
+                <form [formGroup]="form">
+                    <mat-tab-group>
+                        <mat-tab label="Datos del usuario">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="col-span-2">
+                                    <mat-form-field class="mat-no-subscript w-full">
+                                        <mat-label>Correo</mat-label>
+                                        <input
+                                                matInput
+                                                formControlName="email"
+                                                placeholder="Nombres"
+                                                [spellcheck]="false"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-span-1">
+                                    <mat-form-field class="mat-no-subscript w-full">
+                                        <mat-label>Nombre de usuario</mat-label>
+                                        <input
+                                                matInput
+                                                formControlName="nick"
+                                                placeholder="******"
+                                                [spellcheck]="false"
+                                        />
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-span-1">
+                                    <mat-form-field class="mat-no-subscript w-full">
+                                        <mat-label>Contraseña</mat-label>
+                                        <input
+                                                [type]="hidePassword ? 'password' : 'text'"
+                                                matInput
+                                                formControlName="clave"
+                                                placeholder="******"
+                                                [spellcheck]="false"
+                                                #usuario_claveInput
+                                        />
+                                        <button (click)="togglePassword()">
+                                            <mat-icon aria-hidden="false" aria-label="Example home icon"
+                                                      [fontIcon]="hidePassword ? 'visibility_off' : 'visibility'"></mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-span-2">
+                                    <mat-form-field class="mat-no-subscript w-full">
+                                        <mat-label>Rol</mat-label>
+                                        <mat-select
+                                                placeholder="Rol"
+                                                formControlName="rol"
+                                                [spellcheck]="false"
+                                        >
+                                            <mat-option
+                                                    *ngFor="let cargo of cargosList"
+                                                    [value]="cargo.id"
+                                            >
+                                                {{ cargo.descripcion }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-span-1">
+                                    <mat-form-field class="mat-no-subscript w-full">
+                                        <mat-label>N° Celular</mat-label>
+                                        <input
+                                                matInput
+                                                formControlName="telefono"
+                                                placeholder="******"
+                                                [spellcheck]="false"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-span-1">
+                                    <mat-form-field class="mat-no-subscript w-full">
+                                        <mat-label>Dirección</mat-label>
+                                        <input
+                                                matInput
+                                                formControlName="direccion"
+                                                placeholder="Dirección"
+                                                [spellcheck]="false"
+                                        />
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="mt-8" *ngIf="vm.usuarioSelected?.id > 0">
+                                    <div class="flex flex-col">
+                                        <span class="font-semibold mb-2">Estado</span>
+                                        <mat-slide-toggle
+                                                formControlName="activo"
+                                                [color]="'primary'"
+                                        >
+                                            {{ form.get("activo").value ? "Activa" : "Inactiva" }}
+                                        </mat-slide-toggle>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Datos personales">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="col-span-1">
+                                    <mat-form-field class="mat-no-subscript w-full">
+                                        <mat-label>Nombres</mat-label>
+                                        <input
+                                                matInput
+                                                formControlName="nombres"
+                                                placeholder="Nombres"
+                                                [spellcheck]="false"
+                                        />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-span-1">
+                                    <mat-form-field class="mat-no-subscript w-full">
+                                        <mat-label>Apellidos</mat-label>
+                                        <input
+                                                matInput
+                                                formControlName="apellidos"
+                                                placeholder="Apellidos"
+                                                [spellcheck]="false"
+                                        />
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-span-1">
+                                    <mat-form-field class="mat-no-subscript w-full">
+                                        <mat-label>Número DNI</mat-label>
+                                        <input
+                                                matInput
+                                                formControlName="numero_documento"
+                                                placeholder="Documento"
+                                                [spellcheck]="false"/>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+
+                    <div class="flex items-center mt-10 -mx-6 sm:-mx-12 py-4 pr-4 pl-1 sm:pr-12 sm:pl-7 border-t bg-gray-50 dark:bg-transparent">
+                        <div
+                                class="ml-auto"
+                                *ngIf="form.get('id').value <= 0"></div>
+
+                        <button
+                                class="ml-auto"
+                                mat-button
+                                [matTooltip]="'Cancel'"
+                                (click)="toggleEditMode(false)"
+                                *ngIf="form.get('id').value > 0"
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                                class="ml-2 fuse-mat-button-large"
+                                mat-flat-button
+                                [color]="'primary'"
+                                [disabled]="form.invalid || vm.createUpdateStateUsuarioLoading"
+                                (click)="createUpdateSelected()"
+                                [loadingButton]="vm.createUpdateStateUsuarioLoading">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-container>
 </div>

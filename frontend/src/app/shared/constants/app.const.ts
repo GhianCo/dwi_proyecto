@@ -80,25 +80,20 @@ export const CONDICIONES_PAGO = [
 export const COMISION_POR_VENTA = "1";
 export const COMISION_POR_COBRANZA = "2";
 
-export const TIPOS_COMISIONES = [   
+export const TIPOS_COMISIONES = [
     { id: COMISION_POR_VENTA, descripcion: 'Comisión por venta' },
     { id: COMISION_POR_COBRANZA, descripcion: 'Comisión por cobranza' },
 ]
 
-
-export const CARGO_ADMINISTRADOR = "1";
-export const CARGO_CAJERO = "2";
-export const CARGO_ALMACEN = "3";
-export const CARGO_VENDEDOR = "4";
-
+export const CARGO_ADMINISTRADOR = "Administrador";
+export const CARGO_OPERADOR = "Operador";
+export const CARGO_AUDITOR = "Auditor";
 
 export const CARGOS = [
     { id: CARGO_ADMINISTRADOR, descripcion: 'Administrador' },
-    { id: CARGO_CAJERO, descripcion: 'Cajero' },
-    { id: CARGO_ALMACEN, descripcion: 'Almacén' },
-    { id: CARGO_VENDEDOR, descripcion: 'Vendedor' },
+    { id: CARGO_OPERADOR, descripcion: 'Operador' },
+    { id: CARGO_AUDITOR, descripcion: 'Auditor' }
 ];
-
 
 export const ORDENCOMPRA_ESTADO = {
     PENDIENTE: 1,

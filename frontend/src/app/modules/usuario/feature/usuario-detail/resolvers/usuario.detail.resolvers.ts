@@ -9,7 +9,6 @@ export const usuarioDetailResolver = (route: ActivatedRouteSnapshot, state: Rout
     const usuarioStore = inject(UsuarioStore);
     const router = inject(Router);
 
-    usuarioStore.cargarTiposDocumentoActivos();
     return usuarioStore.searchUsuarioById(route.paramMap.get('id')).pipe(
         catchError((error) => {
             console.error(error);

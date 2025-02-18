@@ -141,7 +141,7 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
         return of(this.vm().usuarioData).pipe(
             take(1),
             map((usuario) => {
-                const usuarioSelected = usuario.find(item => item.usuario_id == usuarioId) || null;
+                const usuarioSelected = usuario.find(item => item.id == usuarioId) || null;
 
                 this.patch({
                     usuarioSelected
@@ -251,7 +251,6 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
                     createUpdateStateUsuarioFlashMessage: message,
                 });
 
-
                 setTimeout(_ => {
                     this.patch({
                         createUpdateStateUsuarioFlashMessage: null
@@ -276,27 +275,4 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
         this.loadSearchUsuario(filterUsuarioToApply);
         this.patch({ filterUsuarioToApply });
     };
-
-
-    public async cargarTiposDocumentoActivos() {
-        const critearia = {
-            active: PARAM.ACTIVO
-        }
-
-        this._tipoDocumentoRemoteReq.requestSearchTipoDocumentoByCriteria(critearia).pipe(
-            tap(async ({ data }) => {
-                this.patch({
-                    tiposdocumentosData: data
-                });
-            }),
-            catchError((error) => {
-                console.log("erorr", error)
-                return of(this.patch({
-                    tiposdocumentosData: []
-                }));
-            }),
-        ).subscribe();
-    }
-
-
 }

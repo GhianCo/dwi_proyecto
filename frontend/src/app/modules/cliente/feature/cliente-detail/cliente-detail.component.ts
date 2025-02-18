@@ -32,7 +32,7 @@ import { ClienteListComponent } from '../cliente-list/cliente-list.component';
 import { ClienteStore } from '../../data-access/cliente.store';
 import { LoadingButtonDirective } from '@shared/directives/loading-button.directive';
 import { UsuarioRemoteReq } from 'app/modules/usuario/data-access/usuario.remote.req';
-import { CARGO_VENDEDOR } from '@shared/constants/app.const';
+import { CARGO_OPERADOR } from '@shared/constants/app.const';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
@@ -80,7 +80,7 @@ export class ClienteDetailComponent implements OnInit, OnDestroy {
     public diasCreditoCliente: string[] = ["10", "30", "60"];
 
     public clienteStore = inject(ClienteStore);
-    
+
     public vendedores: [];
     public oldVendedores: any[] = [];
     public filteredOptionsVendedores: Observable<any[]>;
@@ -198,7 +198,7 @@ export class ClienteDetailComponent implements OnInit, OnDestroy {
         const direcciones = this.clienteForm.get('direcciones') as FormArray;
         direcciones.push(direccionGroup);
 
-        
+
         this.onPaisChange(index);
         this.onDepartamentoChange(index);
         this.onProvinciaChange(index);
@@ -220,7 +220,7 @@ export class ClienteDetailComponent implements OnInit, OnDestroy {
         }
         this._changeDetectorRef.markForCheck();
     }
-    
+
     createUpdateSelected(): void {
         if (this.clienteForm.invalid) {
             return;
@@ -327,16 +327,16 @@ export class ClienteDetailComponent implements OnInit, OnDestroy {
             pais_id: [null, [Validators.required]],
         });
 
-        
+
         const direcciones = this.clienteForm.get('direcciones') as FormArray;
-        
+
         const responsePaises = await lastValueFrom(this._paisRemoteReq.obtenerPaisesActivos());
-        
+
         if(responsePaises.data.length > 0){
             direccionGroup.get('pais_id').setValue(responsePaises.data[0].pais_id);
         }
 
-        direcciones.push(direccionGroup);        
+        direcciones.push(direccionGroup);
         this.onPaisChange(direcciones.controls.length - 1);
 
         this.paisesDataArray[direcciones.controls.length - 1] = responsePaises.data;
@@ -371,17 +371,17 @@ export class ClienteDetailComponent implements OnInit, OnDestroy {
     public async cargarVendedores() {
         try {
             const payload = {
-                usuarioCargo: CARGO_VENDEDOR
+                usuarioCargo: CARGO_OPERADOR
             }
             const response = await lastValueFrom(this.usuarioRemoteReq.requestSearchUsuarioByCriteria(payload));
-            
+
             if(response.data) {
                 this.vendedores = response.data;
                 this.oldVendedores = response.data;
             }
-            
+
         } catch (error) {
-            
+
         }
 
     }
