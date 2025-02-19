@@ -1,4 +1,4 @@
-package modules.usuario.resources;
+package modules.usuario;
 
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
@@ -19,7 +19,7 @@ import shared.PaginationResult;
 public class UsuarioResource {
 
     @GET
-    @Path("/getAll")
+    @Path("getAll")
     public Response getAll(
             @DefaultValue("") @QueryParam("query") String query,
             @DefaultValue("1") @QueryParam("page") String page,
@@ -35,7 +35,7 @@ public class UsuarioResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("{id}")
     public Response getOne(@PathParam("id") String usuarioId) {
         UsuarioServiceImpl usuarioservice = new UsuarioServiceImpl();
         Usuario usuario = usuarioservice.buscar(usuarioId);
@@ -56,7 +56,7 @@ public class UsuarioResource {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("{id}")
     public Response update(@PathParam("id") int usuarioId, UsuarioCreateRequestDTO usuarioCreateRequestDTO) {
         UsuarioServiceImpl usuarioservice = new UsuarioServiceImpl();
         usuarioCreateRequestDTO.setId(usuarioId);
@@ -68,7 +68,7 @@ public class UsuarioResource {
     }
     
     @DELETE
-    @Path("/{id}")
+    @Path("{id}")
     public Response delete(@PathParam("id") int usuarioId) {
         UsuarioServiceImpl usuarioservice = new UsuarioServiceImpl();
         usuarioservice.borrar(usuarioId);

@@ -167,56 +167,6 @@
     </servlet-mapping>
     
     <!-- Fin CRUD embarcacion -->
-
-    <!-- Inicio CRUD TipoTransporte -->
-    
-    <servlet>
-        <servlet-name>TipoTransporteGetAll</servlet-name>
-        <servlet-class>modules.tipotransporte.servlets.GetAll</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TipoTransporteGetAll</servlet-name>
-        <url-pattern>/api/tipotransporte/getAll</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>TipoTransporteGetOne</servlet-name>
-        <servlet-class>modules.tipotransporte.servlets.GetOne</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TipoTransporteGetOne</servlet-name>
-        <url-pattern>/api/tipotransporte/*</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>TipoTransporteCreate</servlet-name>
-        <servlet-class>modules.tipotransporte.servlets.Create</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TipoTransporteCreate</servlet-name>
-        <url-pattern>/api/tipotransporte/create</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>TipoTransporteUpdate</servlet-name>
-        <servlet-class>modules.tipotransporte.servlets.Update</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TipoTransporteUpdate</servlet-name>
-        <url-pattern>/api/tipotransporte/update</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>TipoTransporteDelete</servlet-name>
-        <servlet-class>modules.tipotransporte.servlets.Delete</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TipoTransporteDelete</servlet-name>
-        <url-pattern>/api/tipotransporte/delete/*</url-pattern>
-    </servlet-mapping>
-    
-    <!-- Fin CRUD TipoTransporte -->
-    
     
     <session-config>
         <session-timeout>
