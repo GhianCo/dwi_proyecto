@@ -55,7 +55,7 @@ public class PresentacionResource {
                 .build(); 
     }
 
-    @PUT
+    @POST
     @Path("{id}")
     public Response update(@PathParam("id") int presentacionId, PresentacionCreateRequestDTO presentacionCreateRequestDTO) {
         PresentacionServiceImpl presentacionservice = new PresentacionServiceImpl();

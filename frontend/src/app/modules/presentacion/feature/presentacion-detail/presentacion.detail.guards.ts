@@ -3,7 +3,7 @@ import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {PresentacionDetailComponent} from './presentacion.detail.component';
 import {PresentacionStore} from "../../data-access/presentacion.store";
 
-export const canDeactivateTipoDocumentoDetail = (
+export const canDeactivatePresentacionDetail = (
     component: PresentacionDetailComponent,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
@@ -24,7 +24,7 @@ export const canDeactivateTipoDocumentoDetail = (
     if (nextRoute.paramMap.get('id')) {
         return true;
     } else {
-        presentacionStore.discardFromListTipoDocumentoToCreate();
+        presentacionStore.discardFromListPresentacionToCreate();
         return component.closeDrawer().then(() => true);
     }
 }

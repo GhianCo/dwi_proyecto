@@ -60,7 +60,7 @@ public class ConductorResource {
     public Response update(@PathParam("id") int conductorId, ConductorCreateRequestDTO conductorCreateRequestDTO) {
         ConductorServiceImpl conductorService = new ConductorServiceImpl();
         conductorCreateRequestDTO.setId(conductorId);
-        Conductor data = conductorService.updateConductor(conductorCreateRequestDTO);
+        Conductor data = conductorService.updateConductorAndPersona(conductorCreateRequestDTO);
         return Response
                 .status(Response.Status.OK)
                 .entity(new ActionPayload(200, data, "Conductor actualizado exitosamente"))

@@ -21,8 +21,9 @@ export class PresentacionRemoteReq {
     ) {
     }
 
-    requestSearchTipoDocumentoByCriteria(criteria): Observable<IResponse> {
-        return this.http.post(this.REMOTE_API_URI + 'tipodocumento/searchByParams', criteria)
+    requestSearchPresentacionByCriteria(criteria): Observable<IResponse> {
+        const {query, page, perPage} = criteria;
+        return this.http.get(this.REMOTE_API_URI + 'presentacion/getAll?query=' + query + '&page=' + page + '&perPage=' + perPage)
             .pipe(
                 map((response: any) => {
                     if (response.data) {
@@ -33,8 +34,8 @@ export class PresentacionRemoteReq {
             );
     }
 
-    requestCreateTipoDocumento(presentacion): Observable<IResponse> {
-        return this.http.post(this.REMOTE_API_URI + 'tipodocumento', presentacion)
+    requestCreatePresentacion(presentacion): Observable<IResponse> {
+        return this.http.post(this.REMOTE_API_URI + 'presentacion', presentacion)
             .pipe(
                 map((response: any) => {
                     if (response.data) {
@@ -45,9 +46,9 @@ export class PresentacionRemoteReq {
             );
     }
 
-    requestUpdateTipoDocumento(presentacion): Observable<IResponse> {
-        const { tipodocumento_id } = presentacion;
-        return this.http.put(this.REMOTE_API_URI + 'tipodocumento',  tipodocumento_id, presentacion)
+    requestUpdatePresentacion(presentacion): Observable<IResponse> {
+        const { id } = presentacion;
+        return this.http.post(this.REMOTE_API_URI + 'presentacion/' +  id, presentacion)
             .pipe(
                 map((response: any) => {
                     if (response.data) {

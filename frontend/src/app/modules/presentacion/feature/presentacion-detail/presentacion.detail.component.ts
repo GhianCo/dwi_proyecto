@@ -62,15 +62,16 @@ export class PresentacionDetailComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this._presentacionListComponent.matDrawer.open();
         this.presentacionForm = this._formBuilder.group({
-            tipodocumento_id: [''],
-            tipodocumento_descripcion: ['', [Validators.required]],
-            tipodocumento_activo: [true]
+            id: [''],
+            nombre: ['', [Validators.required]],
+            peso_promedio: ['', [Validators.required]],
+            activa: [true]
         });
         of(this.presentacionStore.vm().presentacionSelected)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((presentacionSelected: any) => {
                 this._presentacionListComponent.matDrawer.open();
-                if(presentacionSelected?.tipodocumento_id > 0) {
+                if(presentacionSelected?.id > 0) {
                     this.toggleEditMode(false);
                 } else {
                     this.toggleEditMode(true);
@@ -100,10 +101,10 @@ export class PresentacionDetailComponent implements OnInit, OnDestroy {
             return;
         }
         const presentacion = this.presentacionForm.getRawValue();
-        if (presentacion.tipodocumento_id) {
-            this.presentacionStore.loadUpdateTipoDocumento(presentacion);
+        if (presentacion.id) {
+            this.presentacionStore.loadUpdatePresentacion(presentacion);
         } else {
-            this.presentacionStore.loadCreateTipoDocumento(presentacion);
+            this.presentacionStore.loadCreatePresentacion(presentacion);
         }
     }
 

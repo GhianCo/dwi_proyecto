@@ -56,7 +56,7 @@ export class PresentacionListComponent implements OnInit, OnDestroy {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    private searchTipoDocumentoChanged: Subject<string> = new Subject<string>();
+    private searchPresentacionChanged: Subject<string> = new Subject<string>();
 
     presentacionStore = inject(PresentacionStore);
 
@@ -91,11 +91,11 @@ export class PresentacionListComponent implements OnInit, OnDestroy {
 
                 this._changeDetectorRef.markForCheck();
             });
-        this.searchTipoDocumentoChanged.pipe(
+        this.searchPresentacionChanged.pipe(
             takeUntil(this._unsubscribeAll),
             debounceTime(800),
             tap(searchValue => {
-                this.presentacionStore.changeQueryInTipoDocumento(searchValue);
+                this.presentacionStore.changeQueryInPresentacion(searchValue);
             })
         ).subscribe();
     }
@@ -106,16 +106,16 @@ export class PresentacionListComponent implements OnInit, OnDestroy {
         this._changeDetectorRef.markForCheck();
     }
 
-    public searchTipoDocumentoByQuery(searchValue: string) {
-        this.searchTipoDocumentoChanged.next(searchValue);
+    public searchPresentacionByQuery(searchValue: string) {
+        this.searchPresentacionChanged.next(searchValue);
     }
 
     public changePagination(event: any) {
-        this.presentacionStore.changePageInTipoDocumento(event);
+        this.presentacionStore.changePageInPresentacion(event);
     }
 
     public loadAllStatesFixedAsset() {
-        this.presentacionStore.loadAllTipoDocumento();
+        this.presentacionStore.loadAllPresentacion();
     }
 
     ngOnDestroy(): void {

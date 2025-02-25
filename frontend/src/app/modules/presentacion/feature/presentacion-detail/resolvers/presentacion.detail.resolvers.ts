@@ -7,7 +7,7 @@ import {inject} from "@angular/core";
 export const presentacionDetailResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const presentacionStore = inject(PresentacionStore);
     const router = inject(Router);
-    return presentacionStore.searchTipoDocumentoById(route.paramMap.get('id')).pipe(
+    return presentacionStore.searchPresentacionById(route.paramMap.get('id')).pipe(
         catchError((error) => {
             console.error(error);
             const parentUrl = state.url.split('/').slice(0, -1).join('/');

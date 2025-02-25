@@ -199,7 +199,6 @@ public class PresentacionDaoImpl implements PresentacionDao {
             int paramIndex = 1;
             if (query != null && !query.isEmpty()) {
                 preparedStatement.setString(paramIndex++, "%" + query + "%");
-                preparedStatement.setString(paramIndex++, "%" + query + "%");
             }
 
             preparedStatement.setInt(paramIndex++, perPage);

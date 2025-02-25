@@ -6,7 +6,7 @@ import {PARAM} from "@shared/constants/app.const";
 import {SignalStore} from "@shared/data-access/signal.store";
 import {PresentacionRemoteReq} from "./presentacion.remote.req";
 
-export type ITipoDocumentoState = {
+export type IPresentacionState = {
     presentacionLoading: boolean,
     presentacionData: any[],
     presentacionPagination: any,
@@ -14,14 +14,14 @@ export type ITipoDocumentoState = {
 
     presentacionSelected: any,
 
-    filterTipoDocumentoToApply: any,
+    filterPresentacionToApply: any,
 
-    createUpdateStateTipoDocumentoLoading: boolean,
-    createUpdateStateTipoDocumentoFlashMessage: string,
-    createUpdateStateTipoDocumentoError: any,
+    createUpdateStatePresentacionLoading: boolean,
+    createUpdateStatePresentacionFlashMessage: string,
+    createUpdateStatePresentacionError: any,
 }
 
-const initialTipoDocumentoState: ITipoDocumentoState = {
+const initialPresentacionState: IPresentacionState = {
     presentacionLoading: false,
     presentacionData: [],
     presentacionPagination: null,
@@ -29,22 +29,22 @@ const initialTipoDocumentoState: ITipoDocumentoState = {
 
     presentacionSelected: null,
 
-    filterTipoDocumentoToApply: {
-        query: PARAM.UNDEFINED,
+    filterPresentacionToApply: {
+        query: PARAM.VACIO,
         page: 1,
         perPage: 10
     },
 
-    createUpdateStateTipoDocumentoLoading: false,
-    createUpdateStateTipoDocumentoFlashMessage: null,
-    createUpdateStateTipoDocumentoError: null,
+    createUpdateStatePresentacionLoading: false,
+    createUpdateStatePresentacionFlashMessage: null,
+    createUpdateStatePresentacionError: null,
 };
 
 @Injectable({providedIn: 'root'})
-export class PresentacionStore extends SignalStore<ITipoDocumentoState> {
+export class PresentacionStore extends SignalStore<IPresentacionState> {
 
     public readonly vm = this.selectMany([
-        'filterTipoDocumentoToApply',
+        'filterPresentacionToApply',
 
         'presentacionLoading',
         'presentacionData',
@@ -53,9 +53,9 @@ export class PresentacionStore extends SignalStore<ITipoDocumentoState> {
 
         'presentacionSelected',
 
-        'createUpdateStateTipoDocumentoLoading',
-        'createUpdateStateTipoDocumentoFlashMessage',
-        'createUpdateStateTipoDocumentoError',
+        'createUpdateStatePresentacionLoading',
+        'createUpdateStatePresentacionFlashMessage',
+        'createUpdateStatePresentacionError',
     ]);
 
     constructor(
@@ -64,7 +64,7 @@ export class PresentacionStore extends SignalStore<ITipoDocumentoState> {
         private _activatedRoute: ActivatedRoute,
     ) {
         super();
-        this.initialize(initialTipoDocumentoState);
+        this.initialize(initialPresentacionState);
     }
 
     public get presentacionSelected() {
@@ -77,14 +77,14 @@ export class PresentacionStore extends SignalStore<ITipoDocumentoState> {
         return state.presentacionData
     };
 
-    public get filterTipoDocumentoToApply() {
+    public get filterPresentacionToApply() {
         const state = this.vm();
-        return state.filterTipoDocumentoToApply
+        return state.filterPresentacionToApply
     };
 
-    public async loadSearchTipoDocumento(criteria) {
+    public async loadSearchPresentacion(criteria) {
         this.patch({presentacionLoading: true, presentacionError: null});
-        this._presentacionRemoteReq.requestSearchTipoDocumentoByCriteria(criteria).pipe(
+        this._presentacionRemoteReq.requestSearchPresentacionByCriteria(criteria).pipe(
             tap(async ({data, pagination}) => {
                 this.patch({
                     presentacionData: data,
@@ -102,18 +102,19 @@ export class PresentacionStore extends SignalStore<ITipoDocumentoState> {
         ).subscribe();
     };
 
-    public loadAllTipoDocumento(): Observable<any> {
-        this.loadSearchTipoDocumento(this.filterTipoDocumentoToApply);
+    public loadAllPresentacion(): Observable<any> {
+        this.loadSearchPresentacion(this.filterPresentacionToApply);
         return of(true);
     };
 
-    public addTipoDocumento(): Observable<any> {
+    public addPresentacion(): Observable<any> {
         const presentacionData: any[] = [...this.presentacionData];
 
         const presentacionSelected = {
-            tipodocumento_id: null,
-            tipodocumento_descripcion: null,
-            tipodocumento_activo: true
+            id: null,
+            nombre: null,
+            peso_promedio: null,
+            activa: true
         };
 
         presentacionData.unshift(presentacionSelected);
@@ -125,12 +126,12 @@ export class PresentacionStore extends SignalStore<ITipoDocumentoState> {
         return of(true);
     };
 
-    public searchTipoDocumentoById(presentacionId): Observable<any> {
+    public searchPresentacionById(presentacionId): Observable<any> {
         return of(this.vm().presentacionData).pipe(
             take(1),
             map((presentacion) => {
 
-                const presentacionSelected = presentacion.find(item => item.tipodocumento_id == presentacionId) || null;
+                const presentacionSelected = presentacion.find(item => item.id == presentacionId) || null;
 
                 this.patch({
                     presentacionSelected
@@ -141,7 +142,7 @@ export class PresentacionStore extends SignalStore<ITipoDocumentoState> {
             switchMap((presentacion) => {
 
                 if (!presentacion) {
-                    return throwError('No se encontro el tipodocumento con el id: ' + presentacionId + '!');
+                    return throwError('No se encontro el presentacion con el id: ' + presentacionId + '!');
                 }
 
                 return of(presentacion);
@@ -149,61 +150,61 @@ export class PresentacionStore extends SignalStore<ITipoDocumentoState> {
         );
     };
 
-    public changeQueryInTipoDocumento(searchValue) {
-        const filterTipoDocumentoToApply = this.vm().filterTipoDocumentoToApply;
-        filterTipoDocumentoToApply.query = searchValue;
+    public changeQueryInPresentacion(searchValue) {
+        const filterPresentacionToApply = this.vm().filterPresentacionToApply;
+        filterPresentacionToApply.query = searchValue;
         if (!searchValue.length) {
-            filterTipoDocumentoToApply.query = PARAM.UNDEFINED;
+            filterPresentacionToApply.query = PARAM.UNDEFINED;
         }
-        filterTipoDocumentoToApply.page = 1;
-        this.loadSearchTipoDocumento(filterTipoDocumentoToApply);
-        this.patch({filterTipoDocumentoToApply});
+        filterPresentacionToApply.page = 1;
+        this.loadSearchPresentacion(filterPresentacionToApply);
+        this.patch({filterPresentacionToApply});
     };
 
-    public async loadCreateTipoDocumento(formData) {
-        this.patch({createUpdateStateTipoDocumentoLoading: true, createUpdateStateTipoDocumentoError: null});
-        formData.tipodocumento_fiscalizado = 1;
-        formData.tipodocumento_estado = formData.tipodocumento_activo ? PARAM.ACTIVO : PARAM.INACTIVO;
-        this._presentacionRemoteReq.requestCreateTipoDocumento(formData).pipe(
+    public async loadCreatePresentacion(formData) {
+        this.patch({createUpdateStatePresentacionLoading: true, createUpdateStatePresentacionError: null});
+        delete formData.id;
+        formData.activa = formData.activa ? PARAM.ACTIVO : PARAM.INACTIVO;
+        this._presentacionRemoteReq.requestCreatePresentacion(formData).pipe(
             tap(async ({data, message}) => {
-                this.updateTipoDocumentoInList(data);
+                this.updatePresentacionInList(data);
                 this.patch({
                     presentacionSelected: data,
-                    createUpdateStateTipoDocumentoFlashMessage: message,
-                    createUpdateStateTipoDocumentoError: null
+                    createUpdateStatePresentacionFlashMessage: message,
+                    createUpdateStatePresentacionError: null
                 });
 
-                this._router.navigate(['gestion/presentacion', data.tipodocumento_id], {relativeTo: this._activatedRoute});
+                this._router.navigate(['gestion/presentacion', data.id], {relativeTo: this._activatedRoute});
 
                 setTimeout(_ => {
                     this.patch({
-                        createUpdateStateTipoDocumentoFlashMessage: null
+                        createUpdateStatePresentacionFlashMessage: null
                     });
                 }, 3000);
             }),
             finalize(async () => {
-                this.patch({createUpdateStateTipoDocumentoLoading: false});
+                this.patch({createUpdateStatePresentacionLoading: false});
             }),
             catchError((error) => {
                 return of(this.patch({
-                    createUpdateStateTipoDocumentoError: error
+                    createUpdateStatePresentacionError: error
                 }));
             }),
         ).subscribe();
     };
 
-    public discardFromListTipoDocumentoToCreate() {
+    public discardFromListPresentacionToCreate() {
         const presentacionDataStored = this.vm().presentacionData;
-        const presentacionData = presentacionDataStored.filter(tipodocumento => tipodocumento.tipodocumento_id > 0);
+        const presentacionData = presentacionDataStored.filter(presentacion => presentacion.id > 0);
         this.patch({
             presentacionData,
             presentacionSelected: null
         });
     }
 
-    public updateTipoDocumentoInList(presentacionToUpdate) {
+    public updatePresentacionInList(presentacionToUpdate) {
         const presentacionData = this.vm().presentacionData;
-        const presentacionIndex = presentacionData.findIndex(presentacion => !presentacion.tipodocumento_id || presentacion.tipodocumento_id == presentacionToUpdate.tipodocumento_id);
+        const presentacionIndex = presentacionData.findIndex(presentacion => !presentacion.id || presentacion.id == presentacionToUpdate.id);
 
         if (presentacionIndex >= 0) {
             presentacionData[presentacionIndex] = presentacionToUpdate;
@@ -213,38 +214,38 @@ export class PresentacionStore extends SignalStore<ITipoDocumentoState> {
         });
     }
 
-    public async loadUpdateTipoDocumento(formData) {
-        this.patch({createUpdateStateTipoDocumentoLoading: true, createUpdateStateTipoDocumentoError: null});
-        // formData.tipodocumento_estado = formData.tipodocumento_activo ? PARAM.ACTIVO : PARAM.INACTIVO;
-        this._presentacionRemoteReq.requestUpdateTipoDocumento(formData).pipe(
+    public async loadUpdatePresentacion(formData) {
+        this.patch({createUpdateStatePresentacionLoading: true, createUpdateStatePresentacionError: null});
+        formData.activa = formData.activa ? PARAM.ACTIVO : PARAM.INACTIVO;
+        this._presentacionRemoteReq.requestUpdatePresentacion(formData).pipe(
             tap(async ({data, message}) => {
-                this.updateTipoDocumentoInList(data);
+                this.updatePresentacionInList(data);
                 this.patch({
                     presentacionSelected: data,
-                    createUpdateStateTipoDocumentoFlashMessage: message,
+                    createUpdateStatePresentacionFlashMessage: message,
                 });
                 setTimeout(_ => {
                     this.patch({
-                        createUpdateStateTipoDocumentoFlashMessage: null
+                        createUpdateStatePresentacionFlashMessage: null
                     });
                 }, 3000);
             }),
             finalize(async () => {
-                this.patch({createUpdateStateTipoDocumentoLoading: false});
+                this.patch({createUpdateStatePresentacionLoading: false});
             }),
             catchError((error) => {
                 return of(this.patch({
-                    createUpdateStateTipoDocumentoError: error
+                    createUpdateStatePresentacionError: error
                 }));
             }),
         ).subscribe();
     };
 
-    public changePageInTipoDocumento(pagination: any) {
-        const filterTipoDocumentoToApply = this.vm().filterTipoDocumentoToApply;
-        filterTipoDocumentoToApply.page = pagination.pageIndex + 1;
-        filterTipoDocumentoToApply.perPage = pagination.pageSize;
-        this.loadSearchTipoDocumento(filterTipoDocumentoToApply);
-        this.patch({filterTipoDocumentoToApply});
+    public changePageInPresentacion(pagination: any) {
+        const filterPresentacionToApply = this.vm().filterPresentacionToApply;
+        filterPresentacionToApply.page = pagination.pageIndex + 1;
+        filterPresentacionToApply.perPage = pagination.pageSize;
+        this.loadSearchPresentacion(filterPresentacionToApply);
+        this.patch({filterPresentacionToApply});
     };
 }

@@ -5,7 +5,7 @@ import {PresentacionDetailComponent} from "../presentacion-detail/presentacion.d
 import {presentacionListResolver} from "../presentacion-list/presentacion.list.resolvers";
 import {presentacionNewResolver} from "../presentacion-detail/resolvers/presentacion.new.resolvers";
 import {presentacionDetailResolver} from "../presentacion-detail/resolvers/presentacion.detail.resolvers";
-import {canDeactivateTipoDocumentoDetail} from "../presentacion-detail/presentacion.detail.guards";
+import {canDeactivatePresentacionDetail} from "../presentacion-detail/presentacion.detail.guards";
 import {permissionGuard} from 'app/core/auth/permission.guard';
 
 export default [
@@ -14,7 +14,7 @@ export default [
         component: PresentacionPage,
         canActivate: [permissionGuard],
         data: {
-            acl: 'gestion.tipodocumento'
+            acl: 'gestion.presentacion'
         },
         children: [
             {
@@ -30,7 +30,7 @@ export default [
                         resolve: {
                             provider: presentacionNewResolver,
                         },
-                        canDeactivate: [canDeactivateTipoDocumentoDetail]
+                        canDeactivate: [canDeactivatePresentacionDetail]
                     },
                     {
                         path: ':id',
@@ -38,7 +38,7 @@ export default [
                         resolve: {
                             provider: presentacionDetailResolver,
                         },
-                        canDeactivate: [canDeactivateTipoDocumentoDetail]
+                        canDeactivate: [canDeactivatePresentacionDetail]
                     }
 
                 ]

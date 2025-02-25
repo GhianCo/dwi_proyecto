@@ -6,7 +6,7 @@ export class Presentacion extends MainMapper<any, any> {
 
     return {
       ...presentacion,
-      tipodocumento_activo: presentacion.tipodocumento_activo == PARAM.ACTIVO
+      activa: presentacion.activa == PARAM.ACTIVO
     }
   }
 

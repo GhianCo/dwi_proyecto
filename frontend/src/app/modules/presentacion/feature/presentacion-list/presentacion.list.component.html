@@ -15,14 +15,14 @@
                 <div
                     class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
                     <div>
-                        <div class="text-2xl font-extrabold tracking-tight leading-none">Tipo de documento</div>
+                        <div class="text-2xl font-extrabold tracking-tight leading-none">Presentaciones</div>
                     </div>
                     <div class="flex items-center mt-4 sm:mt-0 w-full">
                         <div class="flex-auto md:mx-32">
                             <mat-form-field class="mat-dense mat-no-subscript mat-rounded w-full min-w-50">
                                 <mat-icon class="icon-size-4 mr-2" [svgIcon]="'heroicons_outline:magnifying-glass'"></mat-icon>
                                 <input matInput #searchStateFixedassetText [autocomplete]="'off'"
-                                    (keyup)="searchTipoDocumentoByQuery(searchStateFixedassetText.value)"
+                                    (keyup)="searchPresentacionByQuery(searchStateFixedassetText.value)"
                                     [placeholder]="'Busqueda...'">
                             </mat-form-field>
                         </div>
@@ -51,6 +51,9 @@
                                                             Descripción
                                                         </th>
                                                         <th class="font-bold px-6 py-4 text-left">
+                                                            Peso promedio
+                                                        </th>
+                                                        <th class="font-bold px-6 py-4 text-left">
                                                             Activo
                                                         </th>
                                                         <th class="font-bold px-6 py-4 text-right">
@@ -60,19 +63,22 @@
                                                 </thead>
                                                 <tbody>
                                                     <ng-container *ngFor="let presentacion of vm.presentacionData">
-                                                        <tr class="border-b" [ngClass]="{'bg-gray-100': vm.presentacionSelected?.tipodocumento_id == presentacion.tipodocumento_id}">
+                                                        <tr class="border-b" [ngClass]="{'bg-gray-100': vm.presentacionSelected?.id == presentacion.id}">
                                                             <td class="px-6 py-4  font-medium">
-                                                                {{presentacion.tipodocumento_descripcion}}
+                                                                {{presentacion.nombre}}
+                                                            </td>
+                                                            <td class="px-6 py-4  font-medium">
+                                                                {{presentacion.peso_promedio}}
                                                             </td>
                                                             <td class="px-6 py-4">
-                                                                @if (presentacion.tipodocumento_activo) {
+                                                                @if (presentacion.activa) {
                                                                     <mat-icon class="text-green-400" [svgIcon]="'heroicons_outline:check'"></mat-icon>
                                                                 } @else {
                                                                     <mat-icon class="text-red-400" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
                                                                 }
                                                             </td>
                                                             <td class="px-6 py-4 text-right">
-                                                                <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button [routerLink]="['./', presentacion.tipodocumento_id]">
+                                                                <a class="min-w-10 min-h-7 h-7 px-2 leading-6" mat-stroked-button [routerLink]="['./', presentacion.id]">
                                                                     <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
                                                                 </a>
                                                             </td>
@@ -88,9 +94,9 @@
                                 class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent"
                                 (page)="changePagination($event)"
                                 [ngClass]="{'pointer-events-none': vm.presentacionLoading}"
-                                [length]="vm.presentacionPagination?.totalRows"
+                                [length]="vm.presentacionPagination?.totalRecords"
                                 [pageIndex]="vm.presentacionPagination?.currentPage - 1"
-                                [pageSize]="vm.filterTipoDocumentoToApply?.perPage" [pageSizeOptions]="[10, 25, 100]"
+                                [pageSize]="vm.filterPresentacionToApply?.perPage" [pageSizeOptions]="[10, 25, 100]"
                                 [showFirstLastButtons]="true"></mat-paginator>
                         </ng-container>
                         <div *ngIf="!vm.presentacionData.length && !vm.presentacionLoading"
