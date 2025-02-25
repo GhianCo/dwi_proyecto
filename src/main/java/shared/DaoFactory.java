@@ -18,6 +18,7 @@ import modules.puntodesembarque.dao.impl.PuntoDesembarqueDaoImpl;
 import modules.tipotransporte.dao.TipoTransporteDao;
 import modules.tipotransporte.dao.impl.TipoTransporteDaoImpl;
 
+
 public class DaoFactory {
 
     private DaoFactory() {
@@ -62,5 +63,5 @@ public class DaoFactory {
     public PuntoDesembarqueDao getPuntoDesembarqueDao() {
         return new PuntoDesembarqueDaoImpl();
     }
-    
+  
 }
