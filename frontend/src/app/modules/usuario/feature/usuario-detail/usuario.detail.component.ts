@@ -31,7 +31,6 @@ import { PersistenceService } from '@shared/services/persistence.service';
 import { PKEY } from '@shared/constants/persistence.const';
 import { CARGOS, COMISION_POR_COBRANZA, COMISION_POR_VENTA, TIPOS_COMISIONES } from '@shared/constants/app.const';
 import { CustomFilterPipe } from '@shared/pipes/filter.pipe';
-import { DiasCreditoRemoteReq } from 'app/modules/diascredito/data-access/diascredito.remote.req';
 import { LoadingDirective } from '@shared/directives/loading.directive';
 import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingButtonDirective } from '@shared/directives/loading-button.directive';
@@ -109,7 +108,6 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
         private _formBuilder: FormBuilder,
         private _activatedRoute: ActivatedRoute,
         private _persistenceService: PersistenceService,
-        private diasCreditoRemoteReq: DiasCreditoRemoteReq,
         private router: Router
     ) {
     }

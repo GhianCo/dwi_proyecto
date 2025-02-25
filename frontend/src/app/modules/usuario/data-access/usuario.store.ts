@@ -5,8 +5,8 @@ import { catchError, map, switchMap, take, tap } from "rxjs/operators";
 import { PARAM } from "@shared/constants/app.const";
 import { SignalStore } from "@shared/data-access/signal.store";
 import { UsuarioRemoteReq } from "./usuario.remote.req";
-import { TipoDocumentoRemoteReq } from "app/modules/tipo-documento/data-access/tipo.documento.remote.req";
 import { DateUtilityService } from "@shared/services/date-utility.service";
+import {PresentacionRemoteReq} from "../../presentacion/data-access/presentacion.remote.req";
 
 export type IUsuarioState = {
     usuarioLoading: boolean,
@@ -68,7 +68,7 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
         private _usuarioRemoteReq: UsuarioRemoteReq,
         private _router: Router,
         private _activatedRoute: ActivatedRoute,
-        private _tipoDocumentoRemoteReq: TipoDocumentoRemoteReq
+        private _tipoDocumentoRemoteReq: PresentacionRemoteReq
     ) {
         super();
         this.initialize(initialUsuarioState);
