@@ -1,26 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
-    <filter>
-        <filter-name>JsonRequestFilter</filter-name>
-        <filter-class>http.JsonRequestFilter</filter-class>
-    </filter>
 
-    <filter-mapping>
-        <filter-name>JsonRequestFilter</filter-name>
-        <url-pattern>/*</url-pattern> <!-- Aplica el filtro a todas las solicitudes -->
-    </filter-mapping>
     
-    <filter>
-        <filter-name>CORS</filter-name>
-        <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>CORS</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    
+  
     <!-- Inicio CRUD Conductor -->
     
     <servlet>
@@ -119,54 +105,6 @@
 
     <!-- Fin CRUD Especie -->
     
-    <!-- Inicio CRUD embarcacion -->
-    
-    <servlet>
-        <servlet-name>EmbarcacionGetAll</servlet-name>
-        <servlet-class>modules.embarcacion.servlets.GetAll</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>EmbarcacionGetAll</servlet-name>
-        <url-pattern>/api/embarcacion/getAll</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>EmbarcacionGetOne</servlet-name>
-        <servlet-class>modules.embarcacion.servlets.GetOne</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>EmbarcacionGetOne</servlet-name>
-        <url-pattern>/api/embarcacion/*</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>EmbarcacionCreate</servlet-name>
-        <servlet-class>modules.embarcacion.servlets.Create</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>EmbarcacionCreate</servlet-name>
-        <url-pattern>/api/embarcacion/create</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>EmbarcacionUpdate</servlet-name>
-        <servlet-class>modules.embarcacion.servlets.Update</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>EmbarcacionUpdate</servlet-name>
-        <url-pattern>/api/embarcacion/update</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>EmbarcacionDelete</servlet-name>
-        <servlet-class>modules.embarcacion.servlets.Delete</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>EmbarcacionDelete</servlet-name>
-        <url-pattern>/api/embarcacion/delete/*</url-pattern>
-    </servlet-mapping>
-    
-    <!-- Fin CRUD embarcacion -->
     
     <session-config>
         <session-timeout>
