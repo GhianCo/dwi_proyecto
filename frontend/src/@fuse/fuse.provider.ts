@@ -40,10 +40,8 @@ export type FuseProviderConfig = {
 export const provideFuse = (
     config: FuseProviderConfig
 ): Array<Provider | EnvironmentProviders> => {
-    // Base providers
     const providers: Array<Provider | EnvironmentProviders> = [
         {
-            // Disable 'theme' sanity check
             provide: MATERIAL_SANITY_CHECKS,
             useValue: {
                 doctype: true,
@@ -52,7 +50,6 @@ export const provideFuse = (
             },
         },
         {
-            // Use the 'fill' appearance on Angular Material form fields by default
             provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
             useValue: {
                 appearance: 'fill',
@@ -103,7 +100,6 @@ export const provideFuse = (
         },
     ];
 
-    // Mock Api services
     if (config?.mockApi?.services) {
         providers.push(
             provideHttpClient(withInterceptors([mockApiInterceptor])),
@@ -116,6 +112,5 @@ export const provideFuse = (
         );
     }
 
-    // Return the providers
     return providers;
 };

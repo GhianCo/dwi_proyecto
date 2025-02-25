@@ -6,14 +6,9 @@ import {
     trigger,
 } from '@angular/animations';
 
-// -----------------------------------------------------------------------------------------------------
-// @ Shake
-// -----------------------------------------------------------------------------------------------------
 const shake = trigger('shake', [
-    // Prevent the transition if the state is false
     transition('void => false', []),
 
-    // Transition
     transition(
         'void => *, * => true',
         [

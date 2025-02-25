@@ -1,14 +1,4 @@
-// -----------------------------------------------------------------------------------------------------
-// @ AUTH UTILITIES
-//
-// Methods are derivations of the Auth0 Angular-JWT helper service methods
-// https://github.com/auth0/angular2-jwt
-// -----------------------------------------------------------------------------------------------------
-
 export class AuthUtils {
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * Is token expired?
@@ -17,12 +7,10 @@ export class AuthUtils {
      * @param offsetSeconds
      */
     static isTokenExpired(token: string, offsetSeconds?: number): boolean {
-        // Return if there is no token
         if (!token || token === '') {
             return true;
         }
 
-        // Get the expiration date
         const date = this._getTokenExpirationDate(token);
 
         offsetSeconds = offsetSeconds || 0;
@@ -31,13 +19,8 @@ export class AuthUtils {
             return true;
         }
 
-        // Check if the token is expired
         return !(date.valueOf() > new Date().valueOf() + offsetSeconds * 1000);
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * Base64 decoder
@@ -61,15 +44,10 @@ export class AuthUtils {
 
         /* eslint-disable */
         for (
-            // initialize result and counters
             let bc = 0, bs: any, buffer: any, idx = 0;
-            // get next character
             (buffer = str.charAt(idx++));
-            // character found in table? initialize bit storage and add its ascii value;
             ~buffer &&
             ((bs = bc % 4 ? bs * 64 + buffer : buffer),
-            // and if not first of each 4 characters,
-            // convert the first 8 bits to one ascii character
             bc++ % 4)
                 ? (output += String.fromCharCode(255 & (bs >> ((-2 * bc) & 6))))
                 : 0

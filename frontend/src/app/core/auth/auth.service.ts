@@ -24,12 +24,10 @@ export class AuthService {
      * Sign out
      */
     signOut(): Observable<any> {
-        // Remove the access token from the local storage
         this.persistence.remove(PKEY.TOKEN);
         this.persistence.remove(PKEY.PERMISOS_USER);
         this.persistence.remove(PKEY.PERMISOS_LIST);
 
-        // Return the observable
         return of(true);
     }
 
@@ -38,12 +36,10 @@ export class AuthService {
      * Check the authentication status
      */
     check(): Observable<boolean> {
-        // Check the access token availability
         if (!this.accessToken) {
             return of(false);
         }
 
-        // If the access token exists, and it didn't expire, sign in using it
         return of(true);
     }
 

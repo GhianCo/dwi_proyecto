@@ -10,7 +10,6 @@ export const appRoutes: Route[] = [
 
     { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'example' },
 
-    // Auth routes for guests
     {
         path: '',
         canActivate: [NoAuthGuard],
@@ -24,7 +23,6 @@ export const appRoutes: Route[] = [
         ]
     },
 
-    // Auth routes for authenticated users
     {
         path: '',
         canActivate: [AuthGuard],
@@ -38,7 +36,6 @@ export const appRoutes: Route[] = [
         ]
     },
 
-    // Admin routes
     {
         path: '',
         canActivate: [AuthGuard],

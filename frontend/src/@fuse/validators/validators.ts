@@ -45,13 +45,10 @@ export class FuseValidators {
                 return null;
             }
 
-            // Prepare the validation errors
             const errors = { mustMatch: true };
 
-            // Set the validation error on the matching control
             matchingControl.setErrors(errors);
 
-            // Return the errors
             return errors;
         };
     }

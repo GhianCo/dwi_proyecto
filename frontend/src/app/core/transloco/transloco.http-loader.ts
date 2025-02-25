@@ -7,10 +7,6 @@ import { Observable } from 'rxjs';
 export class TranslocoHttpLoader implements TranslocoLoader {
     private _httpClient = inject(HttpClient);
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
     /**
      * Get translation
      *

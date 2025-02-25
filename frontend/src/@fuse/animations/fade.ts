@@ -10,9 +10,6 @@ import {
     FuseAnimationDurations,
 } from '@fuse/animations/defaults';
 
-// -----------------------------------------------------------------------------------------------------
-// @ Fade in
-// -----------------------------------------------------------------------------------------------------
 const fadeIn = trigger('fadeIn', [
     state(
         'void',
@@ -28,10 +25,8 @@ const fadeIn = trigger('fadeIn', [
         })
     ),
 
-    // Prevent the transition if the state is false
     transition('void => false', []),
 
-    // Transition
     transition('void => *', animate('{{timings}}'), {
         params: {
             timings: `${FuseAnimationDurations.entering} ${FuseAnimationCurves.deceleration}`,
@@ -39,9 +34,6 @@ const fadeIn = trigger('fadeIn', [
     }),
 ]);
 
-// -----------------------------------------------------------------------------------------------------
-// @ Fade in top
-// -----------------------------------------------------------------------------------------------------
 const fadeInTop = trigger('fadeInTop', [
     state(
         'void',
@@ -59,10 +51,8 @@ const fadeInTop = trigger('fadeInTop', [
         })
     ),
 
-    // Prevent the transition if the state is false
     transition('void => false', []),
 
-    // Transition
     transition('void => *', animate('{{timings}}'), {
         params: {
             timings: `${FuseAnimationDurations.entering} ${FuseAnimationCurves.deceleration}`,
@@ -70,9 +60,6 @@ const fadeInTop = trigger('fadeInTop', [
     }),
 ]);
 
-// -----------------------------------------------------------------------------------------------------
-// @ Fade in bottom
-// -----------------------------------------------------------------------------------------------------
 const fadeInBottom = trigger('fadeInBottom', [
     state(
         'void',
@@ -90,10 +77,8 @@ const fadeInBottom = trigger('fadeInBottom', [
         })
     ),
 
-    // Prevent the transition if the state is false
     transition('void => false', []),
 
-    // Transition
     transition('void => *', animate('{{timings}}'), {
         params: {
             timings: `${FuseAnimationDurations.entering} ${FuseAnimationCurves.deceleration}`,
@@ -121,10 +106,8 @@ const fadeInLeft = trigger('fadeInLeft', [
         })
     ),
 
-    // Prevent the transition if the state is false
     transition('void => false', []),
 
-    // Transition
     transition('void => *', animate('{{timings}}'), {
         params: {
             timings: `${FuseAnimationDurations.entering} ${FuseAnimationCurves.deceleration}`,

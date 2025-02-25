@@ -10,9 +10,6 @@ import {
     FuseAnimationDurations,
 } from '@fuse/animations/defaults';
 
-// -----------------------------------------------------------------------------------------------------
-// @ Expand / collapse
-// -----------------------------------------------------------------------------------------------------
 const expandCollapse = trigger('expandCollapse', [
     state(
         'void, collapsed',
@@ -23,10 +20,8 @@ const expandCollapse = trigger('expandCollapse', [
 
     state('*, expanded', style('*')),
 
-    // Prevent the transition if the state is false
     transition('void <=> false, collapsed <=> false, expanded <=> false', []),
 
-    // Transition
     transition('void <=> *, collapsed <=> expanded', animate('{{timings}}'), {
         params: {
             timings: `${FuseAnimationDurations.entering} ${FuseAnimationCurves.deceleration}`,

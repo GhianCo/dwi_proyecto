@@ -32,14 +32,12 @@ export const appConfig: ApplicationConfig = {
             withPreloading(PreloadAllModules),
             withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
         ),
-        //Custom Lib
         provideToastr(),
         {
             provide: HttpService,
             useFactory: httpServiceCreator,
             deps: [HttpClient]
         },
-        // Material Date Adapter
         {
             provide: DateAdapter,
             useClass: LuxonDateAdapter,
@@ -59,7 +57,6 @@ export const appConfig: ApplicationConfig = {
             },
         },
 
-        // Transloco Config
         provideTransloco({
             config: {
                 availableLangs: [
@@ -80,7 +77,6 @@ export const appConfig: ApplicationConfig = {
             loader: TranslocoHttpLoader,
         }),
         {
-            // Preload the default language before the app starts to prevent empty/jumping content
             provide: APP_INITIALIZER,
             useFactory: () => {
                 const translocoService = inject(TranslocoService);
@@ -91,9 +87,7 @@ export const appConfig: ApplicationConfig = {
             },
             multi: true,
         },
-        //Http Interceptors
         provideInterceptor(),
-        // Fuse
         provideAuth(),
         provideIcons(),
         provideFuse({
@@ -140,6 +134,6 @@ export const appConfig: ApplicationConfig = {
             },
         }),
     ],
-    
-    
+
+
 };

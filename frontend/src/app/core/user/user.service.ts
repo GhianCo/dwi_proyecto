@@ -8,10 +8,6 @@ export class UserService {
     private _httpClient = inject(HttpClient);
     private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
     /**
      * Setter & getter for user
      *
@@ -25,10 +21,6 @@ export class UserService {
     get user$(): Observable<User> {
         return this._user.asObservable();
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * Get the current signed-in user data

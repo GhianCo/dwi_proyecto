@@ -10,9 +10,6 @@ import {
     FuseAnimationDurations,
 } from '@fuse/animations/defaults';
 
-// -----------------------------------------------------------------------------------------------------
-// @ Zoom in
-// -----------------------------------------------------------------------------------------------------
 const zoomIn = trigger('zoomIn', [
     state(
         'void',
@@ -30,10 +27,8 @@ const zoomIn = trigger('zoomIn', [
         })
     ),
 
-    // Prevent the transition if the state is false
     transition('void => false', []),
 
-    // Transition
     transition('void => *', animate('{{timings}}'), {
         params: {
             timings: `${FuseAnimationDurations.entering} ${FuseAnimationCurves.deceleration}`,
@@ -41,9 +36,6 @@ const zoomIn = trigger('zoomIn', [
     }),
 ]);
 
-// -----------------------------------------------------------------------------------------------------
-// @ Zoom out
-// -----------------------------------------------------------------------------------------------------
 const zoomOut = trigger('zoomOut', [
     state(
         '*',
