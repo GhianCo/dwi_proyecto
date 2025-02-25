@@ -11,6 +11,8 @@ import modules.persona.dao.PersonaDao;
 
 import modules.usuario.dao.impl.UsuarioDaoImpl;
 import modules.persona.dao.impl.PersonaDaoImpl;
+import modules.presentacion.dao.PresentacionDao;
+import modules.presentacion.dao.impl.PresentacionDaoImpl;
 import modules.tipotransporte.dao.TipoTransporteDao;
 import modules.tipotransporte.dao.impl.TipoTransporteDaoImpl;
 
@@ -49,6 +51,10 @@ public class DaoFactory {
 
     public TipoTransporteDao getTipoTransporteDao() {
         return new TipoTransporteDaoImpl();
+    }
+    
+    public PresentacionDao getPresentacionDao() {
+        return new PresentacionDaoImpl();
     }
     
 }
