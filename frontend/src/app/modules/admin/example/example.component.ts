@@ -14,6 +14,5 @@ export class ExampleComponent {
      * Constructor
      */
     constructor() {
-        this.exampleStore.getTest();
     }
 }
