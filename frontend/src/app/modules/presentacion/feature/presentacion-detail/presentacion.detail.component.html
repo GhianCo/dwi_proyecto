@@ -60,7 +60,7 @@
                     <div class="mt-2">
                         <mat-form-field class="mat-no-subscript w-full">
                             <mat-label>Peso promedio</mat-label>
-                            <input matInput formControlName="peso_promedio" placeholder="Peso promedio" [spellcheck]="false">
+                            <input matInput formControlName="peso_promedio" placeholder="Peso promedio" [spellcheck]="false" OnlyPositiveInteger>
                         </mat-form-field>
                     </div>
                     <div class="mt-8" *ngIf="vm.presentacionSelected?.id > 0">

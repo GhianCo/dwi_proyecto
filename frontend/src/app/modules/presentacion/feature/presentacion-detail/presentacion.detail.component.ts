@@ -22,6 +22,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import { LoadingButtonDirective } from '@shared/directives/loading-button.directive';
 import {PresentacionListComponent} from "../presentacion-list/presentacion.list.component";
+import {OnlyPositiveIntegerDirective} from "@shared/directives/only-positive-integer.directive";
 
 @Component({
     standalone: true,
@@ -38,7 +39,8 @@ import {PresentacionListComponent} from "../presentacion-list/presentacion.list.
         MatSlideToggle,
         MatIcon,
         MatInput,
-        LoadingButtonDirective
+        LoadingButtonDirective,
+        OnlyPositiveIntegerDirective
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
