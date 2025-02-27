@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
-    <filter>
-        <filter-name>JsonRequestFilter</filter-name>
-        <filter-class>http.JsonRequestFilter</filter-class>
-    </filter>
 
-    <filter-mapping>
-        <filter-name>JsonRequestFilter</filter-name>
-        <url-pattern>/*</url-pattern> <!-- Aplica el filtro a todas las solicitudes -->
-    </filter-mapping>
     
     <filter>
         <filter-name>CORS</filter-name>
@@ -22,54 +14,106 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- Inicio CRUD embarcacion -->
+    
+    <!-- Inicio CRUD Conductor -->
     
     <servlet>
-        <servlet-name>EmbarcacionGetAll</servlet-name>
-        <servlet-class>modules.embarcacion.servlets.GetAll</servlet-class>
+        <servlet-name>ConductorGetAll</servlet-name>
+        <servlet-class>modules.conductor.servlets.GetAll</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>EmbarcacionGetAll</servlet-name>
-        <url-pattern>/api/embarcacion/getAll</url-pattern>
+        <servlet-name>ConductorGetAll</servlet-name>
+        <url-pattern>/api/conductor/getAll</url-pattern>
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>EmbarcacionGetOne</servlet-name>
-        <servlet-class>modules.embarcacion.servlets.GetOne</servlet-class>
+        <servlet-name>ConductorGetOne</servlet-name>
+        <servlet-class>modules.conductor.servlets.GetOne</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>EmbarcacionGetOne</servlet-name>
-        <url-pattern>/api/embarcacion/*</url-pattern>
+        <servlet-name>ConductorGetOne</servlet-name>
+        <url-pattern>/api/conductor/*</url-pattern>
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>EmbarcacionCreate</servlet-name>
-        <servlet-class>modules.embarcacion.servlets.Create</servlet-class>
+        <servlet-name>ConductorCreate</servlet-name>
+        <servlet-class>modules.conductor.servlets.Create</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>EmbarcacionCreate</servlet-name>
-        <url-pattern>/api/embarcacion/create</url-pattern>
+        <servlet-name>ConductorCreate</servlet-name>
+        <url-pattern>/api/conductor/create</url-pattern>
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>EmbarcacionUpdate</servlet-name>
-        <servlet-class>modules.embarcacion.servlets.Update</servlet-class>
+        <servlet-name>ConductorUpdate</servlet-name>
+        <servlet-class>modules.conductor.servlets.Update</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>EmbarcacionUpdate</servlet-name>
-        <url-pattern>/api/embarcacion/update</url-pattern>
+        <servlet-name>ConductorUpdate</servlet-name>
+        <url-pattern>/api/conductor/update</url-pattern>
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>EmbarcacionDelete</servlet-name>
-        <servlet-class>modules.embarcacion.servlets.Delete</servlet-class>
+        <servlet-name>ConductorDelete</servlet-name>
+        <servlet-class>modules.conductor.servlets.Delete</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>EmbarcacionDelete</servlet-name>
-        <url-pattern>/api/embarcacion/delete/*</url-pattern>
+        <servlet-name>ConductorDelete</servlet-name>
+        <url-pattern>/api/conductor/delete/*</url-pattern>
     </servlet-mapping>
     
-    <!-- Fin CRUD embarcacion -->
+    <!-- Fin CRUD Conductor -->
+
+    <!-- Inicio CRUD Especie -->
+
+    <servlet>
+        <servlet-name>EspecieGetAll</servlet-name>
+        <servlet-class>modules.especie.servlets.GetAll</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecieGetAll</servlet-name>
+        <url-pattern>/api/especie/getAll</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EspecieGetOne</servlet-name>
+        <servlet-class>modules.especie.servlets.GetOne</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecieGetOne</servlet-name>
+        <url-pattern>/api/especie/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EspecieCreate</servlet-name>
+        <servlet-class>modules.especie.servlets.Create</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecieCreate</servlet-name>
+        <url-pattern>/api/especie/create</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EspecieUpdate</servlet-name>
+        <servlet-class>modules.especie.servlets.Update</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecieUpdate</servlet-name>
+        <url-pattern>/api/especie/update</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EspecieDelete</servlet-name>
+        <servlet-class>modules.especie.servlets.Delete</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EspecieDelete</servlet-name>
+        <url-pattern>/api/especie/delete/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Fin CRUD Especie -->
+    
+   
     
     <session-config>
         <session-timeout>
