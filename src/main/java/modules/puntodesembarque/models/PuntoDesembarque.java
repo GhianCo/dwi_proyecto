@@ -13,6 +13,7 @@ public class PuntoDesembarque {
     private String nombre;
     private String tipo;
     private String ubigeo;
+    private String activo;
 
     public PuntoDesembarque() {
     }
@@ -56,6 +57,13 @@ public class PuntoDesembarque {
         this.ubigeo = ubigeo;
     }
     
+    public void setActivo(String activo) {
+        this.activo = activo;
+    }
+
+    public String getActivo() {
+        return this.activo;
+    }
     
     
 }

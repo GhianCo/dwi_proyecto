@@ -20,6 +20,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 link: '/gestion/presentacion',
             },
+            {
+                id: 'gestion.puntodesembarque',
+                title: 'Punto de desembarque',
+                type: 'basic',
+                link: '/gestion/puntodesembarque',
+            },
         ],
     },
     {

@@ -154,7 +154,7 @@ export class PresentacionStore extends SignalStore<IPresentacionState> {
         const filterPresentacionToApply = this.vm().filterPresentacionToApply;
         filterPresentacionToApply.query = searchValue;
         if (!searchValue.length) {
-            filterPresentacionToApply.query = PARAM.UNDEFINED;
+            filterPresentacionToApply.query = PARAM.VACIO;
         }
         filterPresentacionToApply.page = 1;
         this.loadSearchPresentacion(filterPresentacionToApply);

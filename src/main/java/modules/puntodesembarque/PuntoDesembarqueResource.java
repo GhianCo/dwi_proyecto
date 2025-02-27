@@ -71,7 +71,7 @@ public class PuntoDesembarqueResource {
         }
     }
 
-    @PUT
+    @POST
     @Path("{id}")
     public Response update(@PathParam("id") Integer puntoDesembarqueId, PuntoDesembarque puntoDesembarque) {
         logger.info("Actualizando punto de desembarque con id {}", puntoDesembarqueId);

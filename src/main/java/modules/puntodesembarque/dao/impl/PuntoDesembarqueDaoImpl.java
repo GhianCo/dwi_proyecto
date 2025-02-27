@@ -26,7 +26,7 @@ public class PuntoDesembarqueDaoImpl implements PuntoDesembarqueDao {
         "SELECT * FROM puntodesembarque";
 
     private static final String UPDATE_SQL = 
-        "UPDATE puntodesembarque SET nombre = ?, tipo = ?, ubigeo = ? WHERE id = ?";
+        "UPDATE puntodesembarque SET nombre = ?, tipo = ?, ubigeo = ?, activo = ? WHERE id = ?";
 
     // Borrado físico:
     private static final String DELETE_SQL = 
@@ -100,7 +100,9 @@ public class PuntoDesembarqueDaoImpl implements PuntoDesembarqueDao {
             pst.setString(1, entity.getNombre());
             pst.setString(2, entity.getTipo());
             pst.setString(3, entity.getUbigeo());
-            pst.setInt(4, entity.getId());
+            pst.setString(4, entity.getActivo());
+            
+            pst.setInt(5, entity.getId());
             
             pst.executeUpdate();
         } catch (SQLException ex) {
@@ -121,12 +123,14 @@ public class PuntoDesembarqueDaoImpl implements PuntoDesembarqueDao {
     }
 
     private PuntoDesembarque mapResultSetToPuntoDesembarque(ResultSet rs) throws SQLException {
-        return new PuntoDesembarque(
+        PuntoDesembarque puntoDesembarque = new PuntoDesembarque(
             rs.getInt("id"),
             rs.getString("nombre"),
             rs.getString("tipo"),
             rs.getString("ubigeo")
         );
+        puntoDesembarque.setActivo(rs.getString("activo"));
+        return puntoDesembarque;
     }
 
     @Override
@@ -135,7 +139,7 @@ public class PuntoDesembarqueDaoImpl implements PuntoDesembarqueDao {
         int totalRecords = 0;
 
         // Consulta base
-        String baseQuery = "SELECT SQL_CALC_FOUND_ROWS * FROM puntodesembarque WHERE 1=1 ";
+        String baseQuery = "SELECT SQL_CALC_FOUND_ROWS * FROM puntodesembarque WHERE activo=1 ";
 
         // Filtro dinámico si 'query' no está vacío
         if (query != null && !query.isBlank()) {
