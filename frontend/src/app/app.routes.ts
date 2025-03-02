@@ -49,6 +49,7 @@ export const appRoutes: Route[] = [
             {
                 path: 'gestion', children: [
                     { path: 'presentacion', loadChildren: () => import('app/modules/presentacion/feature/presentacion-shell/presentacion.routes') },
+                    { path: 'destino', loadChildren: () => import('app/modules/destino/feature/destino-shell/destino.routes') },
                 ]
             },
             {

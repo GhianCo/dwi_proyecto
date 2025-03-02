@@ -2,6 +2,8 @@ package shared;
 
 import modules.conductor.dao.ConductorDao;
 import modules.conductor.dao.impl.ConductorDaoImpl;
+import modules.destino.dao.DestinoDao;
+import modules.destino.dao.impl.DestinoDaoImpl;
 import modules.embarcacion.dao.EmbarcacionDao;
 import modules.embarcacion.dao.impl.EmbarcacionDaoImpl;
 import modules.especie.dao.EspecieDao;
@@ -55,6 +57,10 @@ public class DaoFactory {
     
     public PresentacionDao getPresentacionDao() {
         return new PresentacionDaoImpl();
+    }
+    
+    public DestinoDao getDestinoDao() {
+        return new DestinoDaoImpl();
     }
     
 }

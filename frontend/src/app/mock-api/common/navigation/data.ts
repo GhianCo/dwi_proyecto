@@ -20,6 +20,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 link: '/gestion/presentacion',
             },
+            {
+                id: 'gestion.destino',
+                title: 'Destino',
+                type: 'basic',
+                link: '/gestion/destino',
+            },
         ],
     },
     {
