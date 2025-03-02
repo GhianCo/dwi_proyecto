@@ -156,7 +156,7 @@ export class DestinoStore extends SignalStore<IDestinoState> {
         const filterDestinoToApply = this.vm().filterDestinoToApply;
         filterDestinoToApply.query = searchValue;
         if (!searchValue.length) {
-            filterDestinoToApply.query = PARAM.UNDEFINED;
+            filterDestinoToApply.query = PARAM.VACIO;
         }
         filterDestinoToApply.page = 1;
         this.loadSearchDestino(filterDestinoToApply);
