@@ -46,8 +46,8 @@ export class UsuarioRemoteReq {
     }
 
     requestUpdateUsuario(usuario: any): Observable<IResponse> {
-        const {usuario_id} = usuario;
-        return this.http.put(this.REMOTE_API_URI + 'usuario', usuario_id, usuario)
+        const {id} = usuario;
+        return this.http.post(this.REMOTE_API_URI + 'usuario/' + id, usuario)
             .pipe(
                 map((response: any) => {
                     if (response.data) {

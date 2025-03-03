@@ -55,7 +55,7 @@ public class UsuarioResource {
                 .build();
     }
 
-    @PUT
+    @POST
     @Path("{id}")
     public Response update(@PathParam("id") int usuarioId, UsuarioCreateRequestDTO usuarioCreateRequestDTO) {
         UsuarioServiceImpl usuarioservice = new UsuarioServiceImpl();

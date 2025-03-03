@@ -175,6 +175,7 @@ export class UsuarioStore extends SignalStore<IUsuarioState> {
             createUpdateStateUsuarioError: null
         });
 
+        delete formData.id;
 
         if(formData.usuario_fechanacimiento) {
             formData.usuario_fechanacimiento =  DateUtilityService.parseFechaFromServer(formData.usuario_fechanacimiento);

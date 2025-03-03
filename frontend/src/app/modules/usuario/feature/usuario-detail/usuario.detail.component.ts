@@ -98,7 +98,6 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
     public usuarioStore = inject(UsuarioStore);
 
     public permisosAgrupados: any[] = [];
-    public permisosUsuario: any[] = [];
 
     public cargosList = CARGOS;
 
@@ -125,6 +124,7 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
 
         this.form = this._formBuilder.group({
             id: [''],
+            persona_id: [''],
             nombres: ['', [Validators.required]],
             apellidos: [],
             email: ["", [Validators.required]],
@@ -143,7 +143,6 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
             .subscribe((usuarioSelected: any) => {
                 this._usuarioListResolver.matDrawer.open();
                 if (usuarioSelected?.id > 0) {
-                    this.permisosUsuario = usuarioSelected.permisos;
                     this._changeDetectorRef.detectChanges();
                     this.toggleEditMode(false);
                 } else {
@@ -165,10 +164,7 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
             });
 
             permisos.forEach(permiso => {
-                // Verificar si el permiso actual está en la lista de permisos del usuario
-                const isChecked = this.permisosUsuario.some(usuarioPermiso => usuarioPermiso.permiso_id === permiso.permiso_id);
-                // Agregar control con el estado correspondiente (checked o unchecked)
-                (grupoFormArray.get('permisos') as FormArray).push(this._formBuilder.control(isChecked));
+
             });
 
             permisosArray.push(grupoFormArray); // Agregar grupo al FormArray principal
@@ -196,37 +192,12 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
             return;
         }
         let usuario = this.form.getRawValue();
-        const permisos = this.getSelectedPermisos();
-        usuario.permisos = permisos;
-
         if (usuario.id) {
             this.usuarioStore.loadUpdateUsuario(usuario);
         } else {
             this.usuarioStore.loadCreateUsuario(usuario);
         }
     }
-
-    public getSelectedPermisos() {
-        const selectedPermisos = [];
-
-        // Recorrer cada grupo de permisos
-        (this.form.get('permisos') as FormArray).controls.forEach((grupoFormGroup, grupoIndex) => {
-            const grupo = grupoFormGroup.get('grupo').value;
-            const permisosFormArray = grupoFormGroup.get('permisos') as FormArray;
-
-            // Recorrer los permisos dentro del grupo
-            permisosFormArray.controls.forEach((permisoControl, permisoIndex) => {
-                if (permisoControl.value === true) {
-                    // Recuperar el permiso que está marcado
-                    const permiso = this.permisosAgrupados[grupo][permisoIndex];
-                    selectedPermisos.push(permiso);
-                }
-            });
-        });
-
-        return selectedPermisos;
-    }
-
 
     togglePassword() {
         this.hidePassword = !this.hidePassword;
