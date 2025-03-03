@@ -7,36 +7,32 @@ import {
     OnInit,
     ViewEncapsulation
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { OverlayRef } from '@angular/cdk/overlay';
-import { MatDrawerToggleResult } from '@angular/material/sidenav';
-import { catchError, map, of, Subject, takeUntil } from 'rxjs';
-import { UsuarioStore } from "../../data-access/usuario.store";
-import { MatButton, MatButtonModule, MatIconButton } from "@angular/material/button";
-import { JsonPipe, KeyValuePipe, NgFor, NgIf } from "@angular/common";
-import { MatTooltip } from "@angular/material/tooltip";
-import { ActivatedRoute, NavigationEnd, Router, RouterLink } from "@angular/router";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatSlideToggle } from "@angular/material/slide-toggle";
-import { MatIcon, MatIconModule } from "@angular/material/icon";
-import { MatInput } from "@angular/material/input";
-import { tap } from 'lodash';
-import { UsuarioListComponent } from '../usuario-list/usuario.list.component';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
-import { PersistenceService } from '@shared/services/persistence.service';
-import { PKEY } from '@shared/constants/persistence.const';
-import { CARGOS, COMISION_POR_COBRANZA, COMISION_POR_VENTA, TIPOS_COMISIONES } from '@shared/constants/app.const';
-import { CustomFilterPipe } from '@shared/pipes/filter.pipe';
-import { LoadingDirective } from '@shared/directives/loading.directive';
-import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { LoadingButtonDirective } from '@shared/directives/loading-button.directive';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatOption, provideNativeDateAdapter } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {OverlayRef} from '@angular/cdk/overlay';
+import {MatDrawerToggleResult} from '@angular/material/sidenav';
+import {of, Subject, takeUntil} from 'rxjs';
+import {UsuarioStore} from "../../data-access/usuario.store";
+import {MatButton, MatIconButton} from "@angular/material/button";
+import {NgFor, NgIf} from "@angular/common";
+import {MatTooltip} from "@angular/material/tooltip";
+import {ActivatedRoute, NavigationEnd, Router, RouterLink} from "@angular/router";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {MatIcon} from "@angular/material/icon";
+import {MatInput} from "@angular/material/input";
+import {UsuarioListComponent} from '../usuario-list/usuario.list.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {PersistenceService} from '@shared/services/persistence.service';
+import {CARGOS} from '@shared/constants/app.const';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {LoadingButtonDirective} from '@shared/directives/loading-button.directive';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatOption} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 export const MY_FORMATS = {
     parse: {
@@ -48,7 +44,7 @@ export const MY_FORMATS = {
         dateA11yLabel: 'LL',
         monthYearA11yLabel: 'YYYY'
     }
-  };
+};
 
 @Component({
     standalone: true,
@@ -79,8 +75,8 @@ export const MY_FORMATS = {
         MatDatepickerModule,
     ],
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+        {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -97,16 +93,12 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
 
     public usuarioStore = inject(UsuarioStore);
 
-    public permisosAgrupados: any[] = [];
-
     public cargosList = CARGOS;
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _usuarioListResolver: UsuarioListComponent,
         private _formBuilder: FormBuilder,
-        private _activatedRoute: ActivatedRoute,
-        private _persistenceService: PersistenceService,
         private router: Router
     ) {
     }
@@ -116,8 +108,7 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 console.log('Navegación terminada:', event.url);
-                // Lógica de recarga aquí
-              }
+            }
         });
 
         this._usuarioListResolver.matDrawer.open();
@@ -151,27 +142,7 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
                 this.form.patchValue(usuarioSelected);
                 this._changeDetectorRef.markForCheck();
             });
-        this.addCheckboxes();
     }
-
-    public addCheckboxes() {
-        const permisosArray = this.form.get('permisos') as FormArray;
-
-        Object.entries(this.permisosAgrupados).forEach(([grupo, permisos]) => {
-            const grupoFormArray = this._formBuilder.group({
-                grupo: [grupo],
-                permisos: this._formBuilder.array([]) // Asegúrate de que esto sea un FormArray
-            });
-
-            permisos.forEach(permiso => {
-
-            });
-
-            permisosArray.push(grupoFormArray); // Agregar grupo al FormArray principal
-        });
-    }
-
-
 
     closeDrawer(): Promise<MatDrawerToggleResult> {
         return this._usuarioListResolver.matDrawer.close();
@@ -180,8 +151,7 @@ export class UsuarioDetailComponent implements OnInit, OnDestroy {
     toggleEditMode(editMode: boolean | null = null) {
         if (editMode === null) {
             this.editMode = !this.editMode;
-        }
-        else {
+        } else {
             this.editMode = editMode;
         }
         this._changeDetectorRef.markForCheck();
