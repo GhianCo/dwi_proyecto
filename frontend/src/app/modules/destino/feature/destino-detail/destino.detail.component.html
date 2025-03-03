@@ -1,0 +1,133 @@
+<div class="flex flex-col w-full" *ngIf="destinoStore.vm() as vm">
+    <ng-container *ngIf="!editMode">
+        <div class="relative w-full h-22 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
+            <div class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
+                <div class="text-4xl font-bold truncate">{{vm.destinoSelected?.nombre}}</div>
+                <div class="flex items-center ml-auto mb-1">
+                    <button mat-stroked-button (click)="toggleEditMode(true)">
+                        <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                        <span class="ml-2">Editar</span>
+                    </button>
+                </div>
+                <button mat-icon-button [matTooltip]="'Cerrar'" [routerLink]="['../']">
+                    <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:px-12 sm:pt-0">
+            <div class="w-full max-w-3xl">
+                <div class="flex flex-col pt-6 space-y-8">
+                    <div class="flex sm:items-center" *ngIf="vm.destinoSelected?.nombre">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6"><span class="font-bold">Nombre:</span>
+                            {{vm.destinoSelected?.nombre}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:px-12 sm:pt-0">
+            <div class="w-full max-w-3xl">
+                <div class="flex flex-col pt-6 border-t space-y-8">
+                    <div class="flex sm:items-center" *ngIf="vm.destinoSelected?.tipo">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6"><span class="font-bold">Tipo:</span>
+                            {{vm.destinoSelected?.tipo}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:px-12 sm:pt-0">
+            <div class="w-full max-w-3xl">
+                <div class="flex flex-col pt-6 border-t space-y-8">
+                    <div class="flex sm:items-center" *ngIf="vm.destinoSelected?.actividad">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6"><span class="font-bold">Actividad:</span>
+                            {{vm.destinoSelected?.actividad}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:px-12 sm:pt-0">
+            <div class="w-full max-w-3xl">
+                <div class="flex flex-col pt-6 border-t space-y-8">
+                    <div class="flex sm:items-center" *ngIf="vm.destinoSelected?.direccion">
+                        <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                        <div class="ml-6 leading-6"><span class="font-bold">Direccion:</span>
+                            {{vm.destinoSelected?.direccion}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="editMode">
+        <div class="relative w-full h-22 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
+            <div class="flex items-center justify-between w-full max-w-3xl mx-auto pt-6">
+                <div class="text-4xl font-bold truncate">{{vm.destinoSelected?.nombre}}</div>
+                <button mat-icon-button [matTooltip]="'Cerrar'" [routerLink]="['../']">
+                    <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="relative flex flex-col flex-auto items-center px-6 sm:px-12">
+            <div class="w-full max-w-3xl">
+                <form [formGroup]="destinoForm">
+                    <div class="mt-8">
+                        <mat-form-field class="mat-no-subscript w-full">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput formControlName="nombre" placeholder="Nombre" [spellcheck]="false">
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-2">
+                        <mat-form-field class="mat-no-subscript w-full">
+                            <mat-label>Tipo</mat-label>
+                            <input matInput formControlName="tipo" placeholder="Tipo" [spellcheck]="false">
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-2">
+                        <mat-form-field class="mat-no-subscript w-full">
+                            <mat-label>Actividad</mat-label>
+                            <input matInput formControlName="actividad" placeholder="Actividad" [spellcheck]="false">
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-2">
+                        <mat-form-field class="mat-no-subscript w-full">
+                            <mat-label>Direccion</mat-label>
+                            <input matInput formControlName="direccion" placeholder="Direccion" [spellcheck]="false">
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-8" *ngIf="vm.destinoSelected?.id > 0">
+                        <div class="flex flex-col">
+                            <span class="font-semibold mb-2">Estado</span>
+                            <mat-slide-toggle formControlName="activa"
+                                [color]="'primary'">
+                                {{destinoForm.get('activa').value ?
+                                'Activa' :
+                                'Inactiva'}}
+                            </mat-slide-toggle>
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-10 -mx-6 sm:-mx-12 py-4 pr-4 pl-1 sm:pr-12 sm:pl-7 border-t bg-gray-50 dark:bg-transparent">
+                        <div class="ml-auto" *ngIf="destinoForm.get('id').value <= 0"></div>
+                        <button class="ml-auto" mat-button [matTooltip]="'Cancel'" (click)="toggleEditMode(false)"
+                            *ngIf="destinoForm.get('id').value > 0">
+                            Cancelar
+                        </button>
+                        <!--<app-flash-message *ngIf="vm.createUpdateDestinoFlashMessage"
+                                        [hasError]="vm.createUpdateDestinoError"
+                                        [message]="vm.createUpdateDestinoFlashMessage"></app-flash-message>-->
+                        <button class="ml-2" mat-flat-button [color]="'primary'"
+                            [disabled]="destinoForm.invalid || vm.createUpdateStateDestinoLoading"
+                            [matTooltip]="'Guardar'" (click)="createUpdateSelected()"
+                            [loadingButton]="vm.createUpdateStateDestinoLoading"
+                        >
+                            Guardar
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </ng-container>
+</div>

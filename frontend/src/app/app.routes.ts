@@ -51,7 +51,7 @@ export const appRoutes: Route[] = [
                     { path: 'presentacion', loadChildren: () => import('app/modules/presentacion/feature/presentacion-shell/presentacion.routes') },
                     { path: 'puntodesembarque', loadChildren: () => import('app/modules/puntodesembarque/feature/punto-desembarque-shell/punto.desembarque.routes') },
                     { path: 'conductor', loadChildren: () => import('app/modules/conductor/feature/conductor-shell/conductor.routes') },
-
+                    { path: 'destino', loadChildren: () => import('app/modules/destino/feature/destino-shell/destino.routes') },
                 ]
             },
             {

@@ -32,7 +32,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 link: '/gestion/conductor',
             },
-            
+            {
+                id: 'gestion.destino',
+                title: 'Destino',
+                type: 'basic',
+                link: '/gestion/destino',
+            },
         ],
     },
     {
