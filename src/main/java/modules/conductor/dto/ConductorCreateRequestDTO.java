@@ -11,6 +11,7 @@ public class ConductorCreateRequestDTO {
     private String email;
     private String direccion;
     private String fecha_nacimiento;
+    private String activo;
 
     public int getId() {
         return id;
@@ -82,6 +83,14 @@ public class ConductorCreateRequestDTO {
 
     public void setFecha_nacimiento(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
+    }
+    
+    public String getActivo() {
+        return activo;
+    }
+
+    public void setActivo(String activo) {
+        this.activo = activo;
     }
 
 }

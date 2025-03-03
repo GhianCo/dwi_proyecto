@@ -27,13 +27,14 @@ public class ConductorDaoImpl implements ConductorDao {
 
             connection = DBConn.getConnection();
 
-            String sql = "insert into conductor (persona_id, fecha_nacimiento) "
-                    + "values (?,?)";
+            String sql = "insert into conductor (persona_id, fecha_nacimiento, activo) "
+                    + "values (?,?, ?)";
 
             PreparedStatement pst = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
             pst.setInt(1, entity.getPersona_id());
             pst.setString(2, entity.getFecha_nacimiento());
+            pst.setString(3, entity.getActivo());
 
             pst.executeUpdate();
 
@@ -114,15 +115,11 @@ public class ConductorDaoImpl implements ConductorDao {
         try {
 
             connection = DBConn.getConnection();
-
+//Falta nombre, apellido, numero_documento, telefono, fecha_nacimiento creo 
             String sql = "update conductor set fecha_nacimiento = ? where id = ?";
-
             PreparedStatement pst = connection.prepareStatement(sql);
-
             pst.setString(1, entity.getFecha_nacimiento());
-
             pst.setDouble(2, entity.getId());
-
             pst.executeUpdate();
 
             pst.close();
@@ -166,7 +163,7 @@ public class ConductorDaoImpl implements ConductorDao {
         ArrayList<Conductor> listadeConductors = new ArrayList<>();
         int totalRecords = 0;
 
-        String sql = "SELECT SQL_CALC_FOUND_ROWS c.id, c.persona_id, p.nombres, p.apellidos, p.numero_documento "
+        String sql = "SELECT SQL_CALC_FOUND_ROWS c.id, c.persona_id, p.nombres, p.apellidos, p.numero_documento, p.telefono, c.fecha_nacimiento, c.activo "
                 + "FROM conductor c "
                 + "JOIN persona p ON c.persona_id = p.id "
                 + "WHERE c.activo = 1 "
@@ -192,8 +189,15 @@ public class ConductorDaoImpl implements ConductorDao {
                     String nombres = resultSet.getString("nombres");
                     String apellidos = resultSet.getString("apellidos");
                     String numero_documento = resultSet.getString("numero_documento");
+                    String telefono = resultSet.getString("telefono");
+                    String fecha_nacimiento = resultSet.getString("fecha_nacimiento");
+                    String activo = resultSet.getString("activo");
 
-                    listadeConductors.add(new Conductor(id, personaId, nombres, apellidos, numero_documento));
+                    Conductor conductor = new Conductor(id, personaId, nombres, apellidos, numero_documento);
+                    conductor.setTelefono(telefono);
+                    conductor.setFecha_nacimiento(fecha_nacimiento);
+                    conductor.setActivo(activo);
+                    listadeConductors.add(conductor);
                 }
             }
 

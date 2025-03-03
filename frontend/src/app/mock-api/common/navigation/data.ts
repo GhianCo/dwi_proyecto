@@ -26,6 +26,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 link: '/gestion/puntodesembarque',
             },
+            {
+                id: 'gestion.conductor',
+                title: 'Conductor',
+                type: 'basic',
+                link: '/gestion/conductor',
+            },
+            
         ],
     },
     {

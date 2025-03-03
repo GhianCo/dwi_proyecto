@@ -55,7 +55,7 @@ public class ConductorResource {
                 .build();
     }
 
-    @PUT
+    @POST  
     @Path("{id}")
     public Response update(@PathParam("id") int conductorId, ConductorCreateRequestDTO conductorCreateRequestDTO) {
         ConductorServiceImpl conductorService = new ConductorServiceImpl();
