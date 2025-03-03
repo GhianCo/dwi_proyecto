@@ -11,6 +11,7 @@ import shared.conn.DBConn;
 
 import java.util.ArrayList;
 import java.util.List;
+import modules.embarcacion.dto.EmbarcacionGetAllDto;
 import shared.Pagination;
 import shared.PaginationResult;
 
@@ -26,9 +27,15 @@ public class EmbarcacionDaoImpl implements EmbarcacionDao {
             + "WHERE id = ? AND activa = '1'";
 
     private static final String FIND_ALL_SQL
-            = "SELECT * FROM embarcacion "
+            = "SELECT em.* "
+            + "left join persona pe on (em.persona_id = on.persona_id)"
             + "WHERE activa = '1'";
-
+    
+    private static final String FIND_ALL_SQL_ADDITIONAL
+            = "SELECT em.*, concat(apellidos, ', ', pe.nombres) AS nombre_persona FROM embarcacion em "
+            + "left join persona pe on (em.persona_id = on.persona_id)"
+            + "WHERE activa = '1'";
+    
     private static final String UPDATE_SQL
             = "UPDATE embarcacion "
             + "SET persona_id = ?, nombre = ?, matricula = ?, capacidad_bodega = ?, permiso_pesca = ?, regimen = ? "
@@ -94,6 +101,21 @@ public class EmbarcacionDaoImpl implements EmbarcacionDao {
         }
         return embarcaciones;
     }
+     
+    @Override
+    public List<EmbarcacionGetAllDto> findAllWithAdditional() {
+        List<EmbarcacionGetAllDto> embarcaciones = new ArrayList<>();
+        try (Connection connection = DBConn.getConnection(); PreparedStatement pst = connection.prepareStatement(FIND_ALL_SQL_ADDITIONAL); ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                embarcaciones.add(mapResultSetToEmbarcacionAdditional(rs));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return embarcaciones;
+    }
+    
 
     @Override
     public void update(Embarcacion entity) {
@@ -128,6 +150,20 @@ public class EmbarcacionDaoImpl implements EmbarcacionDao {
         return new Embarcacion(
                 rs.getInt("id"),
                 rs.getInt("persona_id"),
+                rs.getString("nombre"),
+                rs.getString("matricula"),
+                rs.getDouble("capacidad_bodega"),
+                rs.getString("permiso_pesca"),
+                rs.getString("regimen"),
+                rs.getString("activa")
+        );
+    }
+    
+    private EmbarcacionGetAllDto mapResultSetToEmbarcacionAdditional(ResultSet rs) throws SQLException {
+        return new EmbarcacionGetAllDto (
+                rs.getInt("id"),
+                rs.getInt("persona_id"),
+                rs.getString("nombre_persona"),
                 rs.getString("nombre"),
                 rs.getString("matricula"),
                 rs.getDouble("capacidad_bodega"),
@@ -195,4 +231,66 @@ public class EmbarcacionDaoImpl implements EmbarcacionDao {
         int totalPages = (int) Math.ceil((double) totalRecords / perPage);
         return new PaginationResult<>(embarcaciones, new Pagination(totalRecords, totalPages, page, perPage));
     }
+
+    @Override
+    public PaginationResult<List<EmbarcacionGetAllDto>, Pagination> paginateWithAdditional(String query, int page, int perPage) {
+        List<EmbarcacionGetAllDto> embarcaciones = new ArrayList<>();
+        int totalRecords = 0;
+
+        // Construcción dinámica de la consulta con filtro seguro
+        String baseQuery
+                = "SELECT SQL_CALC_FOUND_ROWS em.*, concat(apellidos, ', ', pe.nombres) AS nombre_persona FROM embarcacion em "
+                + " left join persona pe on (em.persona_id = pe.id)"
+                + " WHERE em.activa = '1' ";
+
+        // Se agrega filtro dinámico si 'query' no está vacío
+        if (query != null && !query.isBlank()) {
+            baseQuery += " AND (em.nombre LIKE ? OR em.matricula LIKE ? OR em.permiso_pesca LIKE ?) ";
+        }
+
+        // Se añade ordenación y paginación
+        String paginateQuery = baseQuery + " ORDER BY em.id LIMIT ? OFFSET ?";
+        
+        System.out.println("LISTO " + paginateQuery );
+        
+        try (Connection connection = DBConn.getConnection(); PreparedStatement pst = connection.prepareStatement(paginateQuery)) {
+
+            int paramIndex = 1;
+
+            // Si la query tiene filtro, se agregan parámetros seguros
+            if (query != null && !query.isBlank()) {
+                String likeQuery = "%" + query + "%";
+                pst.setString(paramIndex++, likeQuery);
+                pst.setString(paramIndex++, likeQuery);
+                pst.setString(paramIndex++, likeQuery);
+            }
+
+            // Parámetros para la paginación
+            pst.setInt(paramIndex++, perPage);
+            pst.setInt(paramIndex++, (page - 1) * perPage);
+
+            // Ejecución de la consulta
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    embarcaciones.add(mapResultSetToEmbarcacionAdditional(rs));
+                }
+            }
+
+            // Obtener el total de registros con una consulta separada
+            try (Statement countStmt = connection.createStatement(); ResultSet countResultSet = countStmt.executeQuery("SELECT FOUND_ROWS()")) {
+                if (countResultSet.next()) {
+                    totalRecords = countResultSet.getInt(1);
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return new PaginationResult<>(List.of(), new Pagination(0, 0, page, perPage));
+        }
+
+        int totalPages = (int) Math.ceil((double) totalRecords / perPage);
+        return new PaginationResult<>(embarcaciones, new Pagination(totalRecords, totalPages, page, perPage));
+    }
+
+    
 }

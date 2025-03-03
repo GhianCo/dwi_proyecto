@@ -4,8 +4,12 @@
  */
 package modules.embarcacion.dao;
 
+import java.util.List;
+import modules.embarcacion.dto.EmbarcacionGetAllDto;
 import modules.embarcacion.models.Embarcacion;
 import shared.EntityDao;
+import shared.Pagination;
+import shared.PaginationResult;
 
 /**
  *
@@ -13,5 +17,7 @@ import shared.EntityDao;
  */
 public interface EmbarcacionDao extends EntityDao<Embarcacion> {
     
+    public List<EmbarcacionGetAllDto> findAllWithAdditional();
+    public PaginationResult<List<EmbarcacionGetAllDto>, Pagination> paginateWithAdditional(String query, int page, int perPage);
 
 }

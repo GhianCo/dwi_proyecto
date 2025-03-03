@@ -37,11 +37,13 @@ public class EmbarcacionResource {
                     .build();
         }
 
-        PaginationResult data = embarcacionService.paginate(query, pageNum, perPageNum);
+        PaginationResult data = embarcacionService.paginateWithAdditional(query, pageNum, perPageNum);
         return Response.ok(new ActionPayload(200, data.getData(), "Lista de embarcaciones", data.getPagination()))
                 .build();
     }
 
+    
+    
     @GET
     @Path("{id}")
     public Response getOne(@PathParam("id") Integer embarcacionId) {
