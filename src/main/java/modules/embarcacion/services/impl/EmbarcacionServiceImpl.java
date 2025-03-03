@@ -6,6 +6,7 @@ package modules.embarcacion.services.impl;
 
 import java.util.ArrayList;
 import modules.embarcacion.dao.EmbarcacionDao;
+import modules.embarcacion.dto.EmbarcacionGetAllDto;
 import modules.embarcacion.models.Embarcacion;
 import modules.embarcacion.services.EmbarcacionService;
 import shared.DaoFactory;
@@ -45,8 +46,18 @@ public class EmbarcacionServiceImpl implements EmbarcacionService {
     }
 
     @Override
+    public ArrayList<EmbarcacionGetAllDto> listarCompleto() {
+        return new ArrayList<>(embarcacionDao.findAllWithAdditional());
+    }
+     
+    @Override
     public PaginationResult paginate(String query, int page, int perPage) {
        return embarcacionDao.paginate(query, page, perPage);
+    }
+    
+    @Override
+    public PaginationResult paginateWithAdditional(String query, int page, int perPage) {
+       return embarcacionDao.paginateWithAdditional(query, page, perPage);
     }
 
     @Override
@@ -58,6 +69,8 @@ public class EmbarcacionServiceImpl implements EmbarcacionService {
     public void borrar(Object id) {
         embarcacionDao.delete(id);
     }
+
+    
 
  
     

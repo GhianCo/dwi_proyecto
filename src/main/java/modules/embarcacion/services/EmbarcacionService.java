@@ -4,8 +4,11 @@
  */
 package modules.embarcacion.services;
 
+import java.util.ArrayList;
+import modules.embarcacion.dto.EmbarcacionGetAllDto;
 import modules.embarcacion.models.Embarcacion;
 import shared.BaseService;
+import shared.PaginationResult;
 
 /**
  *
@@ -13,4 +16,7 @@ import shared.BaseService;
  */
 public interface EmbarcacionService extends BaseService<Embarcacion>  {
 
+    public ArrayList<EmbarcacionGetAllDto> listarCompleto();
+     public PaginationResult paginateWithAdditional(String query, int page, int perPage);
+    
 }

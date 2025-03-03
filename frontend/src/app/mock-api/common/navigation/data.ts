@@ -32,6 +32,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 link: '/gestion/destino',
             },
+            {
+                id: 'gestion.embarcacion',
+                title: 'Embarcación',
+                type: 'basic',
+                link: '/gestion/embarcacion',
+            },
         ],
     },
     {

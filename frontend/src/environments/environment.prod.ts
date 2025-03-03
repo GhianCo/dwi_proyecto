@@ -1,6 +1,6 @@
 export const environment = {
     api: 'http://localhost:8080/dwi_proyecto',
-    apiRest : 'api/',
+    apiRest : '',
     publicRest : 'public/',
     endpoints: {
         auth: {
